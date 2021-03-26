@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    int num[4];
+} recebeStruct;
+
+main()
+{
+    int ndx = 0;
+
+    recebeStruct teste (recebeStruct x);
+    recebeStruct Agora;
+
+    Agora = teste (Agora);
+
+    while(ndx < 4)
+    {
+        printf("\n>%d eh o %d- numero.\n\n", Agora.num[ndx],ndx+1);
+        ndx++;
+    }
+
+
+}
+
+
+recebeStruct teste (recebeStruct x)
+{
+
+    int ndx = 0;
+
+    while(ndx < 4)
+    {
+        printf("Informe o %d numero: \n", ndx+1);
+        scanf("%d", &x.num[ndx]);
+        ndx++;
+    }
+
+    return x;
+}

@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct
+{
+    int data;
+    int mes;
+    int ano;
+} nascimento;
+
+typedef struct
+{
+    char nome[50];
+    nascimento recebe;
+    int cpf;
+    char sexo;
+} cadastro;
+
+
+main()
+{
+
+    cadastro cliente;
+
+    cadastro recebe(cadastro *x);
+    void listar(cadastro x);
+
+    printf("TESTANDO CADASTRO BASICO.\n\n");
+
+    cliente = recebe(&cliente);
+
+    listar(cliente);
+
+}
+
+
+cadastro recebe(cadastro *x)
+{
+    printf("Informe o nome do cliente:\n");
+    gets(x->nome);
+    printf("\nInforme a data de nascimento:\n");
+    scanf("%d", &x->recebe.data);
+    printf("\nInforme o mes de nascimento:\n");
+    scanf("%d", &x->recebe.mes);
+    printf("\nInforme o ano de nascimento:\n");
+    scanf("%d", &x->recebe.ano);
+    printf("\nInforme o CPF do cliente:\n");
+    scanf("%d", &x->cpf);
+    setbuf(stdin, NULL);
+    printf("\nInforme o sexo do cliente: (M)- Masculino ou (F)- Feminino.\n");
+    scanf("%c", &x->sexo);
+
+
+    return *x;
+}
+
+
+void listar(cadastro x)
+{
+
+    system("cls");
+
+    printf("Nome do cliente: %s\n", x.nome);
+    printf("Data de nascimento: %d/%d/%d\n", x.recebe.data, x.recebe.mes, x.recebe.ano);
+    printf("CPF do cliente: %d\n", x.cpf);
+    printf("Sexo do cliente: %c\n", x.sexo);
+
+}

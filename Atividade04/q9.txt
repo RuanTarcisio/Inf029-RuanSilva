@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+/*:
+• função validarNome: recebe o nome digitado, e valida se nome tem até 20 caracteres;
+• função validarSexo: recebe o sexo digitado, e valida é um sexo válido (opções: m e M para
+masculino; f e F para feminino, o e O para outro).
+• função validarCPF: recebe o cpf digitado, e valida é um cpf válido;
+• função validarNacimento: recebe o data digitada, e valida é uma data válida
+
+*/
+
+typedef struct
+{
+    int dia;
+    int mes;
+    int ano;
+} data;
+
+typedef struct
+{
+    char nome[30];
+    int cpf;
+    char nascimento[10];
+    char sexo;
+    data recebe;
+} cadastro;
+
+main()
+{
+    setlocale( LC_ALL, "" );
+    void cadastrar(cadastro *cliente);
+
+    cadastro cliente[10];
+
+
+    cadastrar(cliente);
+
+
+}
+
+void cadastrar(cadastro *cliente)
+{
+    void validarNome(char *nome);
+    void validarCPF(int *cpf);
+    void validarSexo(char *sexo);
+    void quebraDataNasc(cadastro *cliente);
+
+
+    printf("\nInforme o nome do cliente:\n");
+    gets(cliente->nome);
+    validarNome(cliente->nome);
+
+    printf("\nInforme o CPF do cliente: \n");
+    scanf("%d", &cliente->cpf);
+    validarCPF(&cliente->cpf);
+    setbuf(stdin, NULL);
+
+    printf("\nInforme o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+    scanf("%c", &cliente->sexo);
+    validarSexo(&cliente->sexo);
+    setbuf(stdin, NULL);
+
+    printf("\nInforme a data de nascimento do cliente: xx/xx/xxxx\n");
+    gets(cliente->nascimento);
+    quebraDataNasc(cliente);
+
+}
+
+
+void validarNome(char *nome)
+{
+    /*printf("\n\nO nome do cliente foi: %s\n\n", nome);*/
+
+}
+
+void validarSexo(char *sexo)
+{
+    if(*sexo == 'M' && *sexo == 'm' && *sexo == 'F' && *sexo == 'f')
+    {
+        return;
+    }
+    else
+    {
+        do
+        {
+            printf("Opção invalida, informe o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+            scanf("%c", &sexo);
+        }
+        while(*sexo != 'M' && *sexo != 'm' && *sexo != 'F' && *sexo != 'f');
+    }
+
+}
+
+void validarCPF(int *cpf)
+{
+
+}
+
+void quebraDataNasc(cadastro *cliente)
+{
+
+
+}
+
+int validarNascimento(int *x, int *y, int *z)
+{
+
+}
+

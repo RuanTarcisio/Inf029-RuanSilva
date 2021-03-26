@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct
+{
+    char palavra[25];
+} recebeLetra;
+
+main()
+{
+    int ndx = 0;
+    recebeLetra Agora(recebeLetra *x);
+
+    recebeLetra SohVem[4];
+
+    Agora(SohVem);
+
+    for (ndx = 0; ndx < 4; ndx++)
+    {
+        printf("A %d- letra foi: %c\n", ndx+1, SohVem[ndx].palavra);
+    }
+
+}
+
+
+recebeLetra Agora(recebeLetra *x)
+{
+    int ndx = 0;
+
+    while(ndx < 4)
+    {
+        printf("\nInforme 1 letra. \n");
+        scanf("%c", &x[ndx].palavra);
+        setbuf(stdin, NULL);
+        ndx++;
+    }
+}

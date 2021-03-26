@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+main()
+{
+    float subtrair(float x, float y, float z);
+    float x, y, z, diminuir;
+    printf("Informe tres numeros:\n");
+    scanf("%f %f %f", &x, &y, &z);
+    diminuir = subtrair(x, y, z);
+    printf("\nO resultado da subtracao eh: %.1f", diminuir);
+
+}
+
+float subtrair( float x, float y, float z)
+{
+
+    float menos = x - y - z;
+    return menos;
+
+}

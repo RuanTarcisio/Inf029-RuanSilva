@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+main()
+{
+    int listar (int *x);
+    int x[3], ndx = 0;
+    listar(x);
+    system("cls");
+    for(ndx = 0; ndx < 3; ndx++)
+    {
+        printf("Os numeros foram: \n%d- %d \n", ndx+1, x[ndx]);
+    }
+}
+
+
+int listar( int *x)
+{
+    int ndx = 0;
+
+    while(ndx < 3)
+    {
+        printf("Informe um numero.\n");
+        scanf("%d", &x[ndx]);
+        ndx++;
+    }
+    return *x;
+}
+

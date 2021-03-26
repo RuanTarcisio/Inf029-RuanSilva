@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+main()
+{
+    float somar(float x, float y);
+    float x, y, soma;
+    printf("Informe dois numeros:\n");
+    scanf("%f %f", &x, &y);
+    soma = somar(x, y);
+    printf("\nO resultado da soma eh: %.1f", soma);
+
+}
+
+float somar( float x, float y)
+{
+
+    float soma = x + y;
+    return soma;
+
+}
+
