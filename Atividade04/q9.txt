@@ -55,7 +55,7 @@ void cadastrar(cadastro *cliente)
 
     printf("\nInforme o CPF do cliente: \n");
     scanf("%d", &cliente->cpf);
-    validarCPF(&cliente->cpf);
+    validarCPF(cliente);
     setbuf(stdin, NULL);
 
     /*printf("\nInforme o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
@@ -68,6 +68,7 @@ void cadastrar(cadastro *cliente)
     quebraDataNasc(cliente);*/
 
 }
+
 
 void validarNome(cadastro *cliente)
 {
@@ -107,7 +108,6 @@ void validarNome(cadastro *cliente)
         }
         while(ndx < strlen(cliente->nome));
     }
-
 }
 
 
@@ -150,6 +150,7 @@ void quebraDataNasc(cadastro *cliente)
 
     do
     {
+
         if(cliente->nascimento[ndxV] != '/')
         {
             recebe.dia[ndx] = cliente->nascimento[ndxV];
@@ -171,6 +172,7 @@ void quebraDataNasc(cadastro *cliente)
         }
     }
     while(cliente->nascimento[ndxV] != '/');
+
 
     ndxV++;
     ndx=0;
@@ -265,14 +267,14 @@ int validarNascimento(cadastro *cliente)
     case 1:
         if(cliente->recebe.dia>31)
             m=0;
-        break;
+            break;
     case 2:
         if(cliente->recebe.ano % 4 == 0 && (cliente->recebe.ano % 400 == 0 || cliente->recebe.ano % 100 != 0))
         {
             if(cliente->recebe.dia > 29)
 
                 m=0;
-            break;
+                break;
         }
         if(cliente->recebe.ano % 4 != 0)
         {
@@ -342,19 +344,19 @@ int validarNascimento(cadastro *cliente)
             m=0;
             break;
         }
-
     }
-
+    
     if(d == 1 && m == 1 && a == 1)
     {
         return cliente->confirma = 1;
-
     }
-    else
+   
+   else
     {
         return cliente->confirma = 0;
     }
 }
+
 
 void validarCPF(cadastro *cliente)
 {
