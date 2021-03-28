@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <ctype.h>
+#include <string.h>
 
 /*:
-• função validarNome: recebe o nome digitado, e valida se nome tem até 20 caracteres;
-• função validarSexo: recebe o sexo digitado, e valida é um sexo válido (opções: m e M para
+â€¢ funÃ§Ã£o validarNome: recebe o nome digitado, e valida se nome tem atÃ© 20 caracteres;
+â€¢ funÃ§Ã£o validarSexo: recebe o sexo digitado, e valida Ã© um sexo vÃ¡lido (opÃ§Ãµes: m e M para
 masculino; f e F para feminino, o e O para outro).
-• função validarCPF: recebe o cpf digitado, e valida é um cpf válido;
-• função validarNacimento: recebe o data digitada, e valida é uma data válida
+â€¢ funÃ§Ã£o validarCPF: recebe o cpf digitado, e valida Ã© um cpf vÃ¡lido;
+â€¢ funÃ§Ã£o validarNacimento: recebe o data digitada, e valida Ã© uma data vÃ¡lida
 
 */
 
@@ -22,6 +24,7 @@ typedef struct
 {
     char nome[30];
     int cpf;
+    int confirma;
     char nascimento[10];
     char sexo;
     data recebe;
@@ -33,8 +36,6 @@ main()
     void cadastrar(cadastro *cliente);
 
     cadastro cliente[10];
-
-
     cadastrar(cliente);
 
 
@@ -42,42 +43,78 @@ main()
 
 void cadastrar(cadastro *cliente)
 {
-    void validarNome(char *nome);
-    void validarCPF(int *cpf);
-    void validarSexo(char *sexo);
+    void validarNome(cadastro *cliente);
+    void validarCPF(cadastro *cliente);
+    void validarSexo(cadastro *cliente);
     void quebraDataNasc(cadastro *cliente);
 
 
-    printf("\nInforme o nome do cliente:\n");
+    /*printf("\nInforme o nome do cliente:\n");
     gets(cliente->nome);
-    validarNome(cliente->nome);
+    validarNome(cliente);*/
 
     printf("\nInforme o CPF do cliente: \n");
     scanf("%d", &cliente->cpf);
     validarCPF(&cliente->cpf);
     setbuf(stdin, NULL);
 
-    printf("\nInforme o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+    /*printf("\nInforme o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
     scanf("%c", &cliente->sexo);
-    validarSexo(&cliente->sexo);
     setbuf(stdin, NULL);
+    validarSexo(cliente);
 
-    printf("\nInforme a data de nascimento do cliente: xx/xx/xxxx\n");
+    printf("\nInforme a data de nascimento do cliente: dd/mm/aaaa\n");
     gets(cliente->nascimento);
-    quebraDataNasc(cliente);
+    quebraDataNasc(cliente);*/
+
+}
+
+void validarNome(cadastro *cliente)
+{
+    void validarNome(cadastro *cliente);
+    int ndx=0;
+
+    ndx = strlen(cliente->nome);
+
+    if(ndx <= 2 || ndx > 20)
+    {
+        printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
+        printf("Informe o nome do cliente.\n");
+        gets(cliente->nome);
+        validarNome(cliente);
+    }
+
+    else
+    {
+        ndx=0;
+        do
+        {
+            if(cliente->nome[ndx] >= 97 && cliente->nome[ndx] <= 122 || (cliente->nome[ndx] >= 65 && cliente->nome[ndx] <= 90)
+                    || (cliente->nome[ndx] == ' ' && cliente->nome[ndx+1] != ' '))
+            {
+                ndx++;
+            }
+
+            else
+            {
+
+                printf("\n\nNome apresenta acento ou algum caractere especial.");
+                printf("\nInforme o nome do cliente sem acento.\n");
+                gets(cliente->nome);
+                validarNome(cliente);
+            }
+
+        }
+        while(ndx < strlen(cliente->nome));
+    }
 
 }
 
 
-void validarNome(char *nome)
+void validarSexo(cadastro *cliente)
 {
-    /*printf("\n\nO nome do cliente foi: %s\n\n", nome);*/
 
-}
-
-void validarSexo(char *sexo)
-{
-    if(*sexo == 'M' && *sexo == 'm' && *sexo == 'F' && *sexo == 'f')
+    if(cliente->sexo == 'M' || cliente->sexo == 'm' || cliente->sexo == 'F' || cliente->sexo == 'f')
     {
         return;
     }
@@ -85,27 +122,241 @@ void validarSexo(char *sexo)
     {
         do
         {
-            printf("Opção invalida, informe o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
-            scanf("%c", &sexo);
+            printf("\nOpÃ§Ã£o invalida, informe o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+            scanf("%c", &cliente->sexo);
+            setbuf(stdin, NULL);
         }
-        while(*sexo != 'M' && *sexo != 'm' && *sexo != 'F' && *sexo != 'f');
+        while(cliente->sexo != 'M' && cliente->sexo != 'm' && cliente->sexo != 'F' && cliente->sexo != 'f');
     }
 
 }
 
-void validarCPF(int *cpf)
-{
-
-}
 
 void quebraDataNasc(cadastro *cliente)
 {
+    typedef struct
+    {
+        char dia[3];
+        char mes[3];
+        char ano[5];
+    } date;
 
+    date recebe;
 
+    void quebraDataNasc(cadastro *cliente);
+    int validarNascimento(cadastro *cliente);
+    int ndx=0, ndxV=0;
+    int d=0, m=0, a=0;
+
+    do
+    {
+        if(cliente->nascimento[ndxV] != '/')
+        {
+            recebe.dia[ndx] = cliente->nascimento[ndxV];
+            ndx++;
+            ndxV++;
+        }
+        if(ndx > 2)
+        {
+            d = 0;
+            break;
+        }
+
+        if(cliente->nascimento[ndxV] == '/')
+        {
+            recebe.dia[ndx++] = '\0';
+            d = 1;
+            cliente->recebe.dia = atoi(recebe.dia);
+            break;
+        }
+    }
+    while(cliente->nascimento[ndxV] != '/');
+
+    ndxV++;
+    ndx=0;
+
+    do
+    {
+        if(cliente->nascimento[ndxV] != '/')
+        {
+            recebe.mes[ndx] = cliente->nascimento[ndxV];
+            ndx++;
+            ndxV++;
+        }
+        if(ndx > 2)
+        {
+            m = 0;
+            break;
+        }
+        if(cliente->nascimento[ndxV] == '/')
+        {
+            recebe.mes[ndx++] = '\0';
+            m = 1;
+            cliente->recebe.mes = atoi(recebe.mes);
+            break;
+        }
+    }
+    while(cliente->nascimento[ndxV] != '/');
+
+    ndxV++;
+    ndx = 0;
+
+    do
+    {
+        if(cliente->nascimento[ndxV] != '\0')
+        {
+            recebe.ano[ndx] = cliente->nascimento[ndxV];
+            ndx++;
+            ndxV++;
+        }
+        if(ndx > 4)
+        {
+            a = 0;
+            break;
+        }
+        if(cliente->nascimento[ndxV] == '\0' && ndx >=2)
+        {
+            recebe.ano[ndx] = '\0';
+            a = 1;
+            cliente->recebe.ano = atoi(recebe.ano);
+            break;
+        }
+    }
+    while(cliente->nascimento[ndxV] != '\0');
+
+    if(d != 1 || m != 1 || a != 1)
+    {
+        printf("\n Data informa Ã© invalida, informe novamente: dd/mm/aaaa.\n");
+        gets(cliente->nascimento);
+        quebraDataNasc(cliente);
+    }
+
+    else
+    {
+        cliente->confirma = validarNascimento(cliente);
+
+        if(cliente->confirma != 1)
+        {
+            printf("\n Data informa Ã© invalida, informe novamente: dd/mm/aaaa.\n");
+            gets(cliente->nascimento);
+            quebraDataNasc(cliente);
+        }
+    }
 }
 
-int validarNascimento(int *x, int *y, int *z)
+
+int validarNascimento(cadastro *cliente)
+{
+
+    int d=1, m=1, a=1;
+
+    if((cliente->recebe.ano > 99 && cliente->recebe.ano < 1869) || cliente->recebe.ano > 2021)
+    {
+        a = 0;
+    }
+
+    if(cliente->recebe.dia < 1 || cliente->recebe.dia > 31)
+    {
+        d = 0;
+    }
+
+    switch(cliente->recebe.mes)
+    {
+    case 1:
+        if(cliente->recebe.dia>31)
+            m=0;
+        break;
+    case 2:
+        if(cliente->recebe.ano % 4 == 0 && (cliente->recebe.ano % 400 == 0 || cliente->recebe.ano % 100 != 0))
+        {
+            if(cliente->recebe.dia > 29)
+
+                m=0;
+            break;
+        }
+        if(cliente->recebe.ano % 4 != 0)
+        {
+            if(cliente->recebe.dia > 28)
+            {
+                m=0;
+                break;
+            }
+        }
+    case 3:
+        if(cliente->recebe.dia > 31)
+        {
+            m=0;
+            break;
+        }
+    case 4:
+        if(cliente->recebe.dia > 30)
+        {
+            m=0;
+            break;
+        }
+    case 5:
+        if(cliente->recebe.dia > 31)
+        {
+            m=0;
+            break;
+        }
+    case 6:
+        if(cliente->recebe.dia > 30)
+        {
+            m=0;
+            break;
+        }
+    case 7:
+        if(cliente->recebe.dia > 31)
+        {
+            m=0;
+            break;
+        }
+    case 8:
+        if(cliente->recebe.dia > 30)
+        {
+            m=0;
+            break;
+        }
+    case 9:
+        if(cliente->recebe.dia > 31)
+        {
+            m=0;
+            break;
+        }
+    case 10:
+        if(cliente->recebe.dia > 30)
+        {
+            m=0;
+            break;
+        }
+    case 11:
+        if(cliente->recebe.dia > 31)
+        {
+            m=0;
+            break;
+        }
+    case 12:
+        if(cliente->recebe.dia > 30)
+        {
+            m=0;
+            break;
+        }
+
+    }
+
+    if(d == 1 && m == 1 && a == 1)
+    {
+        return cliente->confirma = 1;
+
+    }
+    else
+    {
+        return cliente->confirma = 0;
+    }
+}
+
+void validarCPF(cadastro *cliente)
 {
 
 }
-
