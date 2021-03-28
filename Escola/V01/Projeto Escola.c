@@ -3,11 +3,13 @@
 #include <locale.h>
 #include <ctype.h>
 #include <string.h>
+#define MAX_ALUN 100
+#define MAX_PROF 20
 
 /*:
-•	Cadastro de Alunos (Matrícula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO) .
-•	Cadastro de Professores (Matrícula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO).
-•	Cadastro de Disciplinas (Nome, Código, Semestre, Professor)
+â€¢	Cadastro de Alunos (MatrÃ­cula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO) .
+â€¢	Cadastro de Professores (MatrÃ­cula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO).
+â€¢	Cadastro de Disciplinas (Nome, CÃ³digo, Semestre, Professor)
 */
 
 typedef struct
@@ -20,6 +22,7 @@ typedef struct
 typedef struct
 {
     char nome[30];
+    int matricula;
     int cpf;
     int confirma;
     char nascimento[10];
@@ -31,20 +34,23 @@ typedef struct
 main()
 {
     setlocale( LC_ALL, "" );
-    void Aluno(cadastro *Aluno);
-    void Professor(cadastro *Professor);
-    cadastro professor[20], aluno[100];
+    void Discente(cadastro *Aluno);
+    void Docente(cadastro *Professor);
+    void Disciplina();
+
+
+    cadastro professor[MAX_PROF], aluno[MAX_ALUN];
     int escolha, ndxEscolha, confirma;
 
 
-    printf("\nDigite: (1)- Professores, (2)- Alunos, (3)- Materias, (4)- p/ Listar ou (0)- p/ SAIR:  ");
+    printf("\nDigite: (1)- Professores, (2)- Alunos, (3)- Disciplinas ou (0)- p/ SAIR:  ");
     scanf("%d", &escolha);
 
     if(escolha != 0 && escolha != 1 && escolha != 2 && escolha != 3)
     {
         do
         {
-            printf("\nOpção invalida. Digite: (1)- Professores, (2)- Alunos, (3)- Materias, (4)- p/ Listar ou (0)- p/ SAIR:  ");
+            printf("\nOpÃ§Ã£o invalida. Digite: (1)- Professores, (2)- Alunos, (3)- Disciplinas ou (0)- p/ SAIR:  ");
             scanf("%d", &escolha);
 
         }
@@ -57,10 +63,13 @@ main()
         printf("\nEncerrando o programa.");
         exit(0);
     case 1:
+        Discente(aluno);
         break;
     case 2:
+        Docente(professor);
         break;
     case 3:
+        /*Disciplina();*/
         break;
 
     }
@@ -69,14 +78,63 @@ main()
 }
 
 
-void Aluno(cadastro *Aluno)
+void Discente(cadastro *Aluno)
 {
 
+    void cadastrar(cadastro *cliente);
+    void listar(cadastro *cliente);
+
+    int escolha;
+
+    system("cls");
+    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
+    scanf("%d", &escolha);
+    getchar();
+
+    switch(escolha)
+    {
+    case 0:
+        exit(0);
+        break;
+    case 1:
+        cadastrar(Aluno);
+        break;
+    case 2:
+        listar(Aluno);
+        break;
+    case 3:
+        break;
+    }
 }
 
 
-void Professor(cadastro *Professor)
+void Docente(cadastro *Professor)
 {
+
+    void cadastrar(cadastro *cliente);
+    void listar(cadastro *cliente);
+
+    int escolha;
+
+    system("cls");
+    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
+    scanf("%d", &escolha);
+    getchar();
+
+    switch(escolha)
+    {
+    case 0:
+        exit(0);
+        break;
+    case 1:
+        cadastrar(Professor);
+        break;
+    case 2:
+        listar(Professor);
+        break;
+    case 3:
+        break;
+    }
 
 }
 
@@ -88,26 +146,33 @@ void cadastrar(cadastro *cliente)
     void validarSexo(cadastro *cliente);
     void quebraDataNasc(cadastro *cliente);
 
-
-    /*printf("\nInforme o nome do cliente:\n");
+    printf("\nInforme o nome:\n");
     gets(cliente->nome);
-    validarNome(cliente);*/
+    validarNome(cliente);
 
-    printf("\nInforme o CPF do cliente: \n");
+    printf("\nInforme o CPF: \n");
     scanf("%d", &cliente->cpf);
     validarCPF(cliente);
     setbuf(stdin, NULL);
 
-    /*printf("\nInforme o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+    printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
     scanf("%c", &cliente->sexo);
     setbuf(stdin, NULL);
     validarSexo(cliente);
 
-    printf("\nInforme a data de nascimento do cliente: dd/mm/aaaa\n");
+    printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
     gets(cliente->nascimento);
-    quebraDataNasc(cliente);*/
+    quebraDataNasc(cliente);
 
 }
+
+
+void listar(cadastro *cliente)
+{
+
+
+}
+
 
 
 void validarNome(cadastro *cliente)
@@ -120,7 +185,7 @@ void validarNome(cadastro *cliente)
     if(ndx <= 2 || ndx > 20)
     {
         printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
-        printf("Informe o nome do cliente.\n");
+        printf("Informe o nome:\n");
         gets(cliente->nome);
         validarNome(cliente);
     }
@@ -140,7 +205,7 @@ void validarNome(cadastro *cliente)
             {
 
                 printf("\n\nNome apresenta acento ou algum caractere especial.");
-                printf("\nInforme o nome do cliente sem acento.\n");
+                printf("\nInforme o nome sem acento.\n");
                 gets(cliente->nome);
                 validarNome(cliente);
             }
@@ -162,7 +227,7 @@ void validarSexo(cadastro *cliente)
     {
         do
         {
-            printf("\nOpção invalida, informe o sexo do cliente: (F)- Feminino ou (M)- Masculino. \n");
+            printf("\nOpÃ§Ã£o invalida, informe o sexo: (F)- Feminino ou (M)- Masculino. \n");
             scanf("%c", &cliente->sexo);
             setbuf(stdin, NULL);
         }
@@ -268,7 +333,7 @@ void quebraDataNasc(cadastro *cliente)
 
     if(d != 1 || m != 1 || a != 1)
     {
-        printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
+        printf("\n Data informa Ã© invalida, informe novamente: dd/mm/aaaa.\n");
         gets(cliente->nascimento);
         quebraDataNasc(cliente);
     }
@@ -279,7 +344,7 @@ void quebraDataNasc(cadastro *cliente)
 
         if(cliente->confirma != 1)
         {
-            printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
+            printf("\n Data informa Ã© invalida, informe novamente: dd/mm/aaaa.\n");
             gets(cliente->nascimento);
             quebraDataNasc(cliente);
         }
