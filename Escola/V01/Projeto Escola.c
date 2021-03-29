@@ -1,16 +1,22 @@
-#include <stdio.h>
+#include <stdio.h#include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <ctype.h>
 #include <string.h>
 #define MAX_ALUN 100
-#define MAX_PROF 20
+#define MAX_PROF 50
+#define MAX_MATE 50
+#define NAME_ALL 30
 
 /*:
 •	Cadastro de Alunos (Matrícula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO) .
 •	Cadastro de Professores (Matrícula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO).
 •	Cadastro de Disciplinas (Nome, Código, Semestre, Professor)
 */
+
+
+/* CRIAR UMA FUNÇÃO GERAL QUE RECEBE ALUNO, MATERIA E PROFESSOR. */
+
 
 typedef struct
 {
@@ -21,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-    char nome[30];
+    char nome[NAME_ALL];
     int matricula;
     int cpf;
     int confirma;
@@ -29,19 +35,47 @@ typedef struct
     char sexo;
     char TSangue[3];
     data recebe;
+    int ndx;
 } cadastro;
+
+typedef struct
+{
+    char nome[NAME_ALL];
+    int codigo;
+    int semestre;
+    char professor[NAME_ALL];
+} disciplinas;
+
 
 main()
 {
     setlocale( LC_ALL, "" );
     void Discente(cadastro *Aluno);
     void Docente(cadastro *Professor);
-    void Disciplina();
+    void Disciplina(disciplinas *Materia);
+    void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
 
 
     cadastro professor[MAX_PROF], aluno[MAX_ALUN];
+    disciplinas materias[MAX_MATE];
+
     int escolha, ndxEscolha, confirma;
 
+
+    RegistroGeral(professor, aluno, materias);
+
+
+
+}
+
+
+void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
+{
+    void Discente(cadastro *Aluno);
+    void Docente(cadastro *Professor);
+    void Disciplina(disciplinas *Materia);
+
+    int escolha;
 
     printf("\nDigite: (1)- Professores, (2)- Alunos, (3)- Disciplinas ou (0)- p/ SAIR:  ");
     scanf("%d", &escolha);
@@ -63,17 +97,16 @@ main()
         printf("\nEncerrando o programa.");
         exit(0);
     case 1:
-        Discente(aluno);
+        Discente(Aluno);
         break;
     case 2:
-        Docente(professor);
+        Docente(Professor);
         break;
     case 3:
-        /*Disciplina();*/
+        Disciplina(Materia);
         break;
 
     }
-
 
 }
 
@@ -83,10 +116,12 @@ void Discente(cadastro *Aluno)
 
     void cadastrar(cadastro *cliente);
     void listar(cadastro *cliente);
+    void excluir(cadastro *cliente);
 
     int escolha;
 
     system("cls");
+    printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE ALUNOS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
     printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
     scanf("%d", &escolha);
     getchar();
@@ -113,10 +148,12 @@ void Docente(cadastro *Professor)
 
     void cadastrar(cadastro *cliente);
     void listar(cadastro *cliente);
+    void excluir(cadastro *cliente);
 
     int escolha;
 
     system("cls");
+    printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-* CADASTRO DE PROFESSORES *-*-*-*-*-*-*-*-*-*-*-*-*-* \n");
     printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
     scanf("%d", &escolha);
     getchar();
@@ -143,7 +180,7 @@ void cadastrar(cadastro *cliente)
 {
     void validarNome(cadastro *cliente);
     void validarCPF(cadastro *cliente);
-    void validarSexo(cadastro *cliente);
+    void validarSexo_Sangue(cadastro *cliente);
     void quebraDataNasc(cadastro *cliente);
 
     printf("\nInforme o nome:\n");
@@ -158,11 +195,46 @@ void cadastrar(cadastro *cliente)
     printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
     scanf("%c", &cliente->sexo);
     setbuf(stdin, NULL);
-    validarSexo(cliente);
+    validarSexo_Sangue(cliente);
 
     printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
     gets(cliente->nascimento);
     quebraDataNasc(cliente);
+
+}
+
+
+void Disciplina(disciplinas *Materia)
+{
+
+    void cadastrarMateria(disciplinas *Materia);
+    void listarMateria(disciplinas *Materia);
+    void excluirMateria(disciplinas *Materia);
+
+    int escolha;
+
+    system("cls");
+    printf("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE MATERIAS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
+    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
+    scanf("%d", &escolha);
+    getchar();
+
+    switch(escolha)
+    {
+    case 0:
+        exit(0);
+        break;
+    case 1:
+        cadastrarMateria(Materia);
+        break;
+    case 2:
+        break;
+    }
+}
+
+
+void cadastrarMateria(disciplinas *Materia)
+{
 
 }
 
@@ -172,7 +244,6 @@ void listar(cadastro *cliente)
 
 
 }
-
 
 
 void validarNome(cadastro *cliente)
@@ -216,14 +287,11 @@ void validarNome(cadastro *cliente)
 }
 
 
-void validarSexo(cadastro *cliente)
+void validarSexo_Sangue(cadastro *cliente)
 {
+    int ndx=0;
 
-    if(cliente->sexo == 'M' || cliente->sexo == 'm' || cliente->sexo == 'F' || cliente->sexo == 'f')
-    {
-        return;
-    }
-    else
+    if(cliente->sexo != 'M' && cliente->sexo != 'm' && cliente->sexo != 'F' && cliente->sexo != 'f')
     {
         do
         {
@@ -234,6 +302,23 @@ void validarSexo(cadastro *cliente)
         while(cliente->sexo != 'M' && cliente->sexo != 'm' && cliente->sexo != 'F' && cliente->sexo != 'f');
     }
 
+    printf("\nInforme o tipo sanguineo.\n");
+    gets(cliente->TSangue);
+
+    do
+    {
+        cliente->TSangue[ndx] = toupper(cliente->TSangue[ndx]);
+        ndx++;
+
+    }while(ndx < 3 || cliente->TSangue[ndx] != '\0');
+
+    /*if (cliente->TSangue != "A+" && cliente->TSangue != "A-" &&
+        cliente->TSangue != "B+" && cliente->TSangue != "B-" &&
+        cliente->TSangue != "AB+" && cliente->TSangue != "O+" &&
+        cliente->TSangue != "AB-" && cliente->TSangue != "O-")
+    {
+            printf("estou aq");
+    }*/
 }
 
 
@@ -467,3 +552,5 @@ void validarCPF(cadastro *cliente)
 {
 
 }
+
+
