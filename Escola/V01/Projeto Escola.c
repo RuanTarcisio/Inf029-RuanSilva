@@ -1,4 +1,4 @@
-#include <stdio.h#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <ctype.h>
@@ -6,7 +6,7 @@
 #define MAX_ALUN 100
 #define MAX_PROF 50
 #define MAX_MATE 50
-#define NAME_ALL 30
+#define NAME_NOMES 30
 
 /*:
 •	Cadastro de Alunos (Matrícula, Nome, Sexo, Data Nascimento, CPF e TIPO SANGUINEO) .
@@ -27,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-    char nome[NAME_ALL];
+    char nome[NAME_NOMES];
     int matricula;
     int cpf;
     int confirma;
@@ -40,10 +40,10 @@ typedef struct
 
 typedef struct
 {
-    char nome[NAME_ALL];
+    char nome[NAME_NOMES];
     int codigo;
     int semestre;
-    char professor[NAME_ALL];
+    char professor[NAME_NOMES];
 } disciplinas;
 
 
@@ -114,11 +114,12 @@ void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
 void Discente(cadastro *Aluno)
 {
 
-    void cadastrar(cadastro *cliente);
-    void listar(cadastro *cliente);
+    void cadastrar(cadastro *cliente, int x);
+    void listar(cadastro *cliente, int x);
     void excluir(cadastro *cliente);
 
     int escolha;
+    Aluno[0].ndx=0;
 
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE ALUNOS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -132,10 +133,10 @@ void Discente(cadastro *Aluno)
         exit(0);
         break;
     case 1:
-        cadastrar(Aluno);
+        cadastrar(Aluno, 1);
         break;
     case 2:
-        listar(Aluno);
+        listar(Aluno, 1);
         break;
     case 3:
         break;
@@ -146,11 +147,12 @@ void Discente(cadastro *Aluno)
 void Docente(cadastro *Professor)
 {
 
-    void cadastrar(cadastro *cliente);
-    void listar(cadastro *cliente);
+    void cadastrar(cadastro *cliente, int x);
+    void listar(cadastro *cliente, int x);
     void excluir(cadastro *cliente);
 
     int escolha;
+    Professor[0].ndx=0;
 
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-* CADASTRO DE PROFESSORES *-*-*-*-*-*-*-*-*-*-*-*-*-* \n");
@@ -164,10 +166,10 @@ void Docente(cadastro *Professor)
         exit(0);
         break;
     case 1:
-        cadastrar(Professor);
+        cadastrar(Professor, 2);
         break;
     case 2:
-        listar(Professor);
+        listar(Professor, 2);
         break;
     case 3:
         break;
@@ -176,30 +178,89 @@ void Docente(cadastro *Professor)
 }
 
 
-void cadastrar(cadastro *cliente)
+void cadastrar(cadastro *cliente, int x)
 {
-    void validarNome(cadastro *cliente);
-    void validarCPF(cadastro *cliente);
-    void validarSexo_Sangue(cadastro *cliente);
-    void quebraDataNasc(cadastro *cliente);
 
-    printf("\nInforme o nome:\n");
-    gets(cliente->nome);
-    validarNome(cliente);
+    void validarNome(cadastro *cliente, int ndxGuia);
+    void validarCPF(cadastro *cliente, int ndxGuia);
+    void validarSexo_Sangue(cadastro *cliente, int ndxGuia);
+    void quebraDataNasc(cadastro *cliente, int ndxGuia);
 
-    printf("\nInforme o CPF: \n");
-    scanf("%d", &cliente->cpf);
-    validarCPF(cliente);
-    setbuf(stdin, NULL);
+    int ndxGuia = 0, continua;
 
-    printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
-    scanf("%c", &cliente->sexo);
-    setbuf(stdin, NULL);
-    validarSexo_Sangue(cliente);
+    if(x == 1)
+    {
+        /* FAZER UM LAÇO MAX_ALUN e IR SUBINDO CLIENTE->NDX */
 
-    printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
-    gets(cliente->nascimento);
-    quebraDataNasc(cliente);
+        do
+        {
+            printf("\n%d\n%d", ndxGuia, cliente[0].ndx);
+            setbuf(stdin, NULL);
+            printf("\n\nNome do aluno:\n");
+            gets(cliente[ndxGuia].nome);
+            validarNome(cliente, ndxGuia);
+
+            printf("\nCPF do aluno: \n");
+            scanf("%d", &cliente[ndxGuia].cpf);
+            validarCPF(cliente, ndxGuia);
+            setbuf(stdin, NULL);
+
+            printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
+            scanf("%c", &cliente[ndxGuia].sexo);
+            setbuf(stdin, NULL);
+            validarSexo_Sangue(cliente, ndxGuia);
+
+            printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
+            gets(cliente[ndxGuia].nascimento);
+            quebraDataNasc(cliente, ndxGuia);
+
+            ndxGuia++;
+            cliente[0].ndx = ndxGuia;
+
+            setbuf(stdin, NULL);
+            printf("\nDeseja cadastrar outro aluno?(1)- SIM ou (0)- NÃO.\n");
+            scanf("%d", &continua);
+
+            if(continua != 1 && continua != 0)
+            {
+                do
+                {
+                    setbuf(stdin, NULL);
+                    printf("\nOpção invalida. Deseja cadastrar outro aluno?(1)- SIM ou (0)- NÃO.\n");
+                    scanf("%d", &continua);
+
+                }
+                while(continua != 1 || continua != 0);
+            }
+
+        }
+        while(continua == 1);
+    }
+
+    else if(x == 2)
+    {
+        /* FAZER UM LAÇO MAX_PROF e IR SUBINDO CLIENTE->NDX*/
+
+        printf("\nNome do professor:\n");
+        gets(cliente->nome);
+        /* validarNome(cliente);*/
+
+        printf("\nCPF do professor: \n");
+        scanf("%d", &cliente->cpf);
+        validarCPF(cliente, ndxGuia);
+        setbuf(stdin, NULL);
+
+        printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
+        scanf("%c", &cliente->sexo);
+        setbuf(stdin, NULL);
+        validarSexo_Sangue(cliente, ndxGuia);
+
+        printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
+        gets(cliente->nascimento);
+        quebraDataNasc(cliente, ndxGuia);
+    }
+
+
 
 }
 
@@ -239,16 +300,16 @@ void cadastrarMateria(disciplinas *Materia)
 }
 
 
-void listar(cadastro *cliente)
+void listar(cadastro *cliente, int x)
 {
 
 
 }
 
 
-void validarNome(cadastro *cliente)
+void validarNome(cadastro *cliente, int ndxGuia)
 {
-    void validarNome(cadastro *cliente);
+    /* void validarNome(cadastro *cliente);*/
     int ndx=0;
 
     ndx = strlen(cliente->nome);
@@ -258,7 +319,7 @@ void validarNome(cadastro *cliente)
         printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
         printf("Informe o nome:\n");
         gets(cliente->nome);
-        validarNome(cliente);
+        validarNome(cliente, ndxGuia);
     }
 
     else
@@ -278,7 +339,7 @@ void validarNome(cadastro *cliente)
                 printf("\n\nNome apresenta acento ou algum caractere especial.");
                 printf("\nInforme o nome sem acento.\n");
                 gets(cliente->nome);
-                validarNome(cliente);
+                validarNome(cliente, ndxGuia);
             }
 
         }
@@ -287,7 +348,7 @@ void validarNome(cadastro *cliente)
 }
 
 
-void validarSexo_Sangue(cadastro *cliente)
+void validarSexo_Sangue(cadastro *cliente, int ndxGuia)
 {
     int ndx=0;
 
@@ -310,7 +371,8 @@ void validarSexo_Sangue(cadastro *cliente)
         cliente->TSangue[ndx] = toupper(cliente->TSangue[ndx]);
         ndx++;
 
-    }while(ndx < 3 || cliente->TSangue[ndx] != '\0');
+    }
+    while(ndx < 3 || cliente->TSangue[ndx] != '\0');
 
     /*if (cliente->TSangue != "A+" && cliente->TSangue != "A-" &&
         cliente->TSangue != "B+" && cliente->TSangue != "B-" &&
@@ -322,7 +384,7 @@ void validarSexo_Sangue(cadastro *cliente)
 }
 
 
-void quebraDataNasc(cadastro *cliente)
+void quebraDataNasc(cadastro *cliente, int ndxGuia)
 {
     typedef struct
     {
@@ -333,8 +395,8 @@ void quebraDataNasc(cadastro *cliente)
 
     date recebe;
 
-    void quebraDataNasc(cadastro *cliente);
-    int validarNascimento(cadastro *cliente);
+    void quebraDataNasc(cadastro *cliente, int ndxGuia);
+    int validarNascimento(cadastro *cliente, int ndxGuia);
     int ndx=0, ndxV=0;
     int d=0, m=0, a=0;
 
@@ -420,24 +482,24 @@ void quebraDataNasc(cadastro *cliente)
     {
         printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
         gets(cliente->nascimento);
-        quebraDataNasc(cliente);
+        quebraDataNasc(cliente, ndxGuia);
     }
 
     else
     {
-        cliente->confirma = validarNascimento(cliente);
+        cliente->confirma = validarNascimento(cliente, ndxGuia);
 
         if(cliente->confirma != 1)
         {
             printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
             gets(cliente->nascimento);
-            quebraDataNasc(cliente);
+            quebraDataNasc(cliente, ndxGuia);
         }
     }
 }
 
 
-int validarNascimento(cadastro *cliente)
+int validarNascimento(cadastro *cliente, int ndxGuia)
 {
 
     int d=1, m=1, a=1;
@@ -548,7 +610,7 @@ int validarNascimento(cadastro *cliente)
 }
 
 
-void validarCPF(cadastro *cliente)
+void validarCPF(cadastro *cliente, int ndxGuia)
 {
 
 }
