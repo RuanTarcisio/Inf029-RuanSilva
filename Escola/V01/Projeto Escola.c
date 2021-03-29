@@ -57,14 +57,13 @@ main()
 
 
     cadastro professor[MAX_PROF], aluno[MAX_ALUN];
+    professor[0].ndx = 0;
+    aluno[0].ndx = 0;
     disciplinas materias[MAX_MATE];
 
-    int escolha, ndxEscolha, confirma;
 
 
     RegistroGeral(professor, aluno, materias);
-
-
 
 }
 
@@ -84,7 +83,7 @@ void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
     {
         do
         {
-            printf("\nOpção invalida. Digite: (1)- Professores, (2)- Alunos, (3)- Disciplinas ou (0)- p/ SAIR:  ");
+            printf("\nInvalido. Digite: (1)- Professores, (2)- Alunos, (3)- Disciplinas ou (0)- p/ SAIR:  ");
             scanf("%d", &escolha);
 
         }
@@ -105,9 +104,7 @@ void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
     case 3:
         Disciplina(Materia);
         break;
-
     }
-
 }
 
 
@@ -119,7 +116,6 @@ void Discente(cadastro *Aluno)
     void excluir(cadastro *cliente);
 
     int escolha;
-    Aluno[0].ndx=0;
 
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE ALUNOS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -152,7 +148,6 @@ void Docente(cadastro *Professor)
     void excluir(cadastro *cliente);
 
     int escolha;
-    Professor[0].ndx=0;
 
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-* CADASTRO DE PROFESSORES *-*-*-*-*-*-*-*-*-*-*-*-*-* \n");
@@ -178,6 +173,35 @@ void Docente(cadastro *Professor)
 }
 
 
+void Disciplina(disciplinas *Materia)
+{
+
+    void cadastrarMateria(disciplinas *Materia);
+    void listarMateria(disciplinas *Materia);
+    void excluirMateria(disciplinas *Materia);
+
+    int escolha;
+
+    system("cls");
+    printf("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE MATERIAS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
+    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
+    scanf("%d", &escolha);
+    getchar();
+
+    switch(escolha)
+    {
+    case 0:
+        exit(0);
+        break;
+    case 1:
+        cadastrarMateria(Materia);
+        break;
+    case 2:
+        break;
+    }
+}
+
+
 void cadastrar(cadastro *cliente, int x)
 {
 
@@ -186,7 +210,9 @@ void cadastrar(cadastro *cliente, int x)
     void validarSexo_Sangue(cadastro *cliente, int ndxGuia);
     void quebraDataNasc(cadastro *cliente, int ndxGuia);
 
-    int ndxGuia = 0, continua;
+    int ndxGuia = cliente[0].ndx, continua;
+
+
 
     if(x == 1)
     {
@@ -230,67 +256,64 @@ void cadastrar(cadastro *cliente, int x)
                     scanf("%d", &continua);
 
                 }
-                while(continua != 1 || continua != 0);
+                while(continua != 1 && continua != 0);
             }
 
         }
-        while(continua == 1);
+        while(continua == 1 || cliente[ndxGuia].ndx < MAX_ALUN);
     }
 
     else if(x == 2)
     {
         /* FAZER UM LAÇO MAX_PROF e IR SUBINDO CLIENTE->NDX*/
 
-        printf("\nNome do professor:\n");
-        gets(cliente->nome);
-        /* validarNome(cliente);*/
+        do
+        {
+            printf("\n%d\n%d", ndxGuia, cliente[0].ndx);
+            setbuf(stdin, NULL);
+            printf("\n\nNome do professor:\n");
+            gets(cliente[ndxGuia].nome);
+            validarNome(cliente, ndxGuia);
 
-        printf("\nCPF do professor: \n");
-        scanf("%d", &cliente->cpf);
-        validarCPF(cliente, ndxGuia);
-        setbuf(stdin, NULL);
+            printf("\nCPF do professor: \n");
+            scanf("%d", &cliente[ndxGuia].cpf);
+            validarCPF(cliente, ndxGuia);
+            setbuf(stdin, NULL);
 
-        printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
-        scanf("%c", &cliente->sexo);
-        setbuf(stdin, NULL);
-        validarSexo_Sangue(cliente, ndxGuia);
+            printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
+            scanf("%c", &cliente[ndxGuia].sexo);
+            setbuf(stdin, NULL);
+            validarSexo_Sangue(cliente, ndxGuia);
 
-        printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
-        gets(cliente->nascimento);
-        quebraDataNasc(cliente, ndxGuia);
+            printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
+            gets(cliente[ndxGuia].nascimento);
+            quebraDataNasc(cliente, ndxGuia);
+
+            ndxGuia++;
+            cliente[0].ndx = ndxGuia;
+
+            setbuf(stdin, NULL);
+            printf("\nDeseja cadastrar outro professor?(1)- SIM ou (0)- NÃO.\n");
+            scanf("%d", &continua);
+
+            if(continua != 1 && continua != 0)
+            {
+                do
+                {
+                    setbuf(stdin, NULL);
+                    printf("\nInvalido. Deseja cadastrar outro professor?(1)- SIM ou (0)- NÃO.\n");
+                    scanf("%d", &continua);
+
+                }
+                while(continua != 1 && continua != 0);
+            }
+
+        }
+        while(continua == 1 || cliente[ndxGuia].ndx < MAX_PROF);
     }
 
 
 
-}
-
-
-void Disciplina(disciplinas *Materia)
-{
-
-    void cadastrarMateria(disciplinas *Materia);
-    void listarMateria(disciplinas *Materia);
-    void excluirMateria(disciplinas *Materia);
-
-    int escolha;
-
-    system("cls");
-    printf("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE MATERIAS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
-    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
-    scanf("%d", &escolha);
-    getchar();
-
-    switch(escolha)
-    {
-    case 0:
-        exit(0);
-        break;
-    case 1:
-        cadastrarMateria(Materia);
-        break;
-    case 2:
-        break;
-    }
 }
 
 
@@ -303,22 +326,31 @@ void cadastrarMateria(disciplinas *Materia)
 void listar(cadastro *cliente, int x)
 {
 
+    if( x == 1 )
+    {
+
+    }
+
+    else if ( x == 2 )
+    {
+
+    }
 
 }
 
 
 void validarNome(cadastro *cliente, int ndxGuia)
 {
-    /* void validarNome(cadastro *cliente);*/
+    void validarNome(cadastro *cliente, int ndxGuia);
     int ndx=0;
 
-    ndx = strlen(cliente->nome);
+    ndx = strlen(cliente[ndxGuia].nome);
 
     if(ndx <= 2 || ndx > 20)
     {
         printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
         printf("Informe o nome:\n");
-        gets(cliente->nome);
+        gets(cliente[ndxGuia].nome);
         validarNome(cliente, ndxGuia);
     }
 
@@ -327,8 +359,8 @@ void validarNome(cadastro *cliente, int ndxGuia)
         ndx=0;
         do
         {
-            if(cliente->nome[ndx] >= 97 && cliente->nome[ndx] <= 122 || (cliente->nome[ndx] >= 65 && cliente->nome[ndx] <= 90)
-                    || (cliente->nome[ndx] == ' ' && cliente->nome[ndx+1] != ' '))
+            if(cliente[ndxGuia].nome[ndx] >= 97 && cliente[ndxGuia].nome[ndx] <= 122 || (cliente[ndxGuia].nome[ndx] >= 65 && cliente[ndxGuia].nome[ndx] <= 90)
+                    || (cliente[ndxGuia].nome[ndx] == ' ' && cliente[ndxGuia].nome[ndx+1] != ' '))
             {
                 ndx++;
             }
@@ -338,12 +370,12 @@ void validarNome(cadastro *cliente, int ndxGuia)
 
                 printf("\n\nNome apresenta acento ou algum caractere especial.");
                 printf("\nInforme o nome sem acento.\n");
-                gets(cliente->nome);
+                gets(cliente[ndxGuia].nome);
                 validarNome(cliente, ndxGuia);
             }
 
         }
-        while(ndx < strlen(cliente->nome));
+        while(ndx < strlen(cliente[ndxGuia].nome));
     }
 }
 
@@ -352,18 +384,21 @@ void validarSexo_Sangue(cadastro *cliente, int ndxGuia)
 {
     int ndx=0;
 
-    if(cliente->sexo != 'M' && cliente->sexo != 'm' && cliente->sexo != 'F' && cliente->sexo != 'f')
+    cliente[ndxGuia].sexo = toupper(cliente[ndxGuia].sexo);
+
+    if(cliente[ndxGuia].sexo != 'M' && cliente[ndxGuia].sexo != 'F')
     {
         do
         {
             printf("\nOpção invalida, informe o sexo: (F)- Feminino ou (M)- Masculino. \n");
-            scanf("%c", &cliente->sexo);
+            scanf("%c", &cliente[ndxGuia].sexo);
+            cliente[ndxGuia].sexo = toupper(cliente[ndxGuia].sexo);
             setbuf(stdin, NULL);
         }
-        while(cliente->sexo != 'M' && cliente->sexo != 'm' && cliente->sexo != 'F' && cliente->sexo != 'f');
+        while(cliente[ndxGuia].sexo != 'M' && cliente[ndxGuia].sexo != 'F');
     }
 
-    printf("\nInforme o tipo sanguineo.\n");
+    /*printf("\nInforme o tipo sanguineo.\n");
     gets(cliente->TSangue);
 
     do
@@ -374,7 +409,7 @@ void validarSexo_Sangue(cadastro *cliente, int ndxGuia)
     }
     while(ndx < 3 || cliente->TSangue[ndx] != '\0');
 
-    /*if (cliente->TSangue != "A+" && cliente->TSangue != "A-" &&
+    if (cliente->TSangue != "A+" && cliente->TSangue != "A-" &&
         cliente->TSangue != "B+" && cliente->TSangue != "B-" &&
         cliente->TSangue != "AB+" && cliente->TSangue != "O+" &&
         cliente->TSangue != "AB-" && cliente->TSangue != "O-")
@@ -403,9 +438,9 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
     do
     {
 
-        if(cliente->nascimento[ndxV] != '/')
+        if(cliente[ndxGuia].nascimento[ndxV] != '/')
         {
-            recebe.dia[ndx] = cliente->nascimento[ndxV];
+            recebe.dia[ndx] = cliente[ndxGuia].nascimento[ndxV];
             ndx++;
             ndxV++;
         }
@@ -415,15 +450,15 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
             break;
         }
 
-        if(cliente->nascimento[ndxV] == '/')
+        if(cliente[ndxGuia].nascimento[ndxV] == '/')
         {
             recebe.dia[ndx++] = '\0';
             d = 1;
-            cliente->recebe.dia = atoi(recebe.dia);
+            cliente[ndxGuia].recebe.dia = atoi(recebe.dia);
             break;
         }
     }
-    while(cliente->nascimento[ndxV] != '/');
+    while(cliente[ndxGuia].nascimento[ndxV] != '/');
 
 
     ndxV++;
@@ -431,9 +466,9 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
 
     do
     {
-        if(cliente->nascimento[ndxV] != '/')
+        if(cliente[ndxGuia].nascimento[ndxV] != '/')
         {
-            recebe.mes[ndx] = cliente->nascimento[ndxV];
+            recebe.mes[ndx] = cliente[ndxGuia].nascimento[ndxV];
             ndx++;
             ndxV++;
         }
@@ -442,24 +477,24 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
             m = 0;
             break;
         }
-        if(cliente->nascimento[ndxV] == '/')
+        if(cliente[ndxGuia].nascimento[ndxV] == '/')
         {
             recebe.mes[ndx++] = '\0';
             m = 1;
-            cliente->recebe.mes = atoi(recebe.mes);
+            cliente[ndxGuia].recebe.mes = atoi(recebe.mes);
             break;
         }
     }
-    while(cliente->nascimento[ndxV] != '/');
+    while(cliente[ndxGuia].nascimento[ndxV] != '/');
 
     ndxV++;
     ndx = 0;
 
     do
     {
-        if(cliente->nascimento[ndxV] != '\0')
+        if(cliente[ndxGuia].nascimento[ndxV] != '\0')
         {
-            recebe.ano[ndx] = cliente->nascimento[ndxV];
+            recebe.ano[ndx] = cliente[ndxGuia].nascimento[ndxV];
             ndx++;
             ndxV++;
         }
@@ -468,31 +503,31 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
             a = 0;
             break;
         }
-        if(cliente->nascimento[ndxV] == '\0' && ndx >=2)
+        if(cliente[ndxGuia].nascimento[ndxV] == '\0' && ndx >=2)
         {
             recebe.ano[ndx] = '\0';
             a = 1;
-            cliente->recebe.ano = atoi(recebe.ano);
+            cliente[ndxGuia].recebe.ano = atoi(recebe.ano);
             break;
         }
     }
-    while(cliente->nascimento[ndxV] != '\0');
+    while(cliente[ndxGuia].nascimento[ndxV] != '\0');
 
     if(d != 1 || m != 1 || a != 1)
     {
         printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
-        gets(cliente->nascimento);
+        gets(cliente[ndxGuia].nascimento);
         quebraDataNasc(cliente, ndxGuia);
     }
 
     else
     {
-        cliente->confirma = validarNascimento(cliente, ndxGuia);
+        cliente[ndxGuia].confirma = validarNascimento(cliente, ndxGuia);
 
-        if(cliente->confirma != 1)
+        if(cliente[ndxGuia].confirma != 1)
         {
             printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
-            gets(cliente->nascimento);
+            gets(cliente[ndxGuia].nascimento);
             quebraDataNasc(cliente, ndxGuia);
         }
     }
@@ -504,108 +539,113 @@ int validarNascimento(cadastro *cliente, int ndxGuia)
 
     int d=1, m=1, a=1;
 
-    if((cliente->recebe.ano > 99 && cliente->recebe.ano < 1869) || cliente->recebe.ano > 2021)
+    if((cliente[ndxGuia].recebe.ano > 99 && cliente[ndxGuia].recebe.ano < 1869) || cliente[ndxGuia].recebe.ano > 2021)
     {
         a = 0;
     }
 
-    if(cliente->recebe.dia < 1 || cliente->recebe.dia > 31)
+    if(cliente[ndxGuia].recebe.dia < 1 || cliente[ndxGuia].recebe.dia > 31)
     {
         d = 0;
     }
 
-    switch(cliente->recebe.mes)
+    if(cliente[ndxGuia].recebe.mes > 12 || cliente[ndxGuia].recebe.mes < 1)
+    {
+        m = 0;
+    }
+
+    switch(cliente[ndxGuia].recebe.mes)
     {
     case 1:
-        if(cliente->recebe.dia>31)
-            m=0;
+        if(cliente[ndxGuia].recebe.dia>31)
+            m = 0;
         break;
     case 2:
-        if(cliente->recebe.ano % 4 == 0 && (cliente->recebe.ano % 400 == 0 || cliente->recebe.ano % 100 != 0))
+        if(cliente[ndxGuia].recebe.ano % 4 == 0 && (cliente[ndxGuia].recebe.ano % 400 == 0 || cliente[ndxGuia].recebe.ano % 100 != 0))
         {
-            if(cliente->recebe.dia > 29)
+            if(cliente[ndxGuia].recebe.dia > 29)
 
-                m=0;
+                m = 0;
             break;
         }
-        if(cliente->recebe.ano % 4 != 0)
+        if(cliente[ndxGuia].recebe.ano % 4 != 0)
         {
-            if(cliente->recebe.dia > 28)
+            if(cliente[ndxGuia].recebe.dia > 28)
             {
-                m=0;
+                m = 0;
                 break;
             }
         }
     case 3:
-        if(cliente->recebe.dia > 31)
+        if(cliente[ndxGuia].recebe.dia > 31)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 4:
-        if(cliente->recebe.dia > 30)
+        if(cliente[ndxGuia].recebe.dia > 30)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 5:
-        if(cliente->recebe.dia > 31)
+        if(cliente[ndxGuia].recebe.dia > 31)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 6:
-        if(cliente->recebe.dia > 30)
+        if(cliente[ndxGuia].recebe.dia > 30)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 7:
-        if(cliente->recebe.dia > 31)
+        if(cliente[ndxGuia].recebe.dia > 31)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 8:
-        if(cliente->recebe.dia > 30)
+        if(cliente[ndxGuia].recebe.dia > 30)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 9:
-        if(cliente->recebe.dia > 31)
+        if(cliente[ndxGuia].recebe.dia > 31)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 10:
-        if(cliente->recebe.dia > 30)
+        if(cliente[ndxGuia].recebe.dia > 30)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 11:
-        if(cliente->recebe.dia > 31)
+        if(cliente[ndxGuia].recebe.dia > 31)
         {
-            m=0;
+            m = 0;
             break;
         }
     case 12:
-        if(cliente->recebe.dia > 30)
+        if(cliente[ndxGuia].recebe.dia > 30)
         {
-            m=0;
+            m = 0;
             break;
         }
     }
 
     if(d == 1 && m == 1 && a == 1)
     {
-        return cliente->confirma = 1;
+        return cliente[ndxGuia].confirma = 1;
     }
 
     else
     {
-        return cliente->confirma = 0;
+        return cliente[ndxGuia].confirma = 0;
     }
 }
 
