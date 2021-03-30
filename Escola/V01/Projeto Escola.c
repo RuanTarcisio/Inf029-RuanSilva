@@ -17,8 +17,6 @@
 */
 
 
-/* CRIAR UMA FUNÇÃO GERAL QUE RECEBE ALUNO, MATERIA E PROFESSOR. */
-
 
 typedef struct
 {
@@ -33,7 +31,7 @@ typedef struct
     int matricula;
     int cpf;
     int confirma;
-    char nascimento[10];
+    char nascimento[11];
     char sexo;
     char TSangue[3];
     data recebe;
@@ -43,9 +41,10 @@ typedef struct
 typedef struct
 {
     char nome[NAME_NOMES];
-    int codigo;
+    char codigo[6];
     int semestre;
     char professor[NAME_NOMES];
+    int ndx;
 } disciplinas;
 
 
@@ -54,13 +53,14 @@ main()
     setlocale( LC_ALL, "" );
     void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
 
-
+    disciplinas materias[MAX_MATE];
     cadastro professor[MAX_PROF], aluno[MAX_ALUN];
-    professor[0].ndx = 0;
     aluno[0].ndx = 0;
     aluno[0].matricula = MATRICULA_ALUN;
+    professor[0].ndx = 0;
     professor[0].matricula = MATRICULA_PROF;
-    disciplinas materias[MAX_MATE];
+    materias[0].ndx = 0;
+
 
 
     RegistroGeral(aluno, professor, materias);
@@ -70,26 +70,17 @@ main()
 
 void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
 {
+
+    void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
     void Discente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
     void Docente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
     void Disciplina(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
 
     int escolha;
 
-    printf("       *********************** PROJETO ESCOLA ***********************\n\n");
+    printf("\n\n       *********************** PROJETO ESCOLA ***********************\n\n");
     printf("\nDigite: (1)- Alunos, (2)- Professores, (3)- Disciplinas ou (0)- p/ SAIR:  ");
     scanf("%d", &escolha);
-
-    if(escolha != 0 && escolha != 1 && escolha != 2 && escolha != 3)
-    {
-        do
-        {
-            printf("\nInvalido. Digite: (1)- Alunos, (2)- Professores, (3)- Disciplinas ou (0)- p/ SAIR:  ");
-            scanf("%d", &escolha);
-
-        }
-        while(escolha != 0 && escolha != 1 && escolha != 2 && escolha != 3);
-    }
 
     switch(escolha)
     {
@@ -105,6 +96,9 @@ void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
     case 3:
         Disciplina(Aluno, Professor, Materia);
         break;
+    default:
+        system("cls");
+        RegistroGeral(Aluno, Professor, Materia);
     }
 }
 
@@ -145,7 +139,6 @@ void Discente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
         Discente(Aluno, Professor, Materia);
         break;
     }
-
 }
 
 
@@ -186,23 +179,23 @@ void Docente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
         Docente(Aluno, Professor, Materia);
         break;
     }
-
 }
 
 
 void Disciplina(cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
 {
 
+    void cadastrar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x);
+    void Disciplina(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
     void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
-    void cadastrarMateria(disciplinas *Materia);
-    void listarMateria(disciplinas *Materia);
+    void listar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x);
     void excluirMateria(disciplinas *Materia);
 
     int escolha;
 
     system("cls");
     printf("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE MATERIAS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n");
-    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir ou (0)- p/sair.  ");
+    printf("\nEscolha: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir, (9)- voltar ou (0)- p/sair.  ");
     scanf("%d", &escolha);
     getchar();
 
@@ -212,12 +205,16 @@ void Disciplina(cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
         exit(0);
         break;
     case 1:
-        cadastrarMateria(Materia);
+        cadastrar(Aluno, Professor, Materia, 3);
         break;
     case 2:
+        listar(Aluno, Professor, Materia, 3);
         break;
+    case 9:
+        RegistroGeral(Aluno, Professor, Materia);
     default:
-         break;
+        Disciplina(Aluno, Professor, Materia);
+        break;
     }
 }
 
@@ -225,120 +222,240 @@ void Disciplina(cadastro *Aluno, cadastro *Professor, disciplinas *Materia)
 void cadastrar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x)
 {
 
+    void cadastrar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x);
+    void RegistroGeral (cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
+    void Discente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
+    void Docente(cadastro *Aluno, cadastro *Professor, disciplinas *Materia);
+    void validarDisciplina(disciplinas *Materia, int ndxGuia, int x);
     void validarNome(cadastro *cliente, int ndxGuia);
     void validarMatricula(cadastro *cliente, int ndxGuia);
     void validarCPF(cadastro *cliente, int ndxGuia);
     void validarSexo_Sangue(cadastro *cliente, int ndxGuia);
     void quebraDataNasc(cadastro *cliente, int ndxGuia);
 
-    int ndxGuia = Aluno[0].ndx, continua;
+    int ndxGuia;
+    char confirma, continua;
 
 
     if(x == 1)
     {
+        ndxGuia = Aluno[0].ndx;
         do
         {
-            setbuf(stdin, NULL);
-            printf("\n\nNome do aluno:\n");
+            validarMatricula(Aluno, ndxGuia);
+
+            printf("\nNome do aluno:  ");
             gets(Aluno[ndxGuia].nome);
             validarNome(Aluno, ndxGuia);
 
-            validarMatricula(Aluno, ndxGuia);
-
-            printf("\nCPF do aluno: \n");
-            scanf("%d", &Aluno[ndxGuia].cpf);
-            validarCPF(Aluno, ndxGuia);
-            setbuf(stdin, NULL);
-
-            printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
-            scanf("%c", &Aluno[ndxGuia].sexo);
-            setbuf(stdin, NULL);
-            validarSexo_Sangue(Aluno, ndxGuia);
-
-            printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
+            printf("\nInforme a data de nascimento dd/mm/aaaa:  ");
             gets(Aluno[ndxGuia].nascimento);
             quebraDataNasc(Aluno, ndxGuia);
 
-            ndxGuia++;
-            Aluno[0].ndx++;
+            printf("\nInforme o CPF:  ");
+            scanf("%d", &Aluno[ndxGuia].cpf);
+            validarCPF(Aluno, ndxGuia);
 
-            setbuf(stdin, NULL);
-            printf("\nDeseja cadastrar outro aluno?(1)- SIM ou (0)- NÃO.\n");
-            scanf("%d", &continua);
+            validarSexo_Sangue(Aluno, ndxGuia);
 
-            if(continua != 1 && continua != 0)
+            do
             {
-                do
-                {
-                    setbuf(stdin, NULL);
-                    printf("\nOpção invalida. Deseja cadastrar outro aluno?(1)- SIM ou (0)- NÃO.\n");
-                    scanf("%d", &continua);
+                system("cls");
+                printf("\nMATRICULA:  %d", Aluno[ndxGuia].matricula);
+                printf("\nNOME: %s", Aluno[ndxGuia].nome);
+                printf("\nDATA DE NASCIMENTO: %s", Aluno[ndxGuia].nascimento);
+                printf("\nCPF: %d", Aluno[ndxGuia].cpf);
+                printf("\nSEXO: %c", Aluno[ndxGuia].sexo);
+                printf("\n\nCONFIRMA OS DADOS? (S)- SIM, (N)- NÃO:   ");
+                scanf("%c", &confirma);
+                confirma = toupper(confirma);
+            }
+            while(confirma != 'S' && confirma != 'N');
 
-                }
-                while(continua != 1 && continua != 0);
+            if(confirma == 'N')
+            {
+                setbuf(stdin, NULL);
+                printf("\nInforme os dados novamente. \n");
+                cadastrar(Aluno, Professor, Materia, 1);
             }
 
+            else if(confirma == 'S')
+            {
+                ndxGuia++;
+                Professor[0].ndx++;
+            }
+
+            do
+            {
+                setbuf(stdin, NULL);
+                printf("\nDeseja cadastrar outro aluno?(S)- SIM ou (N)- NÃO:  ");
+                scanf("%c", &continua);
+                continua = toupper(continua);
+                setbuf(stdin, NULL);
+            }
+            while(continua != 'S' && continua != 'N');
+
         }
-        while(continua == 1 && ndxGuia < MAX_ALUN);
+        while(continua == 'S' && ndxGuia < MAX_ALUN);
+
+        continua = -1;
+
+        if(continua == -1)
+        {
+
+            do
+            {
+                setbuf(stdin, NULL);
+                printf("\n Digite (1)- menu anterior, (2)- menu inicial ou (0)- p/ Sair: ");
+                scanf("%c", &continua);
+            }
+            while(continua != '1' && continua != '2' && continua != '0');
+
+
+            switch(continua)
+            {
+            case '1':
+                Discente(Aluno, Professor, Materia);
+                break;
+            case '2':
+                RegistroGeral(Aluno, Professor, Materia);
+                break;
+            case '0':
+                printf("\n Encerrando o programa.\n");
+                exit(0);
+                break;
+            }
+        }
     }
 
     else if(x == 2)
     {
-
+        ndxGuia=Professor[0].ndx;
         do
         {
-            setbuf(stdin, NULL);
-            printf("\n\nNome do professor:\n");
+            validarMatricula(Professor, ndxGuia);
+
+            printf("\nNome do professor:  ");
             gets(Professor[ndxGuia].nome);
             validarNome(Professor, ndxGuia);
 
-            validarMatricula(Professor, ndxGuia);
-
-            printf("\n%d", Professor[ndxGuia].matricula);
-
-            printf("\nCPF do professor: \n");
-            scanf("%d", &Professor[ndxGuia].cpf);
-            validarCPF(Professor, ndxGuia);
-            setbuf(stdin, NULL);
-
-            printf("\nInforme o sexo: (F)- Feminino ou (M)- Masculino. \n");
-            scanf("%c", &Professor[ndxGuia].sexo);
-            setbuf(stdin, NULL);
-            validarSexo_Sangue(Professor, ndxGuia);
-
-            printf("\nInforme a data de nascimento: dd/mm/aaaa\n");
+            printf("\nInforme a data de nascimento dd/mm/aaaa:  ");
             gets(Professor[ndxGuia].nascimento);
             quebraDataNasc(Professor, ndxGuia);
 
-            ndxGuia++;
-            Professor[0].ndx++;
+            printf("\nInforme o CPF:  ");
+            scanf("%d", &Professor[ndxGuia].cpf);
+            validarCPF(Professor, ndxGuia);
 
-            setbuf(stdin, NULL);
-            printf("\nDeseja cadastrar outro professor?(1)- SIM ou (0)- NÃO.\n");
-            scanf("%d", &continua);
+            validarSexo_Sangue(Professor, ndxGuia);
 
-            if(continua != 1 && continua != 0)
+            do
             {
-                do
-                {
-                    setbuf(stdin, NULL);
-                    printf("\nInvalido. Deseja cadastrar outro professor?(1)- SIM ou (0)- NÃO.\n");
-                    scanf("%d", &continua);
+                system("cls");
+                printf("\nMATRICULA:  %d", Professor[ndxGuia].matricula);
+                printf("\nNOME: %s", Professor[ndxGuia].nome);
+                printf("\nDATA DE NASCIMENTO: %s", Professor[ndxGuia].nascimento);
+                printf("\nCPF: %d", Professor[ndxGuia].cpf);
+                printf("\nSEXO: %c", Professor[ndxGuia].sexo);
+                printf("\n\nCONFIRMA OS DADOS? (S)- SIM, (N)- NÃO:   ");
+                scanf("%c", &confirma);
+                confirma = toupper(confirma);
+            }
+            while(confirma != 'S' && confirma != 'N');
 
-                }
-                while(continua != 1 && continua != 0);
+            if(confirma == 'N')
+            {
+                setbuf(stdin, NULL);
+                printf("\nInforme os dados novamente. \n");
+                cadastrar(Aluno, Professor, Materia, 2);
             }
 
+            else if(confirma == 'S')
+            {
+                ndxGuia++;
+                Professor[0].ndx++;
+            }
+
+            do
+            {
+                setbuf(stdin, NULL);
+                printf("\nDeseja cadastrar outro professor?(S)- SIM ou (N)- NÃO:  ");
+                scanf("%c", &continua);
+                continua = toupper(continua);
+                setbuf(stdin, NULL);
+            }
+            while(continua != 'S' && continua != 'N');
+
+        }
+        while(continua == 'S' && ndxGuia < MAX_PROF);
+
+        continua = -1;
+
+        if(continua == -1)
+        {
+
+            do
+            {
+                setbuf(stdin, NULL);
+                printf("\n Digite (1)- menu anterior, (2)- menu inicial ou (0)- p/ Sair: ");
+                scanf("%c", &continua);
+            }
+            while(continua != '1' && continua != '2' && continua != '0');
+
+            switch(continua)
+            {
+            case '1':
+                Docente(Aluno, Professor, Materia);
+                break;
+            case '2':
+                RegistroGeral(Aluno, Professor, Materia);
+                break;
+            case '0':
+                printf("\n Encerrando o programa.\n");
+                exit(0);
+                break;
+            }
+        }
+    }
+
+    else if( x == 3 )
+    {
+        ndxGuia = Materia[0].ndx;
+        do
+        {
+            setbuf(stdin, NULL);
+            printf("\n\nNome da materia:\n");
+            gets(Materia[ndxGuia].nome);
+            validarDisciplina(Materia, ndxGuia, 1);
+
+            printf("\nCodigo da Materia: \n");
+            gets(Materia[ndxGuia].codigo);
+            validarDisciplina(Materia, ndxGuia, 2);
+            setbuf(stdin, NULL);
+
+            printf("\nInforme o semestre da matéria: \n");
+            scanf("%d", &Materia[ndxGuia].semestre);
+            setbuf(stdin, NULL);
+
+            setbuf(stdin, NULL);
+            printf("\nInforme o nome do professor: \n");
+            gets(Materia[ndxGuia].professor);
+            validarDisciplina(Materia, ndxGuia, 3);
+
+            ndxGuia++;
+            Materia[0].ndx++;
+
+            do
+            {
+                setbuf(stdin, NULL);
+                printf("\nDeseja cadastrar outra materia?(1)- SIM ou (0)- NÃO.\n");
+                scanf("%c", &continua);
+                setbuf(stdin, NULL);
+            }
+            while(continua != '1' && continua != '0');
         }
         while(continua == 1 && ndxGuia < MAX_PROF);
     }
-
-}
-
-
-void cadastrarMateria(disciplinas *Materia)
-{
-
 }
 
 
@@ -351,7 +468,7 @@ void listar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x)
 
 
     int escolha, ndx=0;
-
+    
 
     if( x == 1 )
     {
@@ -379,7 +496,6 @@ void listar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x)
                 {
                     printf("\n%d\n", Aluno[ndx].matricula);
                     ndx++;
-
                 }
                 while(ndx < Aluno[0].ndx);
             }
@@ -424,7 +540,6 @@ void listar(cadastro *Aluno, cadastro *Professor, disciplinas *Materia, int x)
                 getchar();
                 printf("\nOpção invalida. (1)- p/ matricula, (2)- p/ nome, (8) p/ menu anterior, (9)- p/ menu inicial ou (0)- p/ sair.\n\n");
                 scanf("%d", &escolha);
-
             }
             while(escolha != 1 && escolha != 2 && escolha != 8 && escolha != 9 && escolha != 0);
         }
@@ -501,7 +616,6 @@ void validarNome(cadastro *cliente, int ndxGuia)
 
             else
             {
-
                 printf("\n\nNome apresenta acento ou algum caractere especial.");
                 printf("\nInforme o nome sem acento.\n");
                 gets(cliente[ndxGuia].nome);
@@ -513,24 +627,135 @@ void validarNome(cadastro *cliente, int ndxGuia)
     }
 
     ndx=0;
-
+    
     do
     {
         cliente[ndxGuia].nome[ndx] = toupper(cliente[ndxGuia].nome[ndx]);
         ndx++;
-
     }
     while(ndx < strlen(cliente[ndxGuia].nome));
-
 }
 
 
 void validarMatricula(cadastro *cliente, int ndxGuia)
 {
-
-    if(ndxGuia >= 1)
+    if(ndxGuia < 1)
     {
-        cliente[ndxGuia].matricula = cliente[ndxGuia].matricula+1;
+        cliente[ndxGuia].matricula= MATRICULA_PROF+1;
+    }
+    else if(ndxGuia >= 1)
+    {
+        cliente[ndxGuia].matricula= cliente[ndxGuia-1].matricula+1;
+    }
+}
+
+
+void validarDisciplina(disciplinas *Materia, int ndxGuia, int x)
+{
+    void validarDisciplina(disciplinas *Materia, int ndxGuia, int x);
+
+    int ndx;
+
+    if( x == 1)
+    {
+        printf("Estou aq 1");
+        ndx = strlen(Materia[ndxGuia].nome);
+
+        if(ndx <= 5 || ndx > NAME_NOMES)
+        {
+            printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
+            printf("Informe o nome da materia:\n");
+            gets(Materia[ndxGuia].nome);
+            validarDisciplina(Materia, ndxGuia, 1);
+        }
+
+        else
+        {
+            ndx=0;
+            do
+            {
+                if(Materia[ndxGuia].nome[ndx] >= 97 && Materia[ndxGuia].nome[ndx] <= 122 || (Materia[ndxGuia].nome[ndx] >= 65 && Materia[ndxGuia].nome[ndx] <= 90)
+                        || (Materia[ndxGuia].nome[ndx] == ' ' && Materia[ndxGuia].nome[ndx+1] != ' '))
+                {
+                    ndx++;
+                }
+
+                else
+                {
+                    printf("\n\nNome apresenta acento ou algum caractere especial.");
+                    printf("\nInforme o nome sem acento.\n");
+                    gets(Materia[ndxGuia].nome);
+                    validarDisciplina(Materia, ndxGuia, 1);
+                }
+
+            }
+            while(ndx < strlen(Materia[ndxGuia].nome));
+        }
+
+        ndx=0;
+
+        do
+        {
+            Materia[ndxGuia].nome[ndx] = toupper(Materia[ndxGuia].nome[ndx]);
+            ndx++;
+
+        }
+        while(ndx < strlen(Materia[ndxGuia].nome));
+
+    }
+
+    else if(x == 2)
+    {
+
+    }
+
+    else if(x == 3)
+    {
+        printf("Estou aq 2");
+        ndx = strlen(Materia[ndxGuia].professor);
+
+        if(ndx <= 2 || ndx > 20)
+        {
+            printf("\nUltrapassou o limite de 20 caracteres ou tem apenas 2 letras.\n");
+            printf("Informe o nome do professor:\n");
+            gets(Materia[ndxGuia].professor);
+            validarDisciplina(Materia, ndxGuia, 3);
+        }
+
+        else
+        {
+            ndx=0;
+            do
+            {
+                if(Materia[ndxGuia].professor[ndx] >= 97 && Materia[ndxGuia].professor[ndx] <= 122 ||
+                        (Materia[ndxGuia].professor[ndx] >= 65 && Materia[ndxGuia].professor[ndx] <= 90)||
+                        (Materia[ndxGuia].professor[ndx] == ' ' && Materia[ndxGuia].professor[ndx+1] != ' '))
+                {
+                    ndx++;
+                }
+
+                else
+                {
+
+                    printf("\n\nNome apresenta acento ou algum caractere especial.");
+                    printf("\nInforme o nome sem acento.\n");
+                    gets(Materia[ndxGuia].professor);
+                    validarDisciplina(Materia, ndxGuia, 3);
+                }
+
+            }
+            while(ndx < strlen(Materia[ndxGuia].professor));
+        }
+
+        ndx=0;
+
+        do
+        {
+            Materia[ndxGuia].professor[ndx] = toupper(Materia[ndxGuia].professor[ndx]);
+            ndx++;
+
+        }
+        while(ndx < strlen(Materia[ndxGuia].professor));
     }
 }
 
@@ -539,16 +764,20 @@ void validarSexo_Sangue(cadastro *cliente, int ndxGuia)
 {
     int ndx=0;
 
+    setbuf(stdin, NULL);
+    printf("\nInforme o sexo, (M)- MASCULINO ou (F)- FEMININO:  ");
+    scanf("%c", &cliente[ndxGuia].sexo);
+
     cliente[ndxGuia].sexo = toupper(cliente[ndxGuia].sexo);
 
     if(cliente[ndxGuia].sexo != 'M' && cliente[ndxGuia].sexo != 'F')
     {
         do
         {
-            printf("\nOpção invalida, informe o sexo: (F)- Feminino ou (M)- Masculino. \n");
+            setbuf(stdin, NULL);
+            printf("\nOpção invalida, informe o sexo: (F)- Feminino ou (M)- Masculino:  ");
             scanf("%c", &cliente[ndxGuia].sexo);
             cliente[ndxGuia].sexo = toupper(cliente[ndxGuia].sexo);
-            setbuf(stdin, NULL);
         }
         while(cliente[ndxGuia].sexo != 'M' && cliente[ndxGuia].sexo != 'F');
     }
@@ -613,6 +842,7 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
         }
     }
     while(cliente[ndxGuia].nascimento[ndxV] != '/');
+
 
     ndxV++;
     ndx=0;
@@ -679,7 +909,7 @@ void quebraDataNasc(cadastro *cliente, int ndxGuia)
 
         if(cliente[ndxGuia].confirma != 1)
         {
-            printf("\n Data informa é invalida, informe novamente: dd/mm/aaaa.\n");
+            printf("\n Data informa é invalida, informe novamente dd/mm/aaaa:  ");
             gets(cliente[ndxGuia].nascimento);
             quebraDataNasc(cliente, ndxGuia);
         }
@@ -783,8 +1013,9 @@ int validarNascimento(cadastro *cliente, int ndxGuia)
         {
             m = 0;
             break;
-    default:
-         break;
+        default:
+            m = 0;
+            break;
         }
     }
 
