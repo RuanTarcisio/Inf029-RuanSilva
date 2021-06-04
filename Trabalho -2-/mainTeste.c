@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "RuanSilva-2018216035-T2.c"
+#include "RuanSilva-2018216035-T2.h"
 
 
 void show_log(char *str);
