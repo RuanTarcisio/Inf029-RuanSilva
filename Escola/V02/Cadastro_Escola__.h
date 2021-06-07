@@ -3,8 +3,8 @@
 
 #define TAM_NASC 10
 #define MAX_NAME 50
-#define MATRICULA_ALUN 20211000
-#define MATRICULA_PROF 2021100
+#define MATRICULA_ALUN 20211001
+#define MATRICULA_PROF 2021101
 
 typedef struct
 {
@@ -19,22 +19,19 @@ typedef struct
     char cpf[12];
     char nascimento[11];
     char sexo;
-    date D_M_A;
-    /*int confirma;
-    char TSangue[3];
-    data recebe;
-    int ndx;
-    data date;*/
+    int matricula;
+    /*date D_M_A;*/
 } cadastro;
 
 typedef struct Lista
 {
-    int matricula;
     cadastro dados;
     struct Lista *prox;
     int tamanho;
     int posicao;
 } Node;
+Node* Professores;
+Node* Alunos;
 
 
 typedef struct
@@ -58,18 +55,18 @@ typedef struct Lista_Mat
 
 Node *criar_Lista();
 
-
 void menuGeral();
 void menuAlunos();
 void menuDisciplinas();
 void menuProfessores();
+void menuCadastro();
 
 
-void Display(Node *Geral);
-int Push(Node **Geral, cadastro *Pessoas);
-int Insert(Node **Geral, int select);  /* NA FUNÇÂO DETERMINAR COMO QUER INSERIR, P/ POSIÇÃO, P/ NOME, MATRICULA... etc */
+void Display(Node *Geral, int opcao);
+int Push(Node **Geral, cadastro *Pessoas, int opcao);
+int Insert(Node **Geral, int select);
 int Pop(Node **Geral, int select);
-int Remove(Node **Geral, int select); /* NA FUNÇÂO DETERMINAR COMO QUER EXCLUIR, P/ POSIÇÃO, P/ NOME, MATRICULA... etc */
+int Remove(Node **Geral, int select);
 int Sort(Node **Geral);
 
 cadastro RecebeDadosPessoais();
