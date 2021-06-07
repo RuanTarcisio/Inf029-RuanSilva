@@ -11,45 +11,48 @@
 cadastro RecebeDadosPessoais()
 {
     cadastro Dados;
-
-    setbuf(stdin, NULL);
+    int ndx=0;
 
     printf("\n Informe o nome: ");
-    gets(&Dados.nome);
+    setbuf(stdin, NULL);
+    fgets(Dados.nome, MAX_NAME,stdin);
     scanf("");
     setbuf(stdin, NULL);
     scanf("");
     setbuf(stdin, NULL);
     printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
     scanf("");
-    scanf("%s", &Dados.nascimento);
+    scanf("%s", Dados.nascimento);
     setbuf(stdin, NULL);
     printf("\n Informe o CPF: ");
-    gets(&Dados.cpf);
+    gets(Dados.cpf);
     setbuf(stdin, NULL);
     printf("\n Informe o sexo (F/M): ");
     gets(&Dados.sexo);
 
+    do
+    {
+        Dados.nome[ndx] = toupper(Dados.nome[ndx]);
+        ndx++;
+    }
+    while(ndx < strlen(Dados.nome));
+
+    Dados.sexo = toupper(Dados.sexo);
 
     Dados = validar(&Dados);
-
-
 
     return Dados;
 }
 
 
-cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
+cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÃ‡Ã•ES E RETORNAR*/
 {
-    int a, b, c, d;
-
+    int a, b, c, d, confirma, ndx=0 ;
 
     a = validarNome(Dados->nome);
     b = validarData(&Dados->nascimento);
     c = validarCPF(&Dados->cpf);
     d = validarSexo(&Dados->sexo);
-
-    printf("\n  %d   %d   %d   %d",a, b, c, d);
 
     do
     {
@@ -58,6 +61,15 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             setbuf(stdin, NULL);
             printf("\n Informe o nome: ");
             gets(Dados->nome);
+
+            do
+            {
+                Dados->nome[ndx] = toupper(Dados->nome[ndx]);
+                ndx++;
+
+            }
+            while(ndx < strlen(Dados->nome));
+
             a = validarNome(&Dados->nome);
         }
         if (b != 1)
@@ -67,14 +79,13 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
             gets(Dados->nascimento);
             b = validarData(&Dados->nascimento);
-            printf("%d ",b);
         }
         if (c != 1)
         {
             printf("\nCPF Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o CPF: ");
-            gets(Dados->cpf);
+            scanf("%s", Dados->cpf);
             c = validarCPF(&Dados->cpf);
         }
         if (d != 1)
@@ -84,12 +95,39 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             setbuf(stdin, NULL);
             printf("\n Informe o sexo (F/M): ");
             gets(&Dados->sexo);
+            Dados->sexo = toupper(Dados->sexo);
             d = validarSexo(&Dados->sexo);
         }
     }
     while(a != 1 || b != 1 || c != 1 || d != 1);
 
-    return *Dados;
+    system("cls");
+    printf("\n\n Confirmas os dados: \n\n");
+    puts(Dados->nome);
+    printf("\n");
+    puts(Dados->nascimento);
+    printf("\n");
+    puts(Dados->cpf);
+    printf("\n");
+    printf("%c\n", Dados->sexo);
+    printf("\nDigite, (1)- SIM, (2)- NAO ou (0)- SAIR\n");
+    scanf("%d", &confirma);
+
+    switch(confirma)
+    {
+    case 1:
+        printf("\nRealizado com sucesso.");
+        return *Dados;
+    case 2:
+        RecebeDadosPessoais();
+        break;
+    case 0:
+        exit(0);
+        break;
+    default:
+        validar(&Dados);
+        break;
+    }
 }
 
 int validarData(char *data)
@@ -100,7 +138,6 @@ int validarData(char *data)
         char mes[2];
         char ano[4];
     } nascimento;
-
 
     nascimento recebe;
     date guia;
@@ -187,10 +224,8 @@ int validarData(char *data)
 }
 
 
-
 int validarNascimento(date *guia)
 {
-
     if((guia->ano > 99 && guia->ano < 1869) || guia->ano > 2021)
     {
         return 0;
@@ -278,142 +313,40 @@ int validarNascimento(date *guia)
 
 int validarCPF(char *cpf)
 {
+    int ndx, validador, validador2, aux[11];
 
-	if(strlen(cpf)  > 11) {
-		return 0;
-	} else {
-		double cpfInt = atof(cpf);
+    if(strlen(cpf) != 11)
+    {
+        return 0;
+        printf("\n\n AQ 0");
+    }
+    else if(cpf[1] == cpf[0] && cpf[2] == cpf[0] && cpf[3] == cpf[0] && cpf[4] == cpf[0]
+            && cpf[5] == cpf[0] && cpf[6] == cpf[0] && cpf[7] == cpf[0] && cpf[8] == cpf[0]
+            && cpf[9] == cpf[0] && cpf[10] == cpf[0])
+    {
+        return 0;
+    }
 
-		double primeiroDigitoF = 0;
-		int primeiroDigito = 0;
-		int segundoDigito = 0;
-		int terceiroDigito = 0;
-		int quartoDigito = 0;
-		int quintoDigito = 0;
-		int sextoDigito = 0;
-		int setimoDigito = 0;
-		int oitavoDigito = 0;
-		int nonoDigito = 0;
+    else
+        for(ndx = 0; ndx < strlen(cpf); ndx++)
+        {
+            if(cpf[ndx] == '0')
+                aux[ndx] = 0;
+            else
+                aux[ndx] = cpf[ndx] - '0';
+        }
 
-		/*/ Validando primeiro digito vericador  */
+    validador = (aux[0]*10 + (aux[1]*9) + (aux[2]*8) + (aux[3]*7) + (aux[4]*6) + (aux[5]*5) + (aux[6]*4) + (aux[7]*3) + (aux[8]* 2)) ;
+    validador = validador * 10 % 11;
+    validador2 = (aux[0]*11 + (aux[1]*10) + (aux[2]*9) + (aux[3]*8) + (aux[4]*7) + (aux[5]*6) + (aux[6]*5) + (aux[7]*4) + (aux[8]*3)+ (aux[9]*2)) ;
+    validador2 = validador2 * 10 % 11;
 
-		int multiDigito1 = 0;
-		int multiDigito2 = 0;
-		int multiDigito3 = 0;
-		int multiDigito4 = 0;
-		int multiDigito5 = 0;
-		int multiDigito6 = 0;
-		int multiDigito7 = 0;
-		int multiDigito8 = 0;
-		int multiDigito9 = 0;
-
-		int somaDigitos = 0;
-		int restoDigitos = 0;
-		int subDigitos = 0;
-
-		int primeiroDigitoVerificador = 0;
-
-		primeiroDigitoF = cpfInt / 10000000000;
-		primeiroDigito = primeiroDigitoF;
-		segundoDigito = cpfInt / 1000000000;
-		segundoDigito = segundoDigito % 10;
-		terceiroDigito = cpfInt / 100000000;
-		terceiroDigito = terceiroDigito % 10;
-		quartoDigito = cpfInt / 10000000;
-		quartoDigito = quartoDigito % 10;
-		quintoDigito = cpfInt / 1000000;
-		quintoDigito = quintoDigito % 10;
-		sextoDigito = cpfInt / 100000;
-		sextoDigito = sextoDigito % 10;
-		setimoDigito = cpfInt / 10000;
-		setimoDigito = setimoDigito % 10;
-		oitavoDigito = cpfInt / 1000;
-		oitavoDigito = oitavoDigito % 10;
-		nonoDigito = cpfInt / 100;
-		nonoDigito = nonoDigito % 10;
-
-		/*/	Pegando últimos digitos informados  */
-
-		long long int decimoDigito  =0;
-		long long int decimo1Digito = 0;
-
-		decimoDigito = cpfInt / 10;
-		decimoDigito = decimoDigito % 10;
-		decimo1Digito = cpfInt;
-		decimo1Digito = decimo1Digito % 10;
-
-		multiDigito1 = primeiroDigito * 10;
-		multiDigito2 = segundoDigito  * 9;
-		multiDigito3 = terceiroDigito * 8;
-		multiDigito4 = quartoDigito   * 7;
-		multiDigito5 = quintoDigito   * 6;
-		multiDigito6 = sextoDigito    * 5;
-		multiDigito7 = setimoDigito   * 4;
-		multiDigito8 = oitavoDigito   * 3;
-		multiDigito9 = nonoDigito     * 2;
-
-		somaDigitos = (multiDigito1 + multiDigito2 + multiDigito3 + multiDigito4
-					    + multiDigito5 + multiDigito6 + multiDigito7 + multiDigito8 + multiDigito9);
-
-		restoDigitos = somaDigitos % 11;
-
-		subDigitos = 11 - restoDigitos;
-
-		if(subDigitos >= 10) {
-			primeiroDigitoVerificador = 0;
-		} else {
-			primeiroDigitoVerificador = subDigitos;
-		}
-
-		/*/ Validando segundo digito verifcador   */
-
-		int multi2Digito1 = 0;
-		int multi2Digito2 = 0;
-		int multi2Digito3 = 0;
-		int multi2Digito4 = 0;
-		int multi2Digito5 = 0;
-		int multi2Digito6 = 0;
-		int multi2Digito7 = 0;
-		int multi2Digito8 = 0;
-		int multi2Digito9 = 0;
-		int multi2Digito10 = 0;
-
-		int soma2Digitos = 0;
-		int resto2Digitos = 0;
-		int sub2Digitos = 0;
-
-		int segundoDigitoVerificador = 0;
-
-		multi2Digito1 = primeiroDigito * 11;
-		multi2Digito2 = segundoDigito  * 10;
-		multi2Digito3 = terceiroDigito * 9;
-		multi2Digito4 = quartoDigito   * 8;
-		multi2Digito5 = quintoDigito   * 7;
-		multi2Digito6 = sextoDigito    * 6;
-		multi2Digito7 = setimoDigito   * 5;
-		multi2Digito8 = oitavoDigito   * 4;
-		multi2Digito9 = nonoDigito     * 3;
-		multi2Digito10 = primeiroDigitoVerificador * 2;
-
-		soma2Digitos = (multi2Digito1 + multi2Digito2 + multi2Digito3 + multi2Digito4 + multi2Digito5
-					    + multi2Digito6 + multi2Digito7 + multi2Digito8 + multi2Digito9 + multi2Digito10);
-
-		resto2Digitos = soma2Digitos % 11;
-
-		sub2Digitos = 11 - resto2Digitos;
-
-		if(sub2Digitos >= 10) {
-			segundoDigitoVerificador = 0;
-		} else {
-			segundoDigitoVerificador = sub2Digitos;
-		}
-
-		if(decimoDigito == primeiroDigitoVerificador && decimo1Digito == segundoDigitoVerificador) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
+    if(aux[9] == validador && aux[10] == validador2)
+    {
+        return 1;
+    }
+    else
+        return 0;
 }
 
 int validarNome(char *nome)
@@ -421,6 +354,8 @@ int validarNome(char *nome)
     int ndx=0;
 
     ndx = strlen(nome);
+
+    nome[ndx-1] = '\0';
 
     if(ndx <= 2 || ndx > MAX_NAME)
     {
@@ -438,7 +373,6 @@ int validarNome(char *nome)
             {
                 ndx++;
             }
-
             else
             {
                 printf("\n\nNome apresenta acento ou algum caractere especial.");
@@ -463,14 +397,79 @@ int validarSexo(char *sexo)
         return 0;
     }
 
-    if(sexo[0] == 'F' || sexo[0] == 'f' || sexo[0] == 'M' || sexo[0] == 'm'){
+    if(sexo[0] == 'F' || sexo[0] == 'f' || sexo[0] == 'M' || sexo[0] == 'm')
+    {
         return 1;
     }
     else
         return 0;
 }
 
-int Push(Node** Geral, cadastro *Pessoas)
+int Push(Node** Geral, cadastro *Pessoas, int opcao)
 {
-    Node *novo = (Node*) malloc (sizeof(Node));
+    Node *novo = (Node*) malloc(sizeof(Node));
+    novo->dados = *Pessoas;
+
+    if(*Geral == NULL)
+    {
+        novo->prox = NULL;
+        if(opcao == 1)
+        {
+            novo->dados.matricula = MATRICULA_ALUN;
+        }
+        else
+            novo->dados.matricula = MATRICULA_PROF;
+        *Geral = novo;
+        (*Geral)->tamanho = 1;
+        (*Geral)->posicao = 1;
+    }
+    else
+    {
+        novo->prox = *Geral;
+        if(opcao == 1)
+        {
+            novo->dados.matricula = MATRICULA_ALUN + (*Geral)->posicao;
+        }
+        else
+            novo->dados.matricula = MATRICULA_PROF + (*Geral)->posicao;
+        *Geral = novo;
+        (*Geral)->tamanho ++;
+        (*Geral)->posicao ++;
+    }
+}
+
+void Display(Node *Geral, int opcao)
+{
+    Node *ref = Geral;
+
+    if(ref == NULL)
+    {
+        if(opcao == 1)
+        {
+            printf("\nSem Alunos Cadastrados.");
+            getchar();
+            menuAlunos();
+        }
+        else
+            printf("\nSem Professores Cadastrados.");
+        getchar();
+        menuProfessores();
+    }
+
+    else
+    {
+        do
+        {
+            printf("\n\n%s ", ref->dados.nome);
+            printf("\n\n%d ", ref->dados.matricula);
+            printf("\n\n%s ", ref->dados.nascimento);
+            printf("\n\n%s ", ref->dados.cpf);
+            printf("\n\n%c ", ref->dados.sexo);
+            printf("\n ---------------------------------------------------");
+            ref = ref->prox;
+        }
+        while(ref != NULL);
+    }
+    printf("\n\n");
+    free(ref);
 }
