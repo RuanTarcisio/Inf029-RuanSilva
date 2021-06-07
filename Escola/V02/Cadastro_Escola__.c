@@ -8,11 +8,6 @@
 #include "Cadastro_Escola__.h"
 
 
-
-
-
-
-
 cadastro RecebeDadosPessoais()
 {
     cadastro Dados;
