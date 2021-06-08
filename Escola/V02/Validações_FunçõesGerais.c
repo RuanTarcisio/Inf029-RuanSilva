@@ -11,33 +11,20 @@
 cadastro RecebeDadosPessoais()
 {
     cadastro Dados;
-    int ndx=0;
 
     printf("\n Informe o nome: ");
     setbuf(stdin, NULL);
-    fgets(Dados.nome, MAX_NAME,stdin);
-    scanf("");
+    gets(Dados.nome);
     setbuf(stdin, NULL);
-    scanf("");
-    setbuf(stdin, NULL);
-    printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
-    scanf("");
-    scanf("%s", Dados.nascimento);
+    printf("\n Informe a data de nascimento dd/mm/aaaa: ");
+    fgets(Dados.nascimento, TAM_NASC, stdin);
     setbuf(stdin, NULL);
     printf("\n Informe o CPF: ");
     gets(Dados.cpf);
     setbuf(stdin, NULL);
     printf("\n Informe o sexo (F/M): ");
-    gets(&Dados.sexo);
-
-    do
-    {
-        Dados.nome[ndx] = toupper(Dados.nome[ndx]);
-        ndx++;
-    }
-    while(ndx < strlen(Dados.nome));
-
-    Dados.sexo = toupper(Dados.sexo);
+    gets(Dados.sexo);
+    setbuf(stdin, NULL);
 
     Dados = validar(&Dados);
 
@@ -49,44 +36,41 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
     int a, b, c, d, confirma, ndx=0 ;
 
+
+date *rcbAniversario = &Dados->aniversario;
+char *_data = Dados->nascimento;
+
     a = validarNome(Dados->nome);
-    b = validarData(&Dados->nascimento);
-    c = validarCPF(&Dados->cpf);
-    d = validarSexo(&Dados->sexo);
+    b = validarData(Dados->nascimento);
+    c = validarCPF(Dados->cpf);
+    d = validarSexo(Dados->sexo);
 
     do
     {
         if (a != 1)
         {
+            printf("\nNome Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o nome: ");
             gets(Dados->nome);
-
-            do
-            {
-                Dados->nome[ndx] = toupper(Dados->nome[ndx]);
-                ndx++;
-
-            }
-            while(ndx < strlen(Dados->nome));
-
-            a = validarNome(&Dados->nome);
+            a = validarNome(Dados->nome);
         }
         if (b != 1)
         {
             printf("\nData Invalida.");
             setbuf(stdin, NULL);
             printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
+            setbuf(stdin, NULL);
             gets(Dados->nascimento);
-            b = validarData(&Dados->nascimento);
+            b = validarData(Dados->nascimento);
         }
         if (c != 1)
         {
             printf("\nCPF Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o CPF: ");
-            scanf("%s", Dados->cpf);
-            c = validarCPF(&Dados->cpf);
+            gets(Dados->cpf);
+            c = validarCPF(Dados->cpf);
         }
         if (d != 1)
         {
@@ -94,12 +78,21 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             printf("\nSexo Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o sexo (F/M): ");
-            gets(&Dados->sexo);
-            Dados->sexo = toupper(Dados->sexo);
-            d = validarSexo(&Dados->sexo);
+            gets(Dados->sexo);
+            d = validarSexo(Dados->sexo);
         }
     }
     while(a != 1 || b != 1 || c != 1 || d != 1);
+
+    ndx=0;
+    do
+    {
+        Dados->nome[ndx] = toupper(Dados->nome[ndx]);
+        ndx++;
+    }
+    while(ndx < strlen(Dados->nome));
+    Dados->sexo[0] = toupper(Dados->sexo[0]);
+    _Aniversario(_data, rcbAniversario);
 
     system("cls");
     printf("\n\n Confirmas os dados: \n\n");
@@ -109,26 +102,30 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
     printf("\n");
     puts(Dados->cpf);
     printf("\n");
-    printf("%c\n", Dados->sexo);
+    puts(Dados->sexo);
     printf("\nDigite, (1)- SIM, (2)- NAO ou (0)- SAIR\n");
     scanf("%d", &confirma);
 
     switch(confirma)
     {
     case 1:
-        printf("\nRealizado com sucesso.");
+        system("cls");
+        printf("\nCadastro realizado com sucesso.\n");
         return *Dados;
     case 2:
         RecebeDadosPessoais();
         break;
     case 0:
+        printf("\nEncerrando o programa.");
         exit(0);
         break;
     default:
-        validar(&Dados);
+        validar(Dados);
         break;
     }
+    return *Dados;
 }
+
 
 int validarData(char *data)
 {
@@ -139,21 +136,19 @@ int validarData(char *data)
         char ano[4];
     } nascimento;
 
-    nascimento recebe;
-    date guia;
+    nascimento *recebe = malloc(sizeof(nascimento));
+    date *guia = malloc(sizeof(date));
 
     int validador;
 
-    int ndx=0, ndxV=0;
-    guia.ano = 0;
-    guia.mes = 0;
-    guia.dia = 0;
+    int ndx=0, ndxV=0, ndxB=0;
+
 
     do
     {
         if(data[ndxV] != '/')
         {
-            recebe.dia[ndx] = data[ndxV];
+            recebe->dia[ndx] = data[ndxV];
             ndx++;
             ndxV++;
         }
@@ -164,8 +159,9 @@ int validarData(char *data)
 
         if(data[ndxV] == '/')
         {
-            recebe.dia[ndx++] = '\0';
-            guia.dia = atoi(recebe.dia);
+            ndxB++;
+            recebe->dia[ndx++] = '\0';
+            guia->dia = atoi(recebe->dia);
             break;
         }
     }
@@ -178,7 +174,7 @@ int validarData(char *data)
     {
         if(data[ndxV] != '/')
         {
-            recebe.mes[ndx] = data[ndxV];
+            recebe->mes[ndx] = data[ndxV];
             ndx++;
             ndxV++;
         }
@@ -188,8 +184,9 @@ int validarData(char *data)
         }
         if(data[ndxV] == '/')
         {
-            recebe.mes[ndx++] = '\0';
-            guia.mes = atoi(recebe.mes);
+            ndxB++;
+            recebe->mes[ndx++] = '\0';
+            guia->mes = atoi(recebe->mes);
             break;
         }
     }
@@ -200,9 +197,13 @@ int validarData(char *data)
 
     do
     {
+        if(data[ndxV] == '/')
+        {
+            ndxB++;
+        }
         if(data[ndxV] != '\0')
         {
-            recebe.ano[ndx] = data[ndxV];
+            recebe->ano[ndx] = data[ndxV];
             ndx++;
             ndxV++;
         }
@@ -212,14 +213,32 @@ int validarData(char *data)
         }
         if(data[ndxV] == '\0' && ndx >=2)
         {
-            recebe.ano[ndx] = '\0';
-            guia.ano = atoi(recebe.ano);
+            recebe->ano[ndx] = '\0';
+            guia->ano = atoi(recebe->ano);
             break;
         }
     }
     while(data[ndxV] != '\0');
 
+    ndx = 0;
+
+    do
+    {
+        if((data[ndx] > 47 && data[ndx] < 58) || data[ndx] == '/')
+        {
+            ndx++;
+        }
+        else
+            return 0;
+    }
+    while(ndx < strlen(data) && data[ndx] != '\n');
+
+    if(ndxB > 2)
+    {
+        return 0;
+    }
     validador = validarNascimento(guia);
+    free(recebe);
     return validador;
 }
 
@@ -313,12 +332,11 @@ int validarNascimento(date *guia)
 
 int validarCPF(char *cpf)
 {
-    int ndx, validador, validador2, aux[11];
+    int ndx, validador1, validador2, aux[11];
 
     if(strlen(cpf) != 11)
     {
         return 0;
-        printf("\n\n AQ 0");
     }
     else if(cpf[1] == cpf[0] && cpf[2] == cpf[0] && cpf[3] == cpf[0] && cpf[4] == cpf[0]
             && cpf[5] == cpf[0] && cpf[6] == cpf[0] && cpf[7] == cpf[0] && cpf[8] == cpf[0]
@@ -326,7 +344,6 @@ int validarCPF(char *cpf)
     {
         return 0;
     }
-
     else
         for(ndx = 0; ndx < strlen(cpf); ndx++)
         {
@@ -336,12 +353,12 @@ int validarCPF(char *cpf)
                 aux[ndx] = cpf[ndx] - '0';
         }
 
-    validador = (aux[0]*10 + (aux[1]*9) + (aux[2]*8) + (aux[3]*7) + (aux[4]*6) + (aux[5]*5) + (aux[6]*4) + (aux[7]*3) + (aux[8]* 2)) ;
-    validador = validador * 10 % 11;
+    validador1 = (aux[0]*10 + (aux[1]*9) + (aux[2]*8) + (aux[3]*7) + (aux[4]*6) + (aux[5]*5) + (aux[6]*4) + (aux[7]*3) + (aux[8]* 2)) ;
+    validador1 = validador1 * 10 % 11;
     validador2 = (aux[0]*11 + (aux[1]*10) + (aux[2]*9) + (aux[3]*8) + (aux[4]*7) + (aux[5]*6) + (aux[6]*5) + (aux[7]*4) + (aux[8]*3)+ (aux[9]*2)) ;
     validador2 = validador2 * 10 % 11;
 
-    if(aux[9] == validador && aux[10] == validador2)
+    if(aux[9] == validador1 && aux[10] == validador2)
     {
         return 1;
     }
@@ -349,18 +366,15 @@ int validarCPF(char *cpf)
         return 0;
 }
 
+
 int validarNome(char *nome)
 {
     int ndx=0;
 
     ndx = strlen(nome);
 
-    nome[ndx-1] = '\0';
-
-    if(ndx <= 2 || ndx > MAX_NAME)
+    if(ndx < 3 || ndx > MAX_NAME)
     {
-        printf("\nUltrapassou o limite de 50 caracteres ou tem apenas 2 letras.\n");
-        printf("Informe o nome:\n");
         return 0;
     }
     else
@@ -368,7 +382,7 @@ int validarNome(char *nome)
         ndx=0;
         do
         {
-            if(nome[ndx] >= 97 && nome[ndx] <= 122 || (nome[ndx] >= 65 && nome[ndx] <= 90)
+            if((nome[ndx] >= 97 && nome[ndx] <= 122) || (nome[ndx] >= 65 && nome[ndx] <= 90)
                     || (nome[ndx] == ' ' && nome[ndx+1] != ' '))
             {
                 ndx++;
@@ -385,6 +399,7 @@ int validarNome(char *nome)
     }
     return 1;
 }
+
 
 int validarSexo(char *sexo)
 {
@@ -405,71 +420,78 @@ int validarSexo(char *sexo)
         return 0;
 }
 
-int Push(Node** Geral, cadastro *Pessoas, int opcao)
+void _Aniversario(char *data, date *Anv)
 {
-    Node *novo = (Node*) malloc(sizeof(Node));
-    novo->dados = *Pessoas;
 
-    if(*Geral == NULL)
+    typedef struct
     {
-        novo->prox = NULL;
-        if(opcao == 1)
-        {
-            novo->dados.matricula = MATRICULA_ALUN;
-        }
-        else
-            novo->dados.matricula = MATRICULA_PROF;
-        *Geral = novo;
-        (*Geral)->tamanho = 1;
-        (*Geral)->posicao = 1;
-    }
-    else
-    {
-        novo->prox = *Geral;
-        if(opcao == 1)
-        {
-            novo->dados.matricula = MATRICULA_ALUN + (*Geral)->posicao;
-        }
-        else
-            novo->dados.matricula = MATRICULA_PROF + (*Geral)->posicao;
-        *Geral = novo;
-        (*Geral)->tamanho ++;
-        (*Geral)->posicao ++;
-    }
-}
+        char dia[2];
+        char mes[2];
+        char ano[4];
+    } nascimento;
 
-void Display(Node *Geral, int opcao)
-{
-    Node *ref = Geral;
+    nascimento *recebe = (nascimento*) malloc (sizeof(nascimento));
 
-    if(ref == NULL)
-    {
-        if(opcao == 1)
-        {
-            printf("\nSem Alunos Cadastrados.");
-            getchar();
-            menuAlunos();
-        }
-        else
-            printf("\nSem Professores Cadastrados.");
-        getchar();
-        menuProfessores();
-    }
+    int ndx=0, ndxV=0, ndxB=0;
 
-    else
+    do
     {
-        do
+        if(data[ndxV] != '/')
         {
-            printf("\n\n%s ", ref->dados.nome);
-            printf("\n\n%d ", ref->dados.matricula);
-            printf("\n\n%s ", ref->dados.nascimento);
-            printf("\n\n%s ", ref->dados.cpf);
-            printf("\n\n%c ", ref->dados.sexo);
-            printf("\n ---------------------------------------------------");
-            ref = ref->prox;
+            recebe->dia[ndx] = data[ndxV];
+            ndx++;
+            ndxV++;
         }
-        while(ref != NULL);
+        if(data[ndxV] == '/')
+        {
+            ndxB++;
+            recebe->dia[ndx++] = '\0';
+            Anv->dia = atoi(recebe->dia);
+            break;
+        }
     }
-    printf("\n\n");
-    free(ref);
+    while(data[ndxV] != '/');
+
+    ndxV++;
+    ndx=0;
+
+    do
+    {
+        if(data[ndxV] != '/')
+        {
+            recebe->mes[ndx] = data[ndxV];
+            ndx++;
+            ndxV++;
+        }
+        if(data[ndxV] == '/')
+        {
+            ndxB++;
+            recebe->mes[ndx++] = '\0';
+            Anv->mes = atoi(recebe->mes);
+            break;
+        }
+    }
+    while(data[ndxV] != '/');
+
+    ndxV++;
+    ndx = 0;
+
+    do
+    {
+        if(data[ndxV] != '\0')
+        {
+            recebe->ano[ndx] = data[ndxV];
+            ndx++;
+            ndxV++;
+        }
+        if(data[ndxV] == '\0' && ndx >=2)
+        {
+            recebe->ano[ndx] = '\0';
+            Anv->ano = atoi(recebe->ano);
+            break;
+        }
+    }
+    while(data[ndxV] != '\0');
+
+    free(recebe);
 }
