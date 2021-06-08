@@ -1,7 +1,7 @@
 #ifndef _CADASTRO_ESCOLA_H__
 #define _CADASTRO_ESCOLA_H__
 
-#define TAM_NASC 10
+#define TAM_NASC 11
 #define MAX_NAME 50
 #define MATRICULA_ALUN 20211001
 #define MATRICULA_PROF 2021101
@@ -16,8 +16,8 @@ typedef struct
 typedef struct
 {
     char nome[MAX_NAME];
-    char cpf[12];
-    char nascimento[11];
+    char cpf[TAM_NASC+1];
+    char nascimento[TAM_NASC];
     char sexo[1];
     int matricula;
     date aniversario;
