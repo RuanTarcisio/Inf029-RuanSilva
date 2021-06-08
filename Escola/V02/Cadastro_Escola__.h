@@ -18,10 +18,11 @@ typedef struct
     char nome[MAX_NAME];
     char cpf[12];
     char nascimento[11];
-    char sexo;
+    char sexo[1];
     int matricula;
-    /*date D_M_A;*/
+    date aniversario;
 } cadastro;
+cadastro Pessoas;
 
 typedef struct Lista
 {
@@ -51,25 +52,32 @@ typedef struct Lista_Mat
     int posicao;
 } Node_Mat;
 
-
-
-Node *criar_Lista();
-
+/* FUNÇÕES PARA MENUS */
 void menuGeral();
 void menuAlunos();
 void menuDisciplinas();
 void menuProfessores();
-void menuCadastro();
+void menuCadastro(int select);
 
-
-void Display(Node *Geral, int opcao);
-int Push(Node **Geral, cadastro *Pessoas, int opcao);
+/* FUNÇÕES PARA A LISTA ( PROFESSORES E ALUNOS ) */
+Node *criar_Lista();
+void Display(Node *Geral, int select);
+int Push(Node **Geral, cadastro *Pessoas, int select);
 int Insert(Node **Geral, int select);
 int Pop(Node **Geral, int select);
 int Remove(Node **Geral, int select);
 int Sort(Node **Geral);
+void Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÇÕES. */
+int Buscar_Na_Lista(Node *Geral);
+Node* AtPos(Node *Geral);
+
 
 cadastro RecebeDadosPessoais();
 cadastro validar(cadastro *Dados);
-
+int validarData(char *data);
+int validarNascimento(date *guia);
+int validarCPF(char *cpf);
+int validarNome(char *nome);
+int validarSexo(char *sexo);
+void _Aniversario(char *data, date *Anv);
 #endif
