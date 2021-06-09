@@ -34,11 +34,11 @@ cadastro RecebeDadosPessoais()
 
 cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
-    int a, b, c, d, confirma, ndx=0 ;
+    int a, b, c, d, ndx=0 ;
+    char confirma;
 
-
-date *rcbAniversario = &Dados->aniversario;
-char *_data = Dados->nascimento;
+    date *rcbAniversario = &Dados->aniversario;
+    char *_data = Dados->nascimento;
 
     a = validarNome(Dados->nome);
     b = validarData(Dados->nascimento);
@@ -92,10 +92,11 @@ char *_data = Dados->nascimento;
     }
     while(ndx < strlen(Dados->nome));
     Dados->sexo[0] = toupper(Dados->sexo[0]);
+
     _Aniversario(_data, rcbAniversario);
 
     system("cls");
-    printf("\n\n Confirmas os dados: \n\n");
+    printf("\n\n");
     puts(Dados->nome);
     printf("\n");
     puts(Dados->nascimento);
@@ -103,19 +104,18 @@ char *_data = Dados->nascimento;
     puts(Dados->cpf);
     printf("\n");
     puts(Dados->sexo);
-    printf("\nDigite, (1)- SIM, (2)- NAO ou (0)- SAIR\n");
-    scanf("%d", &confirma);
+    printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (9)- SAIR\n");
+    confirma = getch();
+    setbuf(stdin, NULL);
 
     switch(confirma)
     {
-    case 1:
-        system("cls");
-        printf("\nCadastro realizado com sucesso.\n");
+    case '1':
         return *Dados;
-    case 2:
+    case '2':
         RecebeDadosPessoais();
         break;
-    case 0:
+    case '0':
         printf("\nEncerrando o programa.");
         exit(0);
         break;
@@ -142,7 +142,6 @@ int validarData(char *data)
     int validador;
 
     int ndx=0, ndxV=0, ndxB=0;
-
 
     do
     {
