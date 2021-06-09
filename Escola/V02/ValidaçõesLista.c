@@ -7,6 +7,18 @@
 
 #include "Cadastro_Escola__.h"
 
+
+Node* criar_Lista()
+{
+
+    Node* criar = (Node*)malloc(sizeof(Node));
+    criar->posicao = 0;
+    criar->tamanho = 0;
+    criar = NULL;
+    return criar;
+}
+
+
 int Push(Node** Geral, cadastro *Pessoas, int select)
 {
     Node *novo = (Node*) malloc(sizeof(Node));
@@ -38,7 +50,7 @@ int Push(Node** Geral, cadastro *Pessoas, int select)
         (*Geral)->tamanho ++;
         (*Geral)->posicao ++;
     }
- return 1; /* FUTURAS IMPLEMENTAÇÕES CONFIRMAR SE HA ESPAÇO*/
+    return 1; /* FUTURAS IMPLEMENTAÇÕES CONFIRMAR SE HA ESPAÇO*/
 }
 
 void Display(Node *Geral, int select)
@@ -81,9 +93,52 @@ void Display(Node *Geral, int select)
 
 int Remove(Node **Geral, int select)
 {
-return 0;
+    Node *cache = malloc(sizeof(Node));
+    Node *next = malloc(sizeof(Node));
+
+    cache = AtPos(*Geral, select);
+
+
+    if(*Geral == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        if(cache == *Geral)
+        {
+            *Geral = cache->prox;
+            (*Geral)->tamanho--;
+            free(cache);
+            return 1;
+        }
+        else if(cache == NULL)
+        {
+            return -2;
+        }
+        else
+        {
+            next = cache->prox;
+            cache->prox = next->prox;
+            free(next);
+            (*Geral)->tamanho--;
+        }
+    }
+    return 1;
 }
 
+void pop(Node** Geral)
+{
+
+    Node* cache = (Node*) malloc(sizeof(Node));
+    cache = *Geral;
+
+    cache = *Geral;
+    *Geral = cache->prox;
+    (*Geral)->tamanho--;
+
+    free(cache);
+}
 void Atualizar(Node **Geral, int select)
 {
 
@@ -96,32 +151,120 @@ int Buscar_Na_Lista(Node *Geral)
     return 1;
 }
 
-Node* AtPos(Node *Geral)
+int CPF_NaBase(Node *Geral, char *cpf)
+{
+    int validador = -1;
+    Node *referencia =(Node*) malloc(sizeof(Node));
+    referencia = Geral;
+
+    if(Geral == NULL)
+    {
+        validador = 0;
+    }
+    else
+    {
+        if(strcmp(referencia->dados.cpf, cpf)== 0)
+        {
+            validador = 1;
+        }
+        else
+        {
+            do
+            {
+                referencia = referencia->prox;
+            }
+            while(referencia != NULL && strcmp(referencia->dados.cpf, cpf)!= 0);
+        }
+        if(referencia == NULL)
+        {
+            validador = 0;
+        }
+        else
+            validador = 1;
+    }
+
+    return validador;
+}
+
+Node* AtPos(Node *Geral, int select)
 {
     int opcao, matricula=0;
     char *cpf = malloc(sizeof(char));
-
+    Node *cache = (Node*) malloc(sizeof(Node));
     Node *referencia = (Node*) malloc(sizeof(Node));
     referencia = Geral;
 
-    printf("\n Escolha: (1)- Matricula ou (2)- CPF. ");
-    scanf("%d", &opcao);
+    printf("\n Escolha: (1)- Matricula ou (2)- CPF, (9)- VOLTAR ou (0)- SAIR. ");
+    opcao = getch();
 
-    if(referencia->dados.matricula == matricula)
+    switch(opcao)
     {
-
+    case '0':
+        printf("\nEncerrando o programa. ");
+        exit(0);
+        break;
+    case '1':
+        printf("\nInforme a matricula: ");
+        scanf("%d", &matricula);
+        break;
+    case '2':
+        printf("\nInforme o CPF: ");
+        gets(cpf);
+        break;
+    case '9':
+        if(select == 1)
+        {
+            menuAlunos();
+        }
+        else
+            menuProfessores();
+        break;
+    default:
+        AtPos(Geral, select);
+        break;
     }
 
-    do
+    if(opcao == 1)
     {
-
-        referencia = referencia->prox;
-    }while(referencia->prox != NULL && referencia->prox->dados.matricula != matricula);
-
-    if(referencia->prox == NULL)
-    {
-        return NULL;
+        if(referencia->dados.matricula == matricula)
+        {
+            return referencia;
+        }
+        else
+        {
+            do
+            {
+                cache = referencia;
+                referencia = referencia->prox;
+            }
+            while(referencia != NULL && referencia->dados.matricula != matricula);
+        }
+        if(referencia == NULL)
+        {
+            return NULL;
+        }
     }
 
-return referencia;
+    else
+    {
+        if(referencia->dados.cpf == cpf)
+        {
+            return referencia;
+        }
+        else
+        {
+            do
+            {
+                cache = referencia;
+                referencia = referencia->prox;
+            }
+            while(referencia != NULL && strcmp(referencia->dados.cpf, cpf)!= 0);
+        }
+        if(referencia == NULL)
+        {
+            return NULL;
+        }
+    }
+
+    return cache;
 }
