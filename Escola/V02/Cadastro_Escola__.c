@@ -3,41 +3,32 @@
 #include <locale.h>
 #include <ctype.h>
 #include <string.h>
+#include <conio.h>
 
 #include "Cadastro_Escola__.h"
 
 
-Node* criar_Lista()
-{
-
-    Node* criar = (Node*)malloc(sizeof(Node));
-    criar->posicao = 0;
-    criar->tamanho = 0;
-    criar = NULL;
-    return criar;
-}
-
-
 void menuGeral()
 {
-    int escolha;
-
+    char escolha;
+    setbuf(stdin, NULL);
     printf("\n\n       *********************** PROJETO ESCOLA ***********************\n\n");
     printf("\n Digite: (1)- Alunos, (2)- Professores, (3)- Disciplinas ou (0)- p/ SAIR:  ");
-    scanf("%d", &escolha);
+    escolha = getch();
+    setbuf(stdin, NULL);
 
     switch(escolha)
     {
     case 0:
         printf("\nEncerrando o programa.");
         exit(0);
-    case 1:
+    case '1':
         menuAlunos();
         break;
-    case 2:
+    case '2':
         menuProfessores();
         break;
-    case 3:
+    case '3':
         menuDisciplinas();
         break;
     default:
@@ -48,37 +39,35 @@ void menuGeral()
 }
 
 
-void teste();
-
-
 void menuAlunos()
 {
-    int escolha;
-
+    char escolha;
+    setbuf(stdin, NULL);
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE ALUNOS -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n Digite: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir, (9)- voltar ou (0)- p/sair.  \n");
-    scanf("%d", &escolha);
-    getchar();
+    printf("\n Digite: (1)- CADASTRAR, (2)- LISTAR, (3)- EXCLUIR , (9)- VOLTAR ou (0)- SAIR.  \n");
+    escolha = getch();
+    setbuf(stdin, NULL);
 
     switch(escolha)
     {
-    case 0:
+    case '0':
         printf("\nEncerrando o programa.");
         exit(0);
         break;
-    case 1:
+    case '1':
         menuCadastro(1);
         /*  teste();*/
         break;
-    case 2:
+    case '2':
         Display(Alunos, 1);
         getchar();
         menuAlunos();
         break;
-    /* case 3:
-         break;*/
-    case 9:
+    case 3:
+        Remove(&Alunos, 1);
+        break;
+    case '9':
         menuGeral();
     default:
         menuAlunos();
@@ -89,32 +78,33 @@ void menuAlunos()
 
 void menuProfessores()
 {
-    int escolha;
-
+    char escolha;
+    setbuf(stdin,NULL);
     system("cls");
     printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- CADASTRO DE PROFESSORES -*-*-*-*-*-*-*-*-*-*-*-*-\n");
-    printf("\n Digite: (1)- p/ cadastrar, (2)- p/ listar, (3)- p/ excluir, (9)- voltar ou (0)- p/sair.  \n");
-    scanf("%d", &escolha);
-    getchar();
+    printf("\n Digite: (1)- CADASTRAR, (2)- LISTAR, (3)- EXCLUIR, (9)- VOLTAR ou (0)- SAIR.  \n");
+    escolha = getch();
+    setbuf(stdin, NULL);
 
     switch(escolha)
     {
-    case 0:
+    case '0':
         printf("\nEncerrando o programa.");
         exit(0);
         break;
-    case 1:
+    case '1':
         menuCadastro(2);
         /*  teste();*/
         break;
-    case 2:
+    case '2':
         Display(Professores, 2);
         getchar();
         menuProfessores();
         break;
-    /* case 3:
-         break;*/
-    case 9:
+    case '3':
+        Remove(&Professores, 2);
+        break;
+    case '9':
         menuGeral();
     default:
         menuProfessores();
@@ -122,77 +112,81 @@ void menuProfessores()
     }
 }
 
+
 void menuDisciplinas()
 {
 
 
 }
 
+
 void menuCadastro(int select)
 {
-    int escolha = 0;
+    char escolha;
+    int v_CPF = 0;
 
-    printf("\n Digite: \n(1)- INCLUIR NOVO CADASTRO \n(2)- ATUALIZAR CADASTRO \n(3)- EXCLUIR CADASTRO \n(4)- LISTAR CADASTROS \n(9)- MENU ANTERIOR \n(0)- SAIR. \n");
-    scanf("%d", &escolha);
+    setbuf(stdin, NULL);
 
-    switch(escolha)
+    printf("\n\n    *-*-*-*-*-*-*-*-*-*-* BEM-VINDO AO CADASTRAMENTO *-*-*-*-*-*-*-*-*-*-*\n\n");
+    getchar();
+    system("cls");
+
+    if(select == 1)
     {
-    case 0:
-        printf("\nEncerrando o programa.");
-        exit(0);
-        break;
-    case 1:
-        if(select == 1)
+        setbuf(stdin, NULL);
+        Pessoas = RecebeDadosPessoais();
+        v_CPF = CPF_NaBase(Alunos, Pessoas.cpf);
+        if(v_CPF == 1)
         {
-            setbuf(stdin, NULL);
-            Pessoas = RecebeDadosPessoais();
-            Push(&Alunos, &Pessoas, select);
-            menuCadastro(select);
-        }
-        else
-        {
-            setbuf(stdin, NULL);
-            Pessoas = RecebeDadosPessoais();
-            Push(&Professores, &Pessoas, select);
-            menuCadastro(select);
-        }
-        break;
-    /*case 2:
-        Atualizar(&Alunos);
-        break*/
-    case 3:
-        if(select == 1)
-        {
-            Remove(&Alunos, select);
-        }
-        else
-        {
-            Remove(&Professores, select);
-        }
-        break;
-    case 4:
-        if(select == 1)
-        {
-            setbuf(stdin,NULL);
-            Display(Alunos, select);
+            printf("\n\n ALUNO JÁ ESTA CADASTRADO. ");
             getchar();
-        }
-        else
-        {
-            Display(Professores, select);
-            getchar();
-        }
-    case 9:
-        if(select == 1)
-        {
             menuAlunos();
         }
         else
-            menuProfessores();
-        break;
-    default:
-        printf("\nOPCAO INVALIDA.");
-        menuCadastro(select);
-        break;
+        {
+            Push(&Alunos, &Pessoas, select);
+            setbuf(stdin, NULL);
+            system("cls");
+            printf("\n Deseja realizar outro cadastro? ");
+            printf("\n Digite (1)- SIM ou (2)- NÃO");
+            escolha = getche();
+            if(escolha == '1')
+            {
+                menuCadastro(select);
+            }
+            else
+            {
+                menuAlunos();
+            }
+        }
+    }
+    else
+    {
+        setbuf(stdin, NULL);
+        Pessoas = RecebeDadosPessoais();
+        v_CPF = CPF_NaBase(Professores, Pessoas.cpf);
+        if(v_CPF == 1)
+        {
+            printf("\n\n ALUNO JÁ ESTA CADASTRADO. ");
+            getchar();
+            menuAlunos();
+        }
+        else
+        {
+            Push(&Professores, &Pessoas, select);
+            setbuf(stdin, NULL);
+            system("cls");
+            printf("\n Deseja realizar outro cadastro? ");
+            printf("\n Digite (1)- SIM ou (2)- NÃO");
+            escolha = getche();
+            if(escolha == '1')
+            {
+                menuCadastro(select);
+            }
+            else
+            {
+                menuProfessores();
+            }
+        }
     }
 }
