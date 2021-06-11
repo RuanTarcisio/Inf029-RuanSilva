@@ -16,9 +16,9 @@ typedef struct
 typedef struct
 {
     char nome[MAX_NAME];
-    char cpf[TAM_NASC+1];
-    char nascimento[TAM_NASC];
-    char sexo[1];
+    char cpf[TAM_NASC+6];
+    char nascimento[TAM_NASC+5];
+    char sexo;
     int matricula;
     date aniversario;
 } cadastro;
@@ -64,12 +64,14 @@ Node *criar_Lista();
 void Display(Node *Geral, int select);
 int Push(Node **Geral, cadastro *Pessoas, int select);
 int Insert(Node **Geral, int select);
-int Pop(Node **Geral, int select);
+void Pop(Node **Geral);
 int Remove(Node **Geral, int select);
 int Sort(Node **Geral);
 void Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÇÕES. */
 int Buscar_Na_Lista(Node *Geral);
-Node* AtPos(Node *Geral);
+Node* AtPos(Node *Geral, int select);
+int CPF_NaBase(Node *Geral, char *cpf);
+int isEmpty(Node *Geral);
 
 
 cadastro RecebeDadosPessoais();
