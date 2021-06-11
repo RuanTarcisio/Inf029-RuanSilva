@@ -12,18 +12,25 @@ cadastro RecebeDadosPessoais()
 {
     cadastro Dados;
 
-    printf("\n Informe o nome: ");
+    char *nome, *sexo, *nascimento, *cpf;
+
+    nome = Dados.nome;
+    sexo = &Dados.sexo;
+    nascimento = Dados.nascimento;
+    cpf = Dados.cpf;
+
+    printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
-    gets(Dados.nome);
+    gets(nome);
     setbuf(stdin, NULL);
-    printf("\n Informe a data de nascimento dd/mm/aaaa: ");
-    fgets(Dados.nascimento, TAM_NASC, stdin);
+    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
+    gets(nascimento);
     setbuf(stdin, NULL);
-    printf("\n Informe o CPF: ");
-    gets(Dados.cpf);
+    printf("\n Digite o CPF: ");
+    gets(cpf);
     setbuf(stdin, NULL);
-    printf("\n Informe o sexo (F/M): ");
-    gets(Dados.sexo);
+    printf("\n Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
+    gets(sexo);
     setbuf(stdin, NULL);
 
     Dados = validar(&Dados);
@@ -35,15 +42,17 @@ cadastro RecebeDadosPessoais()
 cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
     int a, b, c, d, ndx=0 ;
-    char confirma;
+    char confirma, *sexo, *_data;
 
     date *rcbAniversario = &Dados->aniversario;
-    char *_data = Dados->nascimento;
+    _data = Dados->nascimento;
+
+    sexo = &Dados->sexo;
 
     a = validarNome(Dados->nome);
-    b = validarData(Dados->nascimento);
+    b = validarData(_data);
     c = validarCPF(Dados->cpf);
-    d = validarSexo(Dados->sexo);
+    d = validarSexo(sexo);
 
     do
     {
@@ -61,8 +70,8 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             setbuf(stdin, NULL);
             printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
             setbuf(stdin, NULL);
-            gets(Dados->nascimento);
-            b = validarData(Dados->nascimento);
+            gets(_data);
+            b = validarData(_data);
         }
         if (c != 1)
         {
@@ -78,8 +87,8 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             printf("\nSexo Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o sexo (F/M): ");
-            gets(Dados->sexo);
-            d = validarSexo(Dados->sexo);
+            gets(sexo);
+            d = validarSexo(sexo);
         }
     }
     while(a != 1 || b != 1 || c != 1 || d != 1);
@@ -91,7 +100,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
         ndx++;
     }
     while(ndx < strlen(Dados->nome));
-    Dados->sexo[0] = toupper(Dados->sexo[0]);
+    Dados->sexo = toupper(Dados->sexo);
 
     _Aniversario(_data, rcbAniversario);
 
@@ -103,7 +112,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
     printf("\n");
     puts(Dados->cpf);
     printf("\n");
-    puts(Dados->sexo);
+    puts(sexo);
     printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (9)- SAIR\n");
     confirma = getch();
     setbuf(stdin, NULL);
