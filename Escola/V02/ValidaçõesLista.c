@@ -99,45 +99,173 @@ void Display(Node *Geral, int select)
 
 int Remove(Node **Geral, int select)
 {
-    Node *cache = NULL, *next = NULL;
-    int validador;
+    int matricula, opcao, validador;
+    char  cpf[12];
+    Node *inicio = NULL;
+    Node* cache = 0;
 
-    setbuf(stdin,NULL);
+    cache = *Geral;
 
-        if(*Geral == NULL)
+    setbuf(stdin, NULL);
+    printf("\n Informe o CPF ou a matricula. ");
+    printf("(1)- Matricula ou (2)- CPF ");
+    opcao = getch();
+
+    switch(opcao)
+    {
+    case '1':
+        setbuf(stdin, NULL);
+        printf("\n Digite a matricula: ");
+        setbuf(stdin, NULL);
+        scanf("%d", &matricula);
+        break;
+    case '2':
+        setbuf(stdin, NULL);
+        printf("\n Digite o CPF: ");
+        setbuf(stdin, NULL);
+        gets(cpf);
+        break;
+    }
+
+    if(opcao == '1')
+    {
+        if(cache == NULL)
         {
-            validador = 0;
+            return 0;
         }
-
-        else if(*Geral != NULL)
+        if(Buscar_Na_Lista(cache, matricula) == 0)
         {
-            cache = AtPos(*Geral, select);
+            return -1;
+        }
+        else if(cache->prox == NULL)
+        {
+            if(isEmpty(cache)== 1)
+            {
+                *Geral = criar_Lista();
+            }
+            validador = 1;
+        }
+        else if(cache->dados.matricula == matricula)
+        {
+            *Geral = cache->prox;
+            (*Geral)->tamanho--;
 
-            if(cache == NULL)
+            validador = 1;
+        }
+        else
+        {
+            cache = cache->prox;
+            while (cache != NULL && cache->dados.matricula != matricula)
+            {
+                inicio = cache;
+                cache= cache->prox;
+            }
+            if(cache->dados.matricula == matricula)
+            {
+                inicio->prox = cache->prox;
+                (*Geral)->tamanho --;
+
+                validador = 1;
+            }
+            else
             {
                 validador = -1;
             }
-
-            else if(cache->prox == NULL)
-            {
-                if(isEmpty(cache)== 1)
-                {
-                    *Geral = criar_Lista();
-                }
-                validador = 1;
-            }
-            else if(cache->prox != NULL)
-            {
-                next = cache->prox;
-                cache->prox = next ->prox;
-                (*Geral)->tamanho--;
-                validador = 1;
-            }
+            free(cache);
         }
+    }
+    else
+    {
 
-    free(next);
+        if(cache == NULL)
+        {
+            return 0 ;
+        }
+        if(CPF_NaBase(cache, cpf) == 0)
+        {
+            return -1;
+        }
+        else if(cache->prox == NULL)
+        {
+            if(isEmpty(cache)== 1)
+            {
+                *Geral = criar_Lista();
+            }
+            validador = 1;
+        }
+        else if(strcmp(cache->dados.cpf, cpf) == 0)
+        {
+            *Geral = cache->prox;
+            (*Geral)->tamanho--;
+
+            validador = 1;
+        }
+        else
+        {
+            cache = cache->prox;
+            while (cache != NULL && strcmp(cache->dados.cpf, cpf) == 0)
+            {
+                inicio = cache;
+                cache = cache->prox;
+            }
+            if(strcmp(cache->dados.cpf, cpf) == 0)
+            {
+                inicio->prox = cache->prox;
+                (*Geral)->tamanho --;
+
+                validador = 1;
+            }
+            else
+            {
+                validador = 0;
+            }
+            free(cache);
+        }
+    }
+
     return validador;
 }
+
+
+/* Node *cache = NULL, *next = NULL;
+ int validador;
+
+ setbuf(stdin,NULL);
+
+ if(*Geral == NULL)
+ {
+     validador = 0;
+ }
+
+ else if(*Geral != NULL)
+ {
+     cache = AtPos(*Geral, select);
+
+     if(cache == NULL)
+     {
+         validador = -1;
+     }
+
+     else if(cache->prox == NULL)
+     {
+         if(isEmpty(cache)== 1)
+         {
+             *Geral = criar_Lista();
+         }
+         validador = 1;
+     }
+     else if(cache->prox != NULL)
+     {
+         next = cache->prox;
+         cache->prox = next ->prox;
+         (*Geral)->tamanho--;
+         validador = 1;
+     }
+ }
+
+ free(next);
+ return validador;
+}*/
 
 
 void Pop(Node** Geral)
@@ -156,19 +284,165 @@ void Pop(Node** Geral)
         *Geral = cache->prox;
         (*Geral)->tamanho--;
     }
-    /*free(cache);*/
-}
-void Atualizar(Node **Geral, int select)
-{
-
+    free(cache);
 }
 
 
-int Buscar_Na_Lista(Node *Geral)
+int Atualizar(Node **Geral, int select)
 {
-    /* PEDIR CPF ou Matricula e verificar se tem na lista, encontrando devolver 1 ou 0 */
-    /*CRIAR STRUCT CADASTRO PARA PASSAR COMO REFERENCIA */
-    return 1;
+    int matricula, opcao, validador;
+    char  cpf[12];
+
+    Node* cache = 0;
+    cadastro Dados;
+
+    cache = *Geral;
+
+    setbuf(stdin, NULL);
+    printf("\n Informe o CPF ou a matricula. ");
+    printf("(1)- Matricula ou (2)- CPF ");
+    opcao = getch();
+
+    switch(opcao)
+    {
+    case '1':
+        setbuf(stdin, NULL);
+        printf("\n Digite a matricula: ");
+        setbuf(stdin, NULL);
+        scanf("%d", &matricula);
+        break;
+    case '2':
+        setbuf(stdin, NULL);
+        printf("\n Digite o CPF: ");
+        setbuf(stdin, NULL);
+        gets(cpf);
+        break;
+    }
+
+    if(opcao == '1')
+    {
+        if(cache == NULL)
+        {
+            return 0;
+        }
+        if(Buscar_Na_Lista(cache, matricula) == 0)
+        {
+            return -1;
+        }
+        else if(cache->dados.matricula == matricula)
+        {
+            Dados = cache->dados;
+
+            Dados = AlterarDadosPessoais(Dados);
+            Dados.matricula = cache->dados.matricula;
+            cache->dados = Dados;
+
+            validador = 1;
+        }
+        else
+        {
+            cache = cache->prox;
+            while (cache != NULL && cache->dados.matricula != matricula)
+            {
+                cache= cache->prox;
+            }
+            if(cache->dados.matricula == matricula)
+            {
+                Dados = cache->dados;
+
+                Dados = AlterarDadosPessoais(Dados);
+                Dados.matricula = cache->dados.matricula;
+                cache->dados = Dados;
+
+                validador = 1;
+            }
+            else
+            {
+                validador = -1;
+            }
+            free(cache);
+        }
+    }
+    else
+    {
+        if(cache == NULL)
+        {
+            return 0 ;
+        }
+        if(CPF_NaBase(cache, cpf) == 0)
+        {
+            return -1;
+        }
+        else if(strcmp(cache->dados.cpf, cpf) == 0)
+        {
+
+            Dados = cache->dados;
+
+            Dados = AlterarDadosPessoais(Dados);
+            Dados.matricula = cache->dados.matricula;
+            cache->dados = Dados;
+
+            validador = 1;
+        }
+        else
+        {
+            cache = cache->prox;
+            while (cache != NULL && strcmp(cache->dados.cpf, cpf) == 0)
+            {
+                cache= cache->prox;
+            }
+            if(strcmp(cache->dados.cpf, cpf) == 0)
+            {
+                Dados = cache->dados;
+
+                Dados = AlterarDadosPessoais(Dados);
+                Dados.matricula = cache->dados.matricula;
+                cache->dados = Dados;
+
+                validador = 1;
+            }
+            else
+            {
+                validador = 0;
+            }
+            free(cache);
+        }
+    }
+    return validador;
+}
+
+
+int Buscar_Na_Lista(Node *Geral, int matricula)
+{
+    int validador = -1;
+    Node *referencia = Geral;
+
+    if(Geral == NULL)
+    {
+        validador = 0;
+    }
+    else
+    {
+        if(referencia->dados.matricula == matricula)
+        {
+            validador = 1;
+        }
+        else
+        {
+            do
+            {
+                referencia = referencia->prox;
+            }
+            while(referencia != NULL && referencia->dados.matricula == matricula);
+        }
+        if(referencia == NULL)
+        {
+            validador = 0;
+        }
+        else
+            validador = 1;
+    }
+    return validador;
 }
 
 
@@ -292,6 +566,7 @@ Node* AtPos(Node *Geral, int select)
     return cache;
 }
 
+
 int isEmpty(Node *Geral)
 {
     int aux = 0, validador;
@@ -301,8 +576,8 @@ int isEmpty(Node *Geral)
     {
         cache = cache->prox;
         aux++;
-
-    }while(cache != NULL && aux < 2);
+    }
+    while(cache != NULL && aux < 2);
 
     if(aux >= 2)
     {
