@@ -58,6 +58,8 @@ void menuAlunos();
 void menuDisciplinas();
 void menuProfessores();
 void menuCadastro(int select);
+void menuAlterar (int select);
+void menuExcluir (int select);
 
 /* FUNÇÕES PARA A LISTA ( PROFESSORES E ALUNOS ) */
 Node *criar_Lista();
@@ -67,14 +69,16 @@ int Insert(Node **Geral, int select);
 void Pop(Node **Geral);
 int Remove(Node **Geral, int select);
 int Sort(Node **Geral);
-void Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÇÕES. */
-int Buscar_Na_Lista(Node *Geral);
+int Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÇÕES. */
+int Buscar_Na_Lista(Node *Geral, int matricula);
 Node* AtPos(Node *Geral, int select);
 int CPF_NaBase(Node *Geral, char *cpf);
 int isEmpty(Node *Geral);
 
 
 cadastro RecebeDadosPessoais();
+cadastro alt_validar(cadastro *Dados);
+cadastro AlterarDadosPessoais(cadastro Dados);
 cadastro validar(cadastro *Dados);
 int validarData(char *data);
 int validarNascimento(date *guia);
