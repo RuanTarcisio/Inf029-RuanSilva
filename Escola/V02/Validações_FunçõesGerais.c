@@ -7,6 +7,34 @@
 
 #include "Cadastro_Escola__.h"
 
+cadastro AlterarDadosPessoais(cadastro Dados)
+{
+    char *nome, *sexo, *nascimento;
+
+    nome = Dados.nome;
+    sexo = &Dados.sexo;
+    nascimento = Dados.nascimento;
+
+    printf("\n\n\n Informe os novos dados. ");
+    printf("\n Digite o nome: ");
+    setbuf(stdin, NULL);
+    gets(nome);
+    setbuf(stdin, NULL);
+    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
+    gets(nascimento);
+    setbuf(stdin, NULL);
+    /*printf("\n Digite o CPF: ");
+    gets(cpf);
+    setbuf(stdin, NULL);*/
+    printf("\n Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
+    gets(sexo);
+    setbuf(stdin, NULL);
+
+    Dados = alt_validar(&Dados);
+
+    return Dados;
+}
+
 
 cadastro RecebeDadosPessoais()
 {
@@ -19,6 +47,7 @@ cadastro RecebeDadosPessoais()
     nascimento = Dados.nascimento;
     cpf = Dados.cpf;
 
+    setbuf(stdin, NULL);
     printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
     gets(nome);
@@ -42,16 +71,17 @@ cadastro RecebeDadosPessoais()
 cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
     int a, b, c, d, ndx=0 ;
-    char confirma, *sexo, *_data;
+    char confirma, *sexo, *nascimento, *nome, *cpf;
 
     date *rcbAniversario = &Dados->aniversario;
-    _data = Dados->nascimento;
-
+    nascimento = Dados->nascimento;
+    nome = Dados->nome;
+    cpf = Dados->cpf;
     sexo = &Dados->sexo;
 
-    a = validarNome(Dados->nome);
-    b = validarData(_data);
-    c = validarCPF(Dados->cpf);
+    a = validarNome(nome);
+    b = validarData(nascimento);
+    c = validarCPF(cpf);
     d = validarSexo(sexo);
 
     do
@@ -61,25 +91,28 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             printf("\nNome Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o nome: ");
-            gets(Dados->nome);
-            a = validarNome(Dados->nome);
+            gets(nome);
+            setbuf(stdin, NULL);
+            a = validarNome(nome);
         }
         if (b != 1)
         {
-            printf("\nData Invalida.");
+            printf("\n Data Invalida.");
             setbuf(stdin, NULL);
             printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
             setbuf(stdin, NULL);
-            gets(_data);
-            b = validarData(_data);
+            gets(nascimento);
+            setbuf(stdin, NULL);
+            b = validarData(nascimento);
         }
         if (c != 1)
         {
             printf("\nCPF Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o CPF: ");
-            gets(Dados->cpf);
-            c = validarCPF(Dados->cpf);
+            setbuf(stdin, NULL);
+            gets(cpf);
+            c = validarCPF(cpf);
         }
         if (d != 1)
         {
@@ -88,6 +121,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
             setbuf(stdin, NULL);
             printf("\n Informe o sexo (F/M): ");
             gets(sexo);
+            setbuf(stdin, NULL);
             d = validarSexo(sexo);
         }
     }
@@ -102,7 +136,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
     while(ndx < strlen(Dados->nome));
     Dados->sexo = toupper(Dados->sexo);
 
-    _Aniversario(_data, rcbAniversario);
+    _Aniversario(nascimento, rcbAniversario);
 
     system("cls");
     printf("\n\n");
@@ -132,6 +166,91 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
         validar(Dados);
         break;
     }
+    return *Dados;
+}
+
+
+cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
+{
+    int a, b, c, d, ndx=0 ;
+    char *sexo, *nascimento, *nome, *cpf;
+
+    date *rcbAniversario = &Dados->aniversario;
+    nascimento = Dados->nascimento;
+    nome = Dados->nome;
+    cpf = Dados->cpf;
+    sexo = &Dados->sexo;
+
+    a = validarNome(nome);
+    b = validarData(nascimento);
+    c = validarCPF(cpf);
+    d = validarSexo(sexo);
+
+    do
+    {
+        if (a != 1)
+        {
+            printf("\nNome Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o nome: ");
+            gets(nome);
+            setbuf(stdin, NULL);
+            a = validarNome(nome);
+        }
+        if (b != 1)
+        {
+            printf("\n Data Invalida.");
+            setbuf(stdin, NULL);
+            printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
+            setbuf(stdin, NULL);
+            gets(nascimento);
+            setbuf(stdin, NULL);
+            b = validarData(nascimento);
+        }
+        if (c != 1)
+        {
+            printf("\nCPF Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o CPF: ");
+            setbuf(stdin, NULL);
+            gets(cpf);
+            c = validarCPF(cpf);
+        }
+        if (d != 1)
+        {
+            setbuf(stdin, NULL);
+            printf("\nSexo Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o sexo (F/M): ");
+            gets(sexo);
+            setbuf(stdin, NULL);
+            d = validarSexo(sexo);
+        }
+    }
+    while(a != 1 || b != 1 || c != 1 || d != 1);
+
+    ndx=0;
+    do
+    {
+        Dados->nome[ndx] = toupper(Dados->nome[ndx]);
+        ndx++;
+    }
+    while(ndx < strlen(Dados->nome));
+    Dados->sexo = toupper(Dados->sexo);
+
+    _Aniversario(nascimento, rcbAniversario);
+
+    system("cls");
+    printf("\n\n");
+    puts(Dados->nome);
+    printf("\n");
+    puts(Dados->nascimento);
+    printf("\n");
+    puts(Dados->cpf);
+    printf("\n");
+    puts(sexo);
+    getch();
+
     return *Dados;
 }
 
@@ -247,6 +366,7 @@ int validarData(char *data)
     }
     validador = validarNascimento(guia);
     free(recebe);
+
     return validador;
 }
 
@@ -346,9 +466,16 @@ int validarCPF(char *cpf)
     {
         return 0;
     }
-    else if(cpf[1] == cpf[0] && cpf[2] == cpf[0] && cpf[3] == cpf[0] && cpf[4] == cpf[0]
-            && cpf[5] == cpf[0] && cpf[6] == cpf[0] && cpf[7] == cpf[0] && cpf[8] == cpf[0]
-            && cpf[9] == cpf[0] && cpf[10] == cpf[0])
+    else if(cpf[1] == cpf[0] &&
+            cpf[2] == cpf[0] &&
+            cpf[3] == cpf[0] &&
+            cpf[4] == cpf[0] &&
+            cpf[5] == cpf[0] &&
+            cpf[6] == cpf[0] &&
+            cpf[7] == cpf[0] &&
+            cpf[8] == cpf[0] &&
+            cpf[9] == cpf[0] &&
+            cpf[10] == cpf[0])
     {
         return 0;
     }
@@ -361,9 +488,27 @@ int validarCPF(char *cpf)
                 aux[ndx] = cpf[ndx] - '0';
         }
 
-    validador1 = (aux[0]*10 + (aux[1]*9) + (aux[2]*8) + (aux[3]*7) + (aux[4]*6) + (aux[5]*5) + (aux[6]*4) + (aux[7]*3) + (aux[8]* 2)) ;
+    validador1 = ( aux[0]*10 +
+                  (aux[1]*9) +
+                  (aux[2]*8) +
+                  (aux[3]*7) +
+                  (aux[4]*6) +
+                  (aux[5]*5) +
+                  (aux[6]*4) +
+                  (aux[7]*3) +
+                  (aux[8]* 2)) ;
     validador1 = validador1 * 10 % 11;
-    validador2 = (aux[0]*11 + (aux[1]*10) + (aux[2]*9) + (aux[3]*8) + (aux[4]*7) + (aux[5]*6) + (aux[6]*5) + (aux[7]*4) + (aux[8]*3)+ (aux[9]*2)) ;
+
+    validador2 = ( aux[0]*11 +
+                  (aux[1]*10)+
+                  (aux[2]*9) +
+                  (aux[3]*8) +
+                  (aux[4]*7) +
+                  (aux[5]*6) +
+                  (aux[6]*5) +
+                  (aux[7]*4) +
+                  (aux[8]*3)+
+                  (aux[9]*2)) ;
     validador2 = validador2 * 10 % 11;
 
     if(aux[9] == validador1 && aux[10] == validador2)
@@ -428,9 +573,9 @@ int validarSexo(char *sexo)
         return 0;
 }
 
+
 void _Aniversario(char *data, date *Anv)
 {
-
     typedef struct
     {
         char dia[2];
