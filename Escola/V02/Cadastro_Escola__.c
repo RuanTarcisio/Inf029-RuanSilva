@@ -280,6 +280,12 @@ void menuAlterar(int select)
 }
 
 
+void menuDisciplinas()
+{
+
+}
+
+
 void menuListar()
 {
 /*

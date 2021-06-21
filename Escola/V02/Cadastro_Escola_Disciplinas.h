@@ -20,6 +20,9 @@ typedef struct List
     int posicao;
 } _Node;
 
+void _Display(_Node *Geral);
 
+int Buscar_Disciplina(_Node* Geral , char *codigo);
+int _isEmpty(_Node *Geral);
 
 #endif // CADASTRO_ESCOLA_DISCIPLINAS_H_INCLUDED

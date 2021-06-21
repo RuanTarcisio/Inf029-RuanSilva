@@ -102,7 +102,7 @@ void Display(Node *Geral, int select)
 int Remove(Node **Geral, int select)
 {
     int matricula, opcao, validador;
-    char  cpf[12];
+    char cpf[12];
     Node *inicio = NULL;
     Node* cache = 0;
 
