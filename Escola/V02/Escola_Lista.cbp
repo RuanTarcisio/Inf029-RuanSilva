@@ -36,13 +36,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Cadastro_Escola__.h" />
-		<Unit filename="ValidaçõesDisciplinas.c">
+		<Unit filename="ValidarDisciplinas.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ValidaçõesLista.c">
+		<Unit filename="ValidarLista.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Validações_FunçõesGerais.c">
+		<Unit filename="Validar_FunctGerais.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="main.c">
