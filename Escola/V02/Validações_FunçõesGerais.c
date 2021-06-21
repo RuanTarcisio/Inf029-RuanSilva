@@ -68,7 +68,7 @@ cadastro RecebeDadosPessoais()
 }
 
 
-cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÃ‡Ã•ES E RETORNAR*/
+cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
     int a, b, c, d, ndx=0 ;
     char confirma, *sexo, *nascimento, *nome, *cpf;
@@ -170,7 +170,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÃ‡Ã•ES E RETORNAR*/
 }
 
 
-cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÃ‡Ã•ES E RETORNAR*/
+cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
     int a, b, c, d, ndx=0 ;
     char *sexo, *nascimento, *nome, *cpf;

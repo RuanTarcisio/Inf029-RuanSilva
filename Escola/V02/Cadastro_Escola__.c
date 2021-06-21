@@ -14,9 +14,9 @@ void menuGeral()
     setbuf(stdin, NULL);
 
     printf("\n\n       *********************** PROJETO ESCOLA ***********************\n\n");
-    printf("\n Digite: (1)- ALUNOS, (2)- PROFESSORES, (3)- DISCIPLINAS ou (0)- p/ SAIR:  ");
-
-    printf("\n\n  > ");
+    printf("\n Digite: (1)- ALUNOS, (2)- PROFESSORES, (3)- DISCIPLINAS ou (0)- SAIR:  ");
+    /*printf("\n Digite: \n\n (1)- ALUNOS \n (2)- PROFESSORES \n (3)- DISCIPLINAS  \n (0)- SAIR:  ");*/
+    printf("\n\n   ");
     escolha = getch();
     setbuf(stdin, NULL);
 
@@ -82,7 +82,7 @@ void menuAlunos()
         }
         else if(OK_Remove == -1)
         {
-            printf("\n N√£o consta na base. ");
+            printf("\n N„o consta na base. ");
         }
         getch();
         menuAlunos();
@@ -141,7 +141,7 @@ void menuProfessores()
         }
         else if(OK_Remove == -1)
         {
-            printf("\n N√£o consta na base. ");
+            printf("\n N„o consta na base. ");
         }
         getch();
         menuProfessores();
@@ -177,7 +177,7 @@ void menuCadastro(int select)
         v_CPF = CPF_NaBase(Alunos, Pessoas.cpf);
         if(v_CPF == 1)
         {
-            printf("\n\n ALUNO J√Å ESTA CADASTRADO. ");
+            printf("\n\n ALUNO J¡ ESTA CADASTRADO. ");
             getchar();
             menuAlunos();
         }
@@ -187,7 +187,7 @@ void menuCadastro(int select)
             setbuf(stdin, NULL);
             system("cls");
             printf("\n Deseja realizar outro cadastro? ");
-            printf("\n Digite (1)- SIM ou (2)- N√ÉO");
+            printf("\n Digite (1)- SIM ou (2)- N√O");
             escolha = getche();
             if(escolha == '1')
             {
@@ -206,7 +206,7 @@ void menuCadastro(int select)
         v_CPF = CPF_NaBase(Professores, Pessoas.cpf);
         if(v_CPF == 1)
         {
-            printf("\n\n PROFESSOR J√Å ESTA CADASTRADO. ");
+            printf("\n\n PROFESSOR J¡ ESTA CADASTRADO. ");
             getchar();
             menuProfessores();
         }
@@ -216,7 +216,7 @@ void menuCadastro(int select)
             setbuf(stdin, NULL);
             system("cls");
             printf("\n Deseja realizar outro cadastro? ");
-            printf("\n Digite (1)- SIM ou (2)- N√ÉO");
+            printf("\n Digite (1)- SIM ou (2)- N√O");
             escolha = getche();
             if(escolha == '1')
             {
@@ -236,7 +236,7 @@ void menuAlterar(int select)
     int OK_Alterar;
 
     printf("\n\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n    *-*-*-*-*-*-*-*-*-*-*       ALTERA√á√ïES      *-*-*-*-*-*-*-*-*-*-*\n");
+    printf("\n    *-*-*-*-*-*-*-*-*-*-*       ALTERA«’ES      *-*-*-*-*-*-*-*-*-*-*\n");
     printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 
     if(select == 1)
@@ -253,7 +253,7 @@ void menuAlterar(int select)
         }
         else if(OK_Alterar == -1)
         {
-            printf("\n N√£o consta na base. ");
+            printf("\n N„o consta na base. ");
         }
         getch();
         menuAlunos();
@@ -272,7 +272,7 @@ void menuAlterar(int select)
         }
         else if(OK_Alterar == -1)
         {
-            printf("\n N√£o consta na base. ");
+            printf("\n N„o consta na base. ");
         }
         getch();
         menuProfessores();

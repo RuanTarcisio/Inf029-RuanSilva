@@ -52,7 +52,7 @@ typedef struct Lista_Mat
     int posicao;
 } Node_Mat;
 
-/* FUNÃ‡Ã•ES PARA MENUS */
+/* FUNÇÕES PARA MENUS */
 void menuGeral();
 void menuAlunos();
 void menuDisciplinas();
@@ -61,7 +61,7 @@ void menuCadastro(int select);
 void menuAlterar (int select);
 void menuExcluir (int select);
 
-/* FUNÃ‡Ã•ES PARA A LISTA ( PROFESSORES E ALUNOS ) */
+/* FUNÇÕES PARA A LISTA ( PROFESSORES E ALUNOS ) */
 Node *criar_Lista();
 void Display(Node *Geral, int select);
 int Push(Node **Geral, cadastro *Pessoas, int select);
@@ -69,7 +69,7 @@ int Insert(Node **Geral, int select);
 void Pop(Node **Geral);
 int Remove(Node **Geral, int select);
 int Sort(Node **Geral);
-int Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÃ‡Ã•ES. */
+int Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMAÇÕES. */
 int Buscar_Na_Lista(Node *Geral, int matricula);
 Node* AtPos(Node *Geral, int select);
 int CPF_NaBase(Node *Geral, char *cpf);

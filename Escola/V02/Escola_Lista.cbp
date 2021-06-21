@@ -35,6 +35,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Cadastro_Escola__.h" />
+		<Unit filename="ValidaçõesLista.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Validações_FunçõesGerais.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -54,7 +54,7 @@ int Push(Node** Geral, cadastro *Pessoas, int select)
         (*Geral)->posicao ++;
     }
 
-    return 1; /* FUTURAS IMPLEMENTAÃ‡Ã•ES CONFIRMAR SE HA ESPAÃ‡O*/
+    return 1; /* FUTURAS IMPLEMENTAÇÕES CONFIRMAR SE HA ESPAÇO*/
 }
 
 
@@ -82,11 +82,13 @@ void Display(Node *Geral, int select)
     {
         do
         {
-            printf("\n\n%s ", ref->dados.nome);
+            printf("\n%d ",ref->posicao);
+            printf("\n%d ",ref->tamanho);
+            /*printf("\n\n%s ", ref->dados.nome);
             printf("\n\n%d ", ref->dados.matricula);
             printf("\n\n%s ", ref->dados.nascimento);
             printf("\n\n%s ", ref->dados.cpf);
-            printf("\n \n%c", ref->dados.sexo);
+            printf("\n \n%c", ref->dados.sexo);*/
             printf("\n\n ---------------------------------------------------");
             ref = ref->prox;
         }
@@ -108,7 +110,7 @@ int Remove(Node **Geral, int select)
 
     setbuf(stdin, NULL);
     printf("\n Informe o CPF ou a matricula. ");
-    printf("(1)- Matricula ou (2)- CPF ");
+    printf("\n(1)- Matricula \n(2)- CPF \n");
     opcao = getch();
 
     switch(opcao)

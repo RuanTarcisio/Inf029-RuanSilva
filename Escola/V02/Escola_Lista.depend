@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1623503173 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\cadastro_escola__.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"Cadastro_Escola__.h"
+
+1623456142 d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\cadastro_escola__.h
+
+1623207561 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<string.h>
+	"Cadastro_Escola__.h"
+	<locale.h>
+
+1623458438 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\validações_funçõesgerais.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"Cadastro_Escola__.h"
+
