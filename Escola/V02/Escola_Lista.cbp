@@ -31,10 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Cadastro_Escola_Disciplinas.h" />
 		<Unit filename="Cadastro_Escola__.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Cadastro_Escola__.h" />
+		<Unit filename="ValidaçõesDisciplinas.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="ValidaçõesLista.c">
 			<Option compilerVar="CC" />
 		</Unit>
