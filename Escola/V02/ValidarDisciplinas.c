@@ -139,7 +139,35 @@ int _Remove(_Node **Geral)
 
 int Buscar_Disciplina(_Node* Geral, char *codigo)
 {
+    int validador = -1;
+    _Node *referencia = Geral;
 
+    if(Geral == NULL)
+    {
+        validador = 0;
+    }
+    else
+    {
+        if(strcmp(referencia->_dados.codigo, codigo)== 0)
+        {
+            validador = 1;
+        }
+        else
+        {
+            do
+            {
+                referencia = referencia->prox;
+            }
+            while(referencia != NULL && strcmp(referencia->_dados.codigo, codigo)!= 0);
+        }
+        if(referencia == NULL)
+        {
+            validador = 0;
+        }
+        else
+            validador = 1;
+    }
+    return validador;
 }
 
 

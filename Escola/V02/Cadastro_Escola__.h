@@ -35,24 +35,10 @@ Node* Professores;
 Node* Alunos;
 
 
-typedef struct
-{
-    char nome[MAX_NAME];
-    int semestre;
-    char professor[MAX_NAME];
-    char area[3];
-    int ndx;
-} disciplinas;
 
-typedef struct Lista_Mat
-{
-    disciplinas materias;
-    struct Lista_Mat *prox;
-    int tamanho;
-    int posicao;
-} Node_Mat;
 
 /* FUNÇÕES PARA MENUS */
+void inicializar();
 void menuGeral();
 void menuAlunos();
 void menuDisciplinas();

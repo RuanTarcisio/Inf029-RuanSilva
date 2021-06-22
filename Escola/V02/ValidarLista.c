@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "Cadastro_Escola__.h"
+#include "Cadastro_Escola_Disciplinas.h"
 
 
 Node* criar_Lista()
@@ -66,13 +67,13 @@ void Display(Node *Geral, int select)
     {
         if(select == 1)
         {
-            printf("\nSem Alunos Cadastrados.");
+            printf("\n Sem Alunos Cadastrados.");
             getchar();
             menuAlunos();
         }
         else
         {
-            printf("\nSem Professores Cadastrados.");
+            printf("\n Sem Professores Cadastrados.");
             getchar();
             menuProfessores();
         }
@@ -105,11 +106,19 @@ int Remove(Node **Geral, int select)
     Node* cache = 0;
 
     cache = *Geral;
+    system("cls");
+    do
+    {
+        setbuf(stdin, NULL);
 
-    setbuf(stdin, NULL);
-    printf("\n Informe o CPF ou a matricula. ");
-    printf("\n(1)- Matricula \n(2)- CPF \n");
-    opcao = getch();
+        printf("\n PARA REMOVER, ESCOLHA:  \n");
+        printf("\n(1)- BUSCAR P/ MATRICULA \n(2)- BUSCAR P/ CPF \n(9)- VOLTAR  \n(0)- SAIR \n");
+        opcao = getch();
+        if(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0')
+        {
+        system("cls");
+        }
+    }while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
 
     switch(opcao)
     {
@@ -124,6 +133,20 @@ int Remove(Node **Geral, int select)
         printf("\n Digite o CPF: ");
         setbuf(stdin, NULL);
         gets(cpf);
+        break;
+    case '9':
+        if(select == 1)
+        {
+            menuAlunos();
+        }
+        else
+        {
+            menuProfessores();
+        }
+        break;
+    case '0':
+        printf("\n\nEncerrando o programa.");
+        exit(0);
         break;
     }
 
@@ -174,7 +197,7 @@ int Remove(Node **Geral, int select)
             free(cache);
         }
     }
-    else
+    else if(opcao == '2')
     {
 
         if(cache == NULL)

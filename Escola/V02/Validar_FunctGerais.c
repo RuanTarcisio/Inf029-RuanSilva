@@ -6,33 +6,166 @@
 #include <string.h>
 
 #include "Cadastro_Escola__.h"
+#include "Cadastro_Escola_Disciplinas.h"
 
-cadastro AlterarDadosPessoais(cadastro Dados)
+
+_cadastro RecebeDados_Materia()
 {
-    char *nome, *sexo, *nascimento;
+    _cadastro _Dados;
+    /*char *nome, *codigo;
+    int semestre;*/
 
-    nome = Dados.nome;
-    sexo = &Dados.sexo;
-    nascimento = Dados.nascimento;
-
-    printf("\n\n\n Informe os novos dados. ");
-    printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
-    gets(nome);
+    printf("\n Digite o nome disciplina: ");
     setbuf(stdin, NULL);
-    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
-    gets(nascimento);
+    gets(_Dados.nome);
     setbuf(stdin, NULL);
-    /*printf("\n Digite o CPF: ");
-    gets(cpf);
-    setbuf(stdin, NULL);*/
-    printf("\n Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
-    gets(sexo);
+    printf(" \n Digite o código da disciplina: ");
+    gets(_Dados.codigo);
+    setbuf(stdin, NULL);
+    printf("\n Digite o semestre da disciplina: ");
+    scanf("%d", &_Dados.semestre);
     setbuf(stdin, NULL);
 
-    Dados = alt_validar(&Dados);
 
-    return Dados;
+    /*Dados = validar(&Dados);*/
+
+    return _Dados;
+}
+
+
+_cadastro AlteraDados_Materia(_cadastro Dados)
+{
+
+}
+
+
+_cadastro _Validar(_cadastro *_Dados)
+{
+    int a, b, c, ndx=0 ;
+    char confirma, *nome, *codigo;
+
+    nome = _Dados->nome;
+    codigo = _Dados->codigo;
+
+
+    a = validarNome(nome);
+
+
+    do
+    {
+        if (a != 1)
+        {
+            printf("\nNome Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o nome: ");
+            gets(nome);
+            setbuf(stdin, NULL);
+            a = validarNome(nome);
+        }
+        if (b != 1)
+        {
+            printf("\n Codigo Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o codigo da disciplina:  ");
+            setbuf(stdin, NULL);
+            gets(codigo);
+            setbuf(stdin, NULL);
+           /* b = validarData(nascimento);*/
+        }
+        if (c != 1)
+        {
+            printf("\n Semestre Invalido.");
+            setbuf(stdin, NULL);
+            printf("\n Informe o CPF: ");
+            setbuf(stdin, NULL);
+/*
+            c = validarCPF(cpf);                        */
+        }
+
+    }
+    while(a != 1 || b != 1 || c != 1);
+
+    ndx=0;
+    do
+    {
+        _Dados->nome[ndx] = toupper(_Dados->nome[ndx]);
+        ndx++;
+    }
+    while(ndx < strlen(_Dados->nome));
+
+    do
+    {
+        _Dados->codigo[ndx] = toupper(_Dados->codigo[ndx]);
+        ndx++;
+    }
+    while(ndx < strlen(_Dados->codigo));
+
+
+    system("cls");
+    printf("\n\n");
+    puts(_Dados->nome);
+    printf("\n");
+    puts(_Dados->codigo);
+    printf("\n");
+    printf("%d", _Dados->semestre);
+    printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (9)- SAIR\n");
+    confirma = getch();
+    setbuf(stdin, NULL);
+
+    switch(confirma)
+    {
+    case '1':
+        return *_Dados;
+    case '2':
+        RecebeDados_Materia();
+        break;
+    case '0':
+        printf("\nEncerrando o programa.");
+        exit(0);
+        break;
+    default:
+        _Validar(_Dados);
+        break;
+    }
+    return *_Dados;
+}
+
+
+int ValidarCodigo(char *codigo)
+{
+    int v_ndx = 1, ndx = 0;
+
+    if(strlen(codigo) > 6)
+    {
+        return 0;
+    }
+
+    do
+    {
+        if(!isalpha(codigo[ndx]))
+        {
+            v_ndx = 0;
+        }
+    }while(ndx < 3);
+
+    if(v_ndx == 0)
+    {
+
+    }
+
+    do
+    {
+        if(!isdigit(codigo[ndx]))
+        {
+            v_ndx = 0;
+        }
+    }while(ndx < 7 || codigo[ndx] != '\0');
+
+    if(v_ndx == 0)
+    {
+
+    }
 }
 
 
@@ -63,6 +196,35 @@ cadastro RecebeDadosPessoais()
     setbuf(stdin, NULL);
 
     Dados = validar(&Dados);
+
+    return Dados;
+}
+
+
+cadastro AlterarDadosPessoais(cadastro Dados)
+{
+    char *nome, *sexo, *nascimento;
+
+    nome = Dados.nome;
+    sexo = &Dados.sexo;
+    nascimento = Dados.nascimento;
+
+    printf("\n\n\n Informe os novos dados. ");
+    printf("\n Digite o nome: ");
+    setbuf(stdin, NULL);
+    gets(nome);
+    setbuf(stdin, NULL);
+    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
+    gets(nascimento);
+    setbuf(stdin, NULL);
+    /*printf("\n Digite o CPF: ");
+    gets(cpf);
+    setbuf(stdin, NULL);*/
+    printf("\n Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
+    gets(sexo);
+    setbuf(stdin, NULL);
+
+    Dados = alt_validar(&Dados);
 
     return Dados;
 }
@@ -265,7 +427,7 @@ int validarData(char *data)
     } nascimento;
 
     nascimento *recebe = malloc(sizeof(nascimento));
-    date *guia = malloc(sizeof(date));
+    date *guia;
 
     int validador;
 
