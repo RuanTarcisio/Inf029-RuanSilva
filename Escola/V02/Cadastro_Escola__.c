@@ -28,6 +28,7 @@ void menuGeral()
     escolha = getch();
     setbuf(stdin, NULL);
 
+
     switch(escolha)
     {
     case '0':
@@ -44,6 +45,7 @@ void menuGeral()
         break;
     default:
         system("cls");
+        setbuf(stdin, NULL);
         menuGeral();
         break;
     }
@@ -232,7 +234,7 @@ void menuCadastro(int select)
             }
             else
             {
-                menuProfessores(select);
+                menuProfessores();
             }
         }
     }
@@ -251,6 +253,19 @@ void menuCadastro(int select)
         else
         {
             _Push(&Materias, &_Disciplina);
+            setbuf(stdin, NULL);
+            system("cls");
+            printf("\n Deseja realizar cadastrar outra disciplina? ");
+            printf("\n Digite (1)- SIM ou (2)- NÃO");
+            escolha = getche();
+            if(escolha == '1')
+            {
+                menuCadastro(select);
+            }
+            else
+            {
+                menuDisciplinas();
+            }
         }
     }
 }
@@ -304,7 +319,22 @@ void menuAlterar(int select)
     }
     else if(select == 3)
     {
+        OK_Alterar = _Atualizar(&Materias);
 
+        if(OK_Alterar == 1)
+        {
+            printf("\n Alterado com sucesso. ");
+        }
+        else if(OK_Alterar == 0)
+        {
+            printf("\n Lista vazia. ");
+        }
+        else if(OK_Alterar == -1)
+        {
+            printf("\n Não consta na base. ");
+        }
+        getch();
+        menuDisciplinas();
     }
 }
 

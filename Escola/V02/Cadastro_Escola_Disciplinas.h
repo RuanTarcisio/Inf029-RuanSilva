@@ -23,16 +23,20 @@ typedef struct List
 } _Node;
 _Node* Materias;
 
+
+_Node* _criar_Lista();
+int _Push(_Node** Geral, _cadastro *Materias);
+int _Remove(_Node **Geral);
+int _Atualizar(_Node **Geral);
 void _Display(_Node *Geral);
 
 int Buscar_Disciplina(_Node* Geral , char *codigo);
 int _isEmpty(_Node *Geral);
-int _Push(_Node** Geral, _cadastro *Materias);
-_Node* _criar_Lista();
 
 
 
 _cadastro RecebeDados_Materia();
 _cadastro AlteraDados_Materia(_cadastro Dados);
+_cadastro _Validar(_cadastro *_Materia);
 
 #endif // CADASTRO_ESCOLA_DISCIPLINAS_H_INCLUDED

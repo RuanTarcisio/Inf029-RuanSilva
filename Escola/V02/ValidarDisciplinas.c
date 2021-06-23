@@ -88,51 +88,107 @@ int _Remove(_Node **Geral)
     gets(codigo);
 
 
-        if(cache == NULL)
+    if(cache == NULL)
+    {
+        return 0;
+    }
+    if(Buscar_Disciplina(cache, codigo) == 0)
+    {
+        return -1;
+    }
+    else if(cache->prox == NULL)
+    {
+        if(_isEmpty(cache)== 1)
         {
-            return 0;
+            *Geral = _criar_Lista();
         }
-        if(Buscar_Disciplina(cache, codigo) == 0)
+        validador = 1;
+    }
+    else if(strcmp(cache->_dados.codigo, codigo) == 0)
+    {
+        *Geral = cache->prox;
+        (*Geral)->tamanho--;
+
+        validador = 1;
+    }
+    else
+    {
+        cache = cache->prox;
+        while (cache != NULL && strcmp(cache->_dados.codigo, codigo) == 0)
         {
-            return -1;
+            inicio = cache;
+            cache = cache->prox;
         }
-        else if(cache->prox == NULL)
+        if(strcmp(cache->_dados.codigo, codigo) == 0)
         {
-            if(_isEmpty(cache)== 1)
-            {
-                *Geral = _criar_Lista();
-            }
-            validador = 1;
-        }
-        else if(strcmp(cache->_dados.codigo, codigo) == 0)
-        {
-            *Geral = cache->prox;
-            (*Geral)->tamanho--;
+            inicio->prox = cache->prox;
+            (*Geral)->tamanho --;
 
             validador = 1;
         }
         else
         {
-            cache = cache->prox;
-            while (cache != NULL && strcmp(cache->_dados.codigo, codigo) == 0)
-            {
-                inicio = cache;
-                cache = cache->prox;
-            }
-            if(strcmp(cache->_dados.codigo, codigo) == 0)
-            {
-                inicio->prox = cache->prox;
-                (*Geral)->tamanho --;
-
-                validador = 1;
-            }
-            else
-            {
-                validador = 0;
-            }
-            free(cache);
+            validador = 0;
         }
+        free(cache);
+    }
 
+    return validador;
+}
+
+
+int _Atualizar(_Node **Geral)
+{
+    int validador;
+    char codigo[7];
+    _cadastro Dados;
+    _Node* cache = 0;
+    cache = *Geral;
+
+    if(cache == NULL)
+    {
+        return 0;
+    }
+
+    setbuf(stdin, NULL);
+    printf("\n Informe o codigo da disciplina. ");
+    gets(codigo);
+
+    if(Buscar_Disciplina(cache, codigo) == 0)
+    {
+        return -1;
+    }
+    else if(strcmp(cache->_dados.codigo, codigo) == 0)
+    {
+        Dados = cache->_dados;
+
+        Dados = AlteraDados_Materia(Dados);
+        cache->_dados = Dados;
+
+        validador = 1;
+    }
+    else
+    {
+        cache = cache->prox;
+        while (cache != NULL && strcmp(cache->_dados.codigo, codigo) == 0)
+        {
+            cache= cache->prox;
+        }
+        if(strcmp(cache->_dados.codigo, codigo) == 0)
+        {
+            Dados = cache->_dados;
+
+            Dados = AlteraDados_Materia(Dados);
+            cache->_dados = Dados;
+
+            validador = 1;
+        }
+        else
+        {
+            validador = 0;
+        }
+        free(cache);
+    }
     return validador;
 }
 

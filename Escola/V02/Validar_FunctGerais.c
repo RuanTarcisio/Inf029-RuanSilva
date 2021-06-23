@@ -28,29 +28,50 @@ _cadastro RecebeDados_Materia()
     setbuf(stdin, NULL);
 
 
-    /*Dados = validar(&Dados);*/
+    _Dados = _Validar(&_Dados);
 
     return _Dados;
 }
 
 
-_cadastro AlteraDados_Materia(_cadastro Dados)
+_cadastro AlteraDados_Materia(_cadastro _Dados)
 {
 
+    setbuf(stdin, NULL);
+    printf("\n Digite o nome disciplina: ");
+    setbuf(stdin, NULL);
+    gets(_Dados.nome);
+    setbuf(stdin, NULL);
+    printf(" \n Digite o código da disciplina: ");
+    gets(_Dados.codigo);
+    setbuf(stdin, NULL);
+    printf("\n Digite o semestre da disciplina: ");
+    scanf("%d", &_Dados.semestre);
+    setbuf(stdin, NULL);
+
+
+    _Dados = _Validar(&_Dados);
+
+    return _Dados;
 }
 
 
-_cadastro _Validar(_cadastro *_Dados)
+_cadastro _Validar(_cadastro *_Materia)
 {
-    int a, b, c, ndx=0 ;
+    int a, b, c=1, ndx=0 ;
     char confirma, *nome, *codigo;
 
-    nome = _Dados->nome;
-    codigo = _Dados->codigo;
-
+    nome = _Materia->nome;
+    codigo = _Materia->codigo;
 
     a = validarNome(nome);
+    b = validarCodigo(codigo);
+    printf("AQQQ");
 
+    if(_Materia->semestre < 1 || _Materia->semestre > 10)
+    {
+        c = 0;
+    }
 
     do
     {
@@ -71,7 +92,7 @@ _cadastro _Validar(_cadastro *_Dados)
             setbuf(stdin, NULL);
             gets(codigo);
             setbuf(stdin, NULL);
-           /* b = validarData(nascimento);*/
+            b = validarCodigo(codigo);
         }
         if (c != 1)
         {
@@ -89,26 +110,26 @@ _cadastro _Validar(_cadastro *_Dados)
     ndx=0;
     do
     {
-        _Dados->nome[ndx] = toupper(_Dados->nome[ndx]);
+        _Materia->nome[ndx] = toupper(_Materia->nome[ndx]);
         ndx++;
     }
-    while(ndx < strlen(_Dados->nome));
+    while(ndx < strlen(_Materia->nome));
 
     do
     {
-        _Dados->codigo[ndx] = toupper(_Dados->codigo[ndx]);
+        _Materia->codigo[ndx] = toupper(_Materia->codigo[ndx]);
         ndx++;
     }
-    while(ndx < strlen(_Dados->codigo));
+    while(ndx < strlen(_Materia->codigo));
 
 
     system("cls");
     printf("\n\n");
-    puts(_Dados->nome);
+    puts(_Materia->nome);
     printf("\n");
-    puts(_Dados->codigo);
+    puts(_Materia->codigo);
     printf("\n");
-    printf("%d", _Dados->semestre);
+    printf("%d", _Materia->semestre);
     printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (9)- SAIR\n");
     confirma = getch();
     setbuf(stdin, NULL);
@@ -116,7 +137,7 @@ _cadastro _Validar(_cadastro *_Dados)
     switch(confirma)
     {
     case '1':
-        return *_Dados;
+        return *_Materia;
     case '2':
         RecebeDados_Materia();
         break;
@@ -125,18 +146,18 @@ _cadastro _Validar(_cadastro *_Dados)
         exit(0);
         break;
     default:
-        _Validar(_Dados);
+        _Validar(_Materia);
         break;
     }
-    return *_Dados;
+    return *_Materia;
 }
 
 
-int ValidarCodigo(char *codigo)
+int validarCodigo(char *codigo)
 {
     int v_ndx = 1, ndx = 0;
 
-    if(strlen(codigo) > 6)
+    if(strlen(codigo) != 6)
     {
         return 0;
     }
@@ -146,26 +167,22 @@ int ValidarCodigo(char *codigo)
         if(!isalpha(codigo[ndx]))
         {
             v_ndx = 0;
+            break;
         }
+        ndx++;
     }while(ndx < 3);
-
-    if(v_ndx == 0)
-    {
-
-    }
 
     do
     {
         if(!isdigit(codigo[ndx]))
         {
             v_ndx = 0;
+            break;
         }
-    }while(ndx < 7 || codigo[ndx] != '\0');
+        ndx++;
+    }while(ndx < 7 && codigo[ndx] != '\0');
 
-    if(v_ndx == 0)
-    {
-
-    }
+    return v_ndx;
 }
 
 
@@ -195,6 +212,7 @@ cadastro RecebeDadosPessoais()
     gets(sexo);
     setbuf(stdin, NULL);
 
+    printf("\n TO AQ 0");
     Dados = validar(&Dados);
 
     return Dados;
@@ -427,12 +445,25 @@ int validarData(char *data)
     } nascimento;
 
     nascimento *recebe = malloc(sizeof(nascimento));
-    date *guia;
+    date *guia = NULL ;
 
     int validador;
 
     int ndx=0, ndxV=0, ndxB=0;
 
+    do
+    {
+        if(!isdigit(data[ndx]) && data[ndx] != '/')
+        {
+            printf("\nInvalida");
+            break;
+            return 0;
+        }
+        ndx++;
+        printf("\nValida");
+    }while(ndx < strlen(data));
+
+    ndx = 0;
     do
     {
         if(data[ndxV] != '/')

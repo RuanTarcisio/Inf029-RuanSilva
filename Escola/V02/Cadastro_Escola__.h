@@ -68,6 +68,7 @@ cadastro AlterarDadosPessoais(cadastro Dados);
 cadastro validar(cadastro *Dados);
 int validarData(char *data);
 int validarNascimento(date *guia);
+int validarCodigo(char *codigo);
 int validarCPF(char *cpf);
 int validarNome(char *nome);
 int validarSexo(char *sexo);
