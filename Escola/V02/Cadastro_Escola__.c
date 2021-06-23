@@ -13,6 +13,11 @@ void inicializar()
     Professores = criar_Lista();
     Alunos = criar_Lista();
     Materias = _criar_Lista();
+
+    /*Materias->Docente = criar_Lista();
+    Materias->Discente = criar_Lista();*/
+
+
 }
 
 

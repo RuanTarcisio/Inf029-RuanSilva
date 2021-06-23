@@ -6,10 +6,10 @@
 typedef struct
 {
     char nome[MAX_NAME];
-    Node *Docente;
-    Node *Discente;
     char codigo[7];
     int semestre;
+    Node *Docente;
+    Node *Discente;
 } _cadastro;
 _cadastro _Disciplina;
 

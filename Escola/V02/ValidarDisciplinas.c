@@ -59,12 +59,13 @@ void _Display(_Node *Geral)
     {
         do
         {
-            /*printf("\n\n%s ", ref->dados.nome);
-            printf("\n\n%d ", ref->dados.matricula);
-            printf("\n\n%s ", ref->dados.nascimento);
-            printf("\n\n%s ", ref->dados.cpf);
-            printf("\n \n%c", ref->dados.sexo);
-            printf("\n\n ---------------------------------------------------");*/
+            printf("\n");
+            puts(ref->_dados.nome);
+            printf("\n%d ", ref->_dados.semestre);
+            printf("\n%s ", ref->_dados.codigo);
+            /*printf("\n\n%s ", ref->dados.cpf);
+            printf("\n \n%c", ref->dados.sexo);*/
+            printf("\n\n ---------------------------------------------------");
             ref = ref->prox;
         }
         while(ref != NULL);
@@ -160,9 +161,11 @@ int _Atualizar(_Node **Geral)
     }
     else if(strcmp(cache->_dados.codigo, codigo) == 0)
     {
+
         Dados = cache->_dados;
 
         Dados = AlteraDados_Materia(Dados);
+
         cache->_dados = Dados;
 
         validador = 1;
@@ -179,6 +182,7 @@ int _Atualizar(_Node **Geral)
             Dados = cache->_dados;
 
             Dados = AlteraDados_Materia(Dados);
+
             cache->_dados = Dados;
 
             validador = 1;
