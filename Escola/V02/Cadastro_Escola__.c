@@ -24,10 +24,20 @@ void inicializar()
 void menuGeral()
 {
     char escolha;
-    setbuf(stdin, NULL);
-
-    printf("\n\n       *********************** PROJETO ESCOLA ***********************\n\n");
-    printf("\n Digite: (1)- ALUNOS, (2)- PROFESSORES, (3)- DISCIPLINAS ou (0)- SAIR:  ");
+    system("cls");
+    printf("\n     |-------------------------------------------------------|");
+    printf("\n     |  ***************** PROJETO ESCOLA ******************  |");
+    printf("\n     |-------------------------------------------------------|\n\n");
+    printf("\n");
+    printf("\n       |------------------------------------------------|");
+    printf("\n       |      DIGITE:                                   |");
+    printf("\n       |                                                |");
+    printf("\n       |       (1)- ALUNOS                              |");
+    printf("\n       |       (2)- PROFESSORES                         |");
+    printf("\n       |       (3)- DISCIPLINAS                         |");
+    printf("\n       |       (0)- SAIR                                |");
+    printf("\n       |                                                |");
+    printf("\n       |------------------------------------------------|");
     /*printf("\n Digite: \n\n (1)- ALUNOS \n (2)- PROFESSORES \n (3)- DISCIPLINAS  \n (0)- SAIR:  ");*/
     printf("\n\n   ");
     escolha = getch();
@@ -63,10 +73,22 @@ void menuAlunos()
     int OK_Remove = 0;
     setbuf(stdin, NULL);
     system("cls");
-    printf("   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n      ---------------------         ALUNOS       ----------------------\n");
-    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n\n Digite: (1)- CADASTRAR, (2)- LISTAR, (3)- EXCLUIR, (4)- ALTERAR , (9)- VOLTAR   ou (0)- SAIR.  \n");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+    printf("\n     ----------------------   CADASTRO ALUNOS   ---------------------\n");
+    printf("\n   ---------------------------------------------------------------------\n\n");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+    printf("\n   |                                                                   |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  Digite:                                                          |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  (1)- CADASTRAR                                                   |");
+    printf("\n   |  (2)- LISTAR                                                      |");
+    printf("\n   |  (3)- EXCLUIR                                                     |");
+    printf("\n   |  (4)- ALTERAR                                                     |");
+    printf("\n   |  (9)- VOLTAR                                                      |");
+    printf("\n   |  (0)- SAIR.                                                       |");
+    printf("\n   |                                                                   |");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
     escolha = getch();
     setbuf(stdin, NULL);
 
@@ -89,17 +111,17 @@ void menuAlunos()
 
         if(OK_Remove == 1)
         {
-            printf("\n Excluido com sucesso. ");
+            printf("\n Excluido com sucesso. \n");
         }
         else if( OK_Remove == 0)
         {
-            printf("\n Lista vazia. ");
+            printf("\n Lista vazia. \n");
         }
         else if(OK_Remove == -1)
         {
-            printf("\n Não consta na base. ");
+            printf("\n Não consta na base. \n");
         }
-        getch();
+        system("pause");
         menuAlunos();
         break;
     case '4':
@@ -118,16 +140,29 @@ void menuAlunos()
 
 void menuProfessores()
 {
-    char escolha;
-    int OK_Remove;
-    setbuf(stdin,NULL);
+   char escolha;
+    int OK_Remove = 0;
+    setbuf(stdin, NULL);
     system("cls");
-    printf("   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n     ---------------------       PROFESSORES       ---------------------\n");
-    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n\n Digite: (1)- CADASTRAR, (2)- LISTAR, (3)- EXCLUIR, (4)- ALTERAR , (9)- VOLTAR   ou (0)- SAIR.  \n");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+    printf("\n     --------------------   CADASTRO PROFESSORES   -------------------\n");
+    printf("\n   ---------------------------------------------------------------------\n\n");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+    printf("\n   |                                                                   |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  Digite:                                                          |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  (1)- CADASTRAR                                                   |");
+    printf("\n   |  (2)- LISTAR                                                      |");
+    printf("\n   |  (3)- EXCLUIR                                                     |");
+    printf("\n   |  (4)- ALTERAR                                                     |");
+    printf("\n   |  (9)- VOLTAR                                                      |");
+    printf("\n   |  (0)- SAIR.                                                       |");
+    printf("\n   |                                                                   |");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
     escolha = getch();
     setbuf(stdin, NULL);
+
 
     switch(escolha)
     {
@@ -148,17 +183,17 @@ void menuProfessores()
 
         if(OK_Remove == 1)
         {
-            printf("\n Excluido com sucesso. ");
+            printf("\n Excluido com sucesso. \n");
         }
         else if( OK_Remove == 0)
         {
-            printf("\n Lista vazia. ");
+            printf("\n Lista vazia. \n");
         }
         else if(OK_Remove == -1)
         {
-            printf("\n Não consta na base. ");
+            printf("\n Não consta na base. \n");
         }
-        getch();
+        system("pause");
         menuProfessores();
         break;
     case '4':
@@ -173,6 +208,76 @@ void menuProfessores()
 }
 
 
+void menuDisciplinas()
+{
+      char escolha;
+    int OK_Remove = 0;
+    setbuf(stdin, NULL);
+    system("cls");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+    printf("\n     -------------------   CADASTRO DISCIPLINAS   -------------------\n");
+    printf("\n   ---------------------------------------------------------------------\n\n");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+    printf("\n   |                                                                   |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  Digite:                                                          |");
+    printf("\n   |                                                                   |");
+    printf("\n   |  (1)- CADASTRAR                                                   |");
+    printf("\n   |  (2)- LISTAR                                                      |");
+    printf("\n   |  (3)- EXCLUIR                                                     |");
+    printf("\n   |  (4)- ALTERAR                                                     |");
+    printf("\n   |  (9)- VOLTAR                                                      |");
+    printf("\n   |  (0)- SAIR.                                                       |");
+    printf("\n   |                                                                   |");
+    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+    escolha = getch();
+    setbuf(stdin, NULL);
+;
+
+    switch(escolha)
+    {
+    case '0':
+        printf("\nEncerrando o programa.");
+        exit(0);
+        break;
+    case '1':
+        menuCadastro(3);
+        break;
+    case '2':
+        _Display(Materias);
+        getch();
+        menuDisciplinas();
+        break;
+    case '3':
+        OK_Remove = _Remove(&Materias);
+
+        if(OK_Remove == 1)
+        {
+            printf("\n Excluido com sucesso. \n");
+        }
+        else if( OK_Remove == 0)
+        {
+            printf("\n Lista vazia. \n");
+        }
+        else if(OK_Remove == -1)
+        {
+            printf("\n Não consta na base. \n");
+        }
+        system("pause");
+        menuDisciplinas();
+        break;
+    case '4':
+        menuAlterar(3);
+        break;
+    case '9':
+        menuGeral();
+    default:
+        menuDisciplinas();
+        break;
+    }
+}
+
+
 void menuCadastro(int select)
 {
     char escolha;
@@ -180,9 +285,9 @@ void menuCadastro(int select)
 
     setbuf(stdin, NULL);
     system("cls");
-    printf("\n\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n    *-*-*-*-*-*-*-*-*-*-*       CADASTRAMENTO      *-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+     printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
+    printf("\n   |                              CADASTRO                             |");
+    printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
     getchar();
 
     if(select == 1)
@@ -192,8 +297,8 @@ void menuCadastro(int select)
         v_CPF = CPF_NaBase(Alunos, Pessoas.cpf);
         if(v_CPF == 1)
         {
-            printf("\n\n ALUNO JÁ ESTA CADASTRADO. ");
-            getchar();
+            printf("\n\n ALUNO JÁ ESTA CADASTRADO. \n\n");
+            system("pause");
             menuAlunos();
         }
         else
@@ -221,8 +326,8 @@ void menuCadastro(int select)
         v_CPF = CPF_NaBase(Professores, Pessoas.cpf);
         if(v_CPF == 1)
         {
-            printf("\n\n PROFESSOR JÁ ESTA CADASTRADO. ");
-            getchar();
+            printf("\n\n PROFESSOR JÁ ESTA CADASTRADO. \n\n");
+            system("pause");
             menuProfessores();
         }
         else
@@ -251,8 +356,8 @@ void menuCadastro(int select)
 
         if(v_MATERIA == 1)
         {
-            printf("\n\n DISCIPLINA JÁ ESTÁ CADASTRADA. ");
-            getchar();
+            printf("\n\n DISCIPLINA JÁ ESTÁ CADASTRADA. \n\n");
+            system("pause");
             menuDisciplinas();
         }
         else
@@ -279,10 +384,10 @@ void menuCadastro(int select)
 void menuAlterar(int select)
 {
     int OK_Alterar;
-
-    printf("\n\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n    *-*-*-*-*-*-*-*-*-*-*       ALTERAÇÕES      *-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
+    system("cls");
+    printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
+    printf("\n   |                             ALTERAÇÕES                            |");
+    printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
 
     if(select == 1)
     {
@@ -290,17 +395,17 @@ void menuAlterar(int select)
 
         if(OK_Alterar == 1)
         {
-            printf("\n Alterado com sucesso. ");
-        }
-        else if(OK_Alterar == 0)
-        {
-            printf("\n Lista vazia. ");
+            printf("\n Alterado com sucesso.\n ");
         }
         else if(OK_Alterar == -1)
         {
-            printf("\n Não consta na base. ");
+            printf("\n Não consta na base.\n");
         }
-        getch();
+        else if(OK_Alterar == 0)
+        {
+            printf("\n Lista vazia. \n");
+        }
+        system("pause");
         menuAlunos();
     }
     else if(select == 2)
@@ -309,7 +414,7 @@ void menuAlterar(int select)
 
         if(OK_Alterar == 1)
         {
-            printf("\n Alterado com sucesso. ");
+            printf("\n Alterado com sucesso. \n");
         }
         else if(OK_Alterar == 0)
         {
@@ -317,9 +422,9 @@ void menuAlterar(int select)
         }
         else if(OK_Alterar == -1)
         {
-            printf("\n Não consta na base. ");
+            printf("\n Não consta na base. \n");
         }
-        getch();
+        system("pause");
         menuProfessores();
     }
     else if(select == 3)
@@ -328,7 +433,7 @@ void menuAlterar(int select)
 
         if(OK_Alterar == 1)
         {
-            printf("\n Alterado com sucesso. ");
+            printf("\n Alterado com sucesso. \n");
         }
         else if(OK_Alterar == 0)
         {
@@ -336,67 +441,10 @@ void menuAlterar(int select)
         }
         else if(OK_Alterar == -1)
         {
-            printf("\n Não consta na base. ");
+            printf("\n Não consta na base. \n");
         }
-        getch();
+        system("pause");
         menuDisciplinas();
-    }
-}
-
-
-void menuDisciplinas()
-{
-     char escolha;
-    int OK_Remove;
-    setbuf(stdin,NULL);
-    system("cls");
-    printf("   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n     ---------------------      DISCIPLINAS       ---------------------\n");
-    printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
-    printf("\n\n Digite: (1)- CADASTRAR, (2)- LISTAR, (3)- EXCLUIR, (4)- ALTERAR , (9)- VOLTAR   ou (0)- SAIR.  \n");
-    escolha = getch();
-    setbuf(stdin, NULL);
-
-    switch(escolha)
-    {
-    case '0':
-        printf("\nEncerrando o programa.");
-        exit(0);
-        break;
-    case '1':
-        menuCadastro(3);
-        break;
-    case '2':
-        _Display(Materias);
-        getch();
-        menuDisciplinas();
-        break;
-    case '3':
-        OK_Remove = Remove(&Professores, 2);
-
-        if(OK_Remove == 1)
-        {
-            printf("\n Excluido com sucesso. ");
-        }
-        else if( OK_Remove == 0)
-        {
-            printf("\n Lista vazia. ");
-        }
-        else if(OK_Remove == -1)
-        {
-            printf("\n Não consta na base. ");
-        }
-        getch();
-        menuDisciplinas();
-        break;
-    case '4':
-        menuAlterar(3);
-        break;
-    case '9':
-        menuGeral();
-    default:
-        menuDisciplinas();
-        break;
     }
 }
 

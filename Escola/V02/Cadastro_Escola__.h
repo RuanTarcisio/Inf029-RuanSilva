@@ -35,7 +35,7 @@ Node* Professores;
 Node* Alunos;
 
 
-
+void clear_keyboard_buffer(void);
 /* FUNÇÕES PARA MENUS */
 void inicializar();
 void menuGeral();

@@ -8,8 +8,6 @@ typedef struct
     char nome[MAX_NAME];
     char codigo[7];
     int semestre;
-    Node *Docente;
-    Node *Discente;
 } _cadastro;
 _cadastro _Disciplina;
 
@@ -18,6 +16,8 @@ typedef struct List
 {
     _cadastro _dados;
     struct List *prox;
+    Node *Docente;
+    Node *Discente;
     int tamanho;
     int posicao;
 } _Node;

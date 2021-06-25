@@ -9,6 +9,14 @@
 #include "Cadastro_Escola_Disciplinas.h"
 
 
+void clear_keyboard_buffer(void)
+{
+    int c = 0;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+    return;
+}
+
+
 _cadastro RecebeDados_Materia()
 {
     _cadastro _Dados;
@@ -18,10 +26,13 @@ _cadastro RecebeDados_Materia()
     setbuf(stdin, NULL);
     printf("\n Digite o nome disciplina: ");
     setbuf(stdin, NULL);
-    gets(_Dados.nome);
+    fgets(_Dados.nome, MAX_NAME, stdin);
+    _Dados.nome[strlen(_Dados.nome)-1] = '\0';
     setbuf(stdin, NULL);
+    clear_keyboard_buffer();
     printf(" \n Digite o código da disciplina: ");
-    gets(_Dados.codigo);
+    fgets(_Dados.codigo, 8, stdin);
+    _Dados.codigo[strlen(_Dados.codigo)-1] = '\0';
     setbuf(stdin, NULL);
     printf("\n Digite o semestre da disciplina: ");
     scanf("%d", &_Dados.semestre);
@@ -37,13 +48,16 @@ _cadastro RecebeDados_Materia()
 _cadastro AlteraDados_Materia(_cadastro _Dados)
 {
 
-    setbuf(stdin, NULL);
+   setbuf(stdin, NULL);
     printf("\n Digite o nome disciplina: ");
     setbuf(stdin, NULL);
-    gets(_Dados.nome);
+    fgets(_Dados.nome, MAX_NAME, stdin);
+    _Dados.nome[strlen(_Dados.nome)-1] = '\0';
     setbuf(stdin, NULL);
+    clear_keyboard_buffer();
     printf(" \n Digite o código da disciplina: ");
-    gets(_Dados.codigo);
+    fgets(_Dados.codigo, 8, stdin);
+    _Dados.codigo[strlen(_Dados.codigo)-1] = '\0';
     setbuf(stdin, NULL);
     printf("\n Digite o semestre da disciplina: ");
     scanf("%d", &_Dados.semestre);
@@ -66,7 +80,7 @@ _cadastro _Validar(_cadastro *_Materia)
 
     a = validarNome(nome);
     b = validarCodigo(codigo);
-    printf("AQQQ");
+
 
     if(_Materia->semestre < 1 || _Materia->semestre > 10)
     {
@@ -200,10 +214,13 @@ cadastro RecebeDadosPessoais()
     setbuf(stdin, NULL);
     printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
-    gets(nome);
+    fgets(nome, MAX_NAME, stdin);
+    nome[strlen(nome)-1] = '\0';
     setbuf(stdin, NULL);
-    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
-    gets(nascimento);
+    /*clear_keyboard_buffer();*/
+    printf(" Digite a data de nascimento < dd/mm/aaaa >: ");
+    fgets(nascimento, 15, stdin);
+    nascimento[strlen(nascimento)-1] = '\0';
     setbuf(stdin, NULL);
     printf("\n Digite o CPF: ");
     gets(cpf);
@@ -227,13 +244,16 @@ cadastro AlterarDadosPessoais(cadastro Dados)
     sexo = &Dados.sexo;
     nascimento = Dados.nascimento;
 
-    printf("\n\n\n Informe os novos dados. ");
+    setbuf(stdin, NULL);
     printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
-    gets(nome);
+    fgets(nome, MAX_NAME, stdin);
+    nome[strlen(nome)-1] = '\0';
     setbuf(stdin, NULL);
-    printf(" \n Digite a data de nascimento < dd/mm/aaaa >: ");
-    gets(nascimento);
+    clear_keyboard_buffer();
+    printf(" Digite a data de nascimento < dd/mm/aaaa >: ");
+    fgets(nascimento, 15, stdin);
+    nascimento[strlen(nascimento)-1] = '\0';
     setbuf(stdin, NULL);
     /*printf("\n Digite o CPF: ");
     gets(cpf);
@@ -268,26 +288,28 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
     {
         if (a != 1)
         {
-            printf("\nNome Invalido.");
+            clear_keyboard_buffer();
+            printf("\n Nome Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o nome: ");
-            gets(nome);
+            fgets(nome, MAX_NAME, stdin);
+            nome[strlen(nome)-1] = '\0';
             setbuf(stdin, NULL);
             a = validarNome(nome);
         }
         if (b != 1)
         {
+            clear_keyboard_buffer();
             printf("\n Data Invalida.");
-            setbuf(stdin, NULL);
-            printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
-            setbuf(stdin, NULL);
-            gets(nascimento);
+            printf(" \n Digite a data de nascimento  dd/mm/aaaa : ");
+            fgets(nascimento, 15, stdin);
+            nascimento[strlen(nascimento)-1] = '\0';
             setbuf(stdin, NULL);
             b = validarData(nascimento);
         }
         if (c != 1)
         {
-            printf("\nCPF Invalido.");
+            printf("\n CPF Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o CPF: ");
             setbuf(stdin, NULL);
@@ -297,7 +319,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
         if (d != 1)
         {
             setbuf(stdin, NULL);
-            printf("\nSexo Invalido.");
+            printf("\n Sexo Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o sexo (F/M): ");
             gets(sexo);
@@ -306,6 +328,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
         }
     }
     while(a != 1 || b != 1 || c != 1 || d != 1);
+
 
     ndx=0;
     do
@@ -327,7 +350,7 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
     puts(Dados->cpf);
     printf("\n");
     puts(sexo);
-    printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (9)- SAIR\n");
+    printf("\n Confirma os dados? Digite, (1)- SIM, (2)- NAO ou (0)- SAIR\n");
     confirma = getch();
     setbuf(stdin, NULL);
 
@@ -352,42 +375,42 @@ cadastro validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 
 cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR*/
 {
-    int a, b, c, d, ndx=0 ;
-    char *sexo, *nascimento, *nome, *cpf;
+    int a, b, d, ndx=0 ;
+    char *sexo, *nascimento, *nome;
 
     date *rcbAniversario = &Dados->aniversario;
     nascimento = Dados->nascimento;
     nome = Dados->nome;
-    cpf = Dados->cpf;
     sexo = &Dados->sexo;
 
     a = validarNome(nome);
     b = validarData(nascimento);
-    c = validarCPF(cpf);
     d = validarSexo(sexo);
 
     do
     {
         if (a != 1)
         {
-            printf("\nNome Invalido.");
+            clear_keyboard_buffer();
+            printf("\n Nome Invalido.");
             setbuf(stdin, NULL);
             printf("\n Informe o nome: ");
-            gets(nome);
+            fgets(nome, MAX_NAME, stdin);
+            nome[strlen(nome)-1] = '\0';
             setbuf(stdin, NULL);
             a = validarNome(nome);
         }
         if (b != 1)
         {
+           clear_keyboard_buffer();
             printf("\n Data Invalida.");
-            setbuf(stdin, NULL);
-            printf("\n Informe a data de nascimento dd/mm/aaaa:  ");
-            setbuf(stdin, NULL);
-            gets(nascimento);
+            printf(" \n Digite a data de nascimento  dd/mm/aaaa : ");
+            fgets(nascimento, 15, stdin);
+            nascimento[strlen(nascimento)-1] = '\0';
             setbuf(stdin, NULL);
             b = validarData(nascimento);
         }
-        if (c != 1)
+        /*if (c != 1)
         {
             printf("\nCPF Invalido.");
             setbuf(stdin, NULL);
@@ -395,7 +418,7 @@ cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR
             setbuf(stdin, NULL);
             gets(cpf);
             c = validarCPF(cpf);
-        }
+        */
         if (d != 1)
         {
             setbuf(stdin, NULL);
@@ -407,7 +430,7 @@ cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR
             d = validarSexo(sexo);
         }
     }
-    while(a != 1 || b != 1 || c != 1 || d != 1);
+    while(a != 1 || b != 1 || d != 1);
 
     ndx=0;
     do
@@ -444,23 +467,27 @@ int validarData(char *data)
         char ano[4];
     } nascimento;
 
-    nascimento *recebe = malloc(sizeof(nascimento));
-    date *guia = NULL ;
+    nascimento *recebe = (nascimento*) malloc(sizeof(nascimento));
+    date *guia = (date*) malloc (sizeof(date));
+
 
     int validador;
 
     int ndx=0, ndxV=0, ndxB=0;
 
+    if(strlen(data)> 10)
+    {
+        return 0;
+    }
+
     do
     {
         if(!isdigit(data[ndx]) && data[ndx] != '/')
         {
-            printf("\nInvalida");
-            break;
             return 0;
+            break;
         }
         ndx++;
-        printf("\nValida");
     }while(ndx < strlen(data));
 
     ndx = 0;
@@ -550,6 +577,7 @@ int validarData(char *data)
         }
         else
             return 0;
+
     }
     while(ndx < strlen(data) && data[ndx] != '\n');
 
@@ -557,8 +585,10 @@ int validarData(char *data)
     {
         return 0;
     }
+
     validador = validarNascimento(guia);
     free(recebe);
+    free(guia);
 
     return validador;
 }

@@ -63,6 +63,8 @@ void Display(Node *Geral, int select)
 {
     Node *ref = Geral;
 
+    system("cls");
+
     if(ref == NULL)
     {
         if(select == 1)
@@ -103,22 +105,19 @@ int Remove(Node **Geral, int select)
     int matricula, opcao, validador;
     char cpf[12];
     Node *inicio = NULL;
-    Node* cache = 0;
+    Node* cache = (Node*) malloc(sizeof(Node));
 
     cache = *Geral;
-    system("cls");
     do
     {
+        system("cls");
         setbuf(stdin, NULL);
 
         printf("\n PARA REMOVER, ESCOLHA:  \n");
         printf("\n(1)- BUSCAR P/ MATRICULA \n(2)- BUSCAR P/ CPF \n(9)- VOLTAR  \n(0)- SAIR \n");
         opcao = getch();
-        if(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0')
-        {
-        system("cls");
-        }
-    }while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
+    }
+    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
 
     switch(opcao)
     {
@@ -152,13 +151,15 @@ int Remove(Node **Geral, int select)
 
     if(opcao == '1')
     {
-        if(cache == NULL)
-        {
-            return 0;
-        }
+        cache = *Geral;
+
         if(Buscar_Na_Lista(cache, matricula) == 0)
         {
             return -1;
+        }
+        else if(*Geral == NULL)
+        {
+            return 0;
         }
         else if(cache->prox == NULL)
         {
@@ -166,7 +167,7 @@ int Remove(Node **Geral, int select)
             {
                 *Geral = criar_Lista();
             }
-            validador = 1;
+            return 1;
         }
         else if(cache->dados.matricula == matricula)
         {
@@ -177,36 +178,41 @@ int Remove(Node **Geral, int select)
         }
         else
         {
-            cache = cache->prox;
-            while (cache != NULL && cache->dados.matricula != matricula)
+            for (cache = *Geral; cache != NULL && cache->dados.matricula != matricula; cache = cache->prox)
             {
                 inicio = cache;
-                cache= cache->prox;
             }
             if(cache->dados.matricula == matricula)
             {
+                printf("AQ 6");
+
                 inicio->prox = cache->prox;
+
                 (*Geral)->tamanho --;
 
-                validador = 1;
+                return 1;
             }
             else
             {
                 validador = -1;
             }
-            free(cache);
         }
     }
     else if(opcao == '2')
     {
+        cache = *Geral;
 
-        if(cache == NULL)
-        {
-            return 0 ;
-        }
         if(CPF_NaBase(cache, cpf) == 0)
         {
+            printf(" \n TO AQ 0");
+            getch();
             return -1;
+        }
+        else if(*Geral == NULL)
+        {
+            printf(" \n TO AQ 1");
+            getch();
+            return 0 ;
         }
         else if(cache->prox == NULL)
         {
@@ -214,10 +220,14 @@ int Remove(Node **Geral, int select)
             {
                 *Geral = criar_Lista();
             }
-            validador = 1;
+            printf(" \n TO AQ 2");
+            getch();
+            return 1;
         }
         else if(strcmp(cache->dados.cpf, cpf) == 0)
         {
+            printf(" \n TO AQ 3");
+            getch();
             *Geral = cache->prox;
             (*Geral)->tamanho--;
 
@@ -225,50 +235,49 @@ int Remove(Node **Geral, int select)
         }
         else
         {
-            cache = cache->prox;
-            while (cache != NULL && strcmp(cache->dados.cpf, cpf) == 0)
+            printf(" \n TO AQ 4");
+            getch();
+            for (cache = *Geral; cache != NULL && (strcmp(cache->dados.cpf, cpf) != 0); cache = cache->prox)
             {
                 inicio = cache;
-                cache = cache->prox;
             }
+            printf(" \n TO AQ ***");
+            getch();
             if(strcmp(cache->dados.cpf, cpf) == 0)
             {
+                printf("AQ 6");
+                getch();
                 inicio->prox = cache->prox;
+
                 (*Geral)->tamanho --;
 
-                validador = 1;
+                return 1;
             }
             else
             {
-                validador = 0;
+                validador = -1;
             }
-            free(cache);
         }
     }
-
+    free(cache);
     return validador;
 }
 
 
 /* Node *cache = NULL, *next = NULL;
  int validador;
-
  setbuf(stdin,NULL);
-
  if(*Geral == NULL)
  {
      validador = 0;
  }
-
  else if(*Geral != NULL)
  {
      cache = AtPos(*Geral, select);
-
      if(cache == NULL)
      {
          validador = -1;
      }
-
      else if(cache->prox == NULL)
      {
          if(isEmpty(cache)== 1)
@@ -285,7 +294,6 @@ int Remove(Node **Geral, int select)
          validador = 1;
      }
  }
-
  free(next);
  return validador;
 }*/
@@ -388,13 +396,13 @@ int Atualizar(Node **Geral, int select)
     }
     else
     {
-        if(cache == NULL)
-        {
-            return 0 ;
-        }
         if(CPF_NaBase(cache, cpf) == 0)
         {
             return -1;
+        }
+        else if(cache == NULL)
+        {
+            return 0 ;
         }
         else if(strcmp(cache->dados.cpf, cpf) == 0)
         {
@@ -410,7 +418,7 @@ int Atualizar(Node **Geral, int select)
         else
         {
             cache = cache->prox;
-            while (cache != NULL && strcmp(cache->dados.cpf, cpf) == 0)
+            while (cache != NULL && strcmp(cache->dados.cpf, cpf) != 0)
             {
                 cache= cache->prox;
             }
@@ -452,11 +460,13 @@ int Buscar_Na_Lista(Node *Geral, int matricula)
         }
         else
         {
-            do
+            for(referencia = Geral; referencia != NULL && referencia->dados.matricula != matricula; referencia = referencia->prox)
+            {
+            }/*do
             {
                 referencia = referencia->prox;
             }
-            while(referencia != NULL && referencia->dados.matricula == matricula);
+            while(referencia != NULL && referencia->dados.matricula == matricula);*/
         }
         if(referencia == NULL)
         {
@@ -486,18 +496,18 @@ int CPF_NaBase(Node *Geral, char *cpf)
         }
         else
         {
-            do
+            for(referencia = Geral; referencia != NULL && (strcmp(referencia->dados.cpf, cpf) != 0); referencia = referencia->prox);
             {
-                referencia = referencia->prox;
+
             }
-            while(referencia != NULL && strcmp(referencia->dados.cpf, cpf)!= 0);
         }
-        if(referencia == NULL)
+        if(referencia != NULL)
         {
-            validador = 0;
+            validador = 1;
         }
         else
-            validador = 1;
+            validador = 0;
+
     }
     return validador;
 }

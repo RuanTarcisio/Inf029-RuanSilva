@@ -24,6 +24,8 @@ int _Push(_Node** Geral, _cadastro *Materias)
 {
     _Node *novo = (_Node*) malloc(sizeof(_Node));
     novo->_dados = *Materias;
+    novo->Discente = criar_Lista();
+    novo->Docente = criar_Lista();
 
     if(*Geral == NULL)
     {
@@ -63,6 +65,40 @@ void _Display(_Node *Geral)
             puts(ref->_dados.nome);
             printf("\n%d ", ref->_dados.semestre);
             printf("\n%s ", ref->_dados.codigo);
+
+            if(ref->Discente != NULL)
+            {
+                do
+                {
+                    printf("\n\n%s ", ref->Discente->dados.nome);
+                    printf("\n\n%d ", ref->Discente->dados.matricula);
+                    printf("\n\n%s ", ref->Discente->dados.nascimento);
+                    printf("\n\n%s ", ref->Discente->dados.cpf);
+                    printf("\n \n%c", ref->Discente->dados.sexo);
+
+                    ref->Discente = ref->Discente->prox;
+
+                }while(ref->Discente != NULL);
+            }
+            else
+                printf("\n Sem alunos matriculados na materia.");
+
+            if(ref->Docente != NULL)
+            {
+                do
+                {
+                    printf("\n\n%s ", ref->Docente->dados.nome);
+                    printf("\n\n%d ", ref->Docente->dados.matricula);
+                    printf("\n\n%s ", ref->Docente->dados.nascimento);
+                    printf("\n\n%s ", ref->Docente->dados.cpf);
+                    printf("\n \n%c", ref->Docente->dados.sexo);
+
+                    ref->Docente = ref->Docente->prox;
+
+                }while(ref->Docente != NULL);
+            }
+            else
+                printf("\n Sem professores matriculados na materia.");
             /*printf("\n\n%s ", ref->dados.cpf);
             printf("\n \n%c", ref->dados.sexo);*/
             printf("\n\n ---------------------------------------------------");
@@ -88,14 +124,13 @@ int _Remove(_Node **Geral)
     printf("\n Informe o codigo da disciplina. ");
     gets(codigo);
 
-
-    if(cache == NULL)
-    {
-        return 0;
-    }
     if(Buscar_Disciplina(cache, codigo) == 0)
     {
         return -1;
+    }
+    else if(cache == NULL)
+    {
+        return 0;
     }
     else if(cache->prox == NULL)
     {
@@ -114,11 +149,9 @@ int _Remove(_Node **Geral)
     }
     else
     {
-        cache = cache->prox;
-        while (cache != NULL && strcmp(cache->_dados.codigo, codigo) == 0)
+        for(cache = *Geral; cache != NULL && (strcmp(cache->_dados.codigo, codigo) != 0); cache = cache->prox)
         {
             inicio = cache;
-            cache = cache->prox;
         }
         if(strcmp(cache->_dados.codigo, codigo) == 0)
         {
@@ -131,9 +164,9 @@ int _Remove(_Node **Geral)
         {
             validador = 0;
         }
-        free(cache);
-    }
 
+    }
+    free(cache);
     return validador;
 }
 
@@ -173,9 +206,9 @@ int _Atualizar(_Node **Geral)
     else
     {
         cache = cache->prox;
-        while (cache != NULL && strcmp(cache->_dados.codigo, codigo) == 0)
+        while (cache != NULL && strcmp(cache->_dados.codigo, codigo) != 0)
         {
-            cache= cache->prox;
+            cache = cache->prox;
         }
         if(strcmp(cache->_dados.codigo, codigo) == 0)
         {
@@ -214,11 +247,11 @@ int Buscar_Disciplina(_Node* Geral, char *codigo)
         }
         else
         {
-            do
+
+            for(referencia = Geral; referencia != NULL && (strcmp(referencia->_dados.codigo, codigo)!= 0); referencia = referencia->prox)
             {
-                referencia = referencia->prox;
+
             }
-            while(referencia != NULL && strcmp(referencia->_dados.codigo, codigo)!= 0);
         }
         if(referencia == NULL)
         {
