@@ -14,8 +14,8 @@ int main()
     setlocale( LC_ALL, "" );
 
     inicializar();
-    menuGeral();
-/*
+    /*menuGeral();*/
+
     cadastro teste;
 
     strcpy(teste.nome, "Laboratorio");
@@ -57,7 +57,7 @@ int main()
     getch();
         Remove(&Alunos, 1);
     Display(Alunos, 1);
-
+/*
 
     strcpy(teste.nome, "Jaqueline Carolina Martins");
     strcpy(teste.cpf, "29743122419");

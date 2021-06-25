@@ -250,7 +250,7 @@ cadastro AlterarDadosPessoais(cadastro Dados)
     fgets(nome, MAX_NAME, stdin);
     nome[strlen(nome)-1] = '\0';
     setbuf(stdin, NULL);
-    clear_keyboard_buffer();
+    /*clear_keyboard_buffer();*/
     printf(" Digite a data de nascimento < dd/mm/aaaa >: ");
     fgets(nascimento, 15, stdin);
     nascimento[strlen(nascimento)-1] = '\0';

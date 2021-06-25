@@ -42,9 +42,11 @@ void menuGeral();
 void menuAlunos();
 void menuDisciplinas();
 void menuProfessores();
+void menuListar();
 void menuCadastro(int select);
 void menuAlterar (int select);
 void menuExcluir (int select);
+
 
 /* FUNÇÕES PARA A LISTA ( PROFESSORES E ALUNOS ) */
 Node *criar_Lista();

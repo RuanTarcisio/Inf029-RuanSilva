@@ -1,0 +1,56 @@
+# depslib dependency file v1.0
+1624564096 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\cadastro_escola__.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"Cadastro_Escola__.h"
+	"Cadastro_Escola_Disciplinas.h"
+
+1624591604 d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\cadastro_escola__.h
+
+1624591604 d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\cadastro_escola_disciplinas.h
+	"Cadastro_Escola__.h"
+
+1624592442 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<string.h>
+	<locale.h>
+	"Cadastro_Escola__.h"
+	"Cadastro_Escola_Disciplinas.h"
+
+1624591604 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\validar_functgerais.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"Cadastro_Escola__.h"
+	"Cadastro_Escola_Disciplinas.h"
+
+1624591106 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\validardisciplinas.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"Cadastro_Escola__.h"
+	"Cadastro_Escola_Disciplinas.h"
+
+1624592412 source:d:\®uan\ruan\atividades\inf029-ruansilva\escola\v02\validarlista.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"Cadastro_Escola__.h"
+	"Cadastro_Escola_Disciplinas.h"
+

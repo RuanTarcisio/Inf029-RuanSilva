@@ -20,7 +20,7 @@ typedef struct List
     Node *Discente;
     int tamanho;
     int posicao;
-} _Node;
+}_Node;
 _Node* Materias;
 
 
