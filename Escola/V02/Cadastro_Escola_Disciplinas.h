@@ -20,7 +20,7 @@ typedef struct List
     Node *Discente;
     int tamanho;
     int posicao;
-}_Node;
+} _Node;
 _Node* Materias;
 
 
@@ -30,7 +30,7 @@ int _Remove(_Node **Geral);
 int _Atualizar(_Node **Geral);
 void _Display(_Node *Geral);
 
-int Buscar_Disciplina(_Node* Geral , char *codigo);
+int Buscar_Disciplina(_Node* Geral, char *codigo);
 int _isEmpty(_Node *Geral);
 
 

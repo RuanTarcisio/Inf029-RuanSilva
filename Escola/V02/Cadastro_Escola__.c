@@ -10,13 +10,9 @@
 
 void inicializar()
 {
-    Professores = criar_Lista();
-    Alunos = criar_Lista();
+    Professores = ler_Arq(PROF);
+    Alunos = ler_Arq(ALUN);
     Materias = _criar_Lista();
-
-    /*Materias->Docente = criar_Lista();
-    Materias->Discente = criar_Lista();*/
-
 
 }
 
@@ -70,7 +66,7 @@ void menuGeral()
 void menuAlunos()
 {
     char escolha;
-    int OK_Remove = 0;
+    /*int OK_Remove = 0;*/
     setbuf(stdin, NULL);
     system("cls");
     printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -107,22 +103,7 @@ void menuAlunos()
         menuAlunos();
         break;
     case '3':
-        OK_Remove = Remove(&Alunos, 1);
-
-        if(OK_Remove == 1)
-        {
-            printf("\n Excluido com sucesso. \n");
-        }
-        else if( OK_Remove == 0)
-        {
-            printf("\n Lista vazia. \n");
-        }
-        else if(OK_Remove == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
-        system("pause");
-        menuAlunos();
+        menuExcluir(1);
         break;
     case '4':
         menuAlterar(1);
@@ -140,8 +121,8 @@ void menuAlunos()
 
 void menuProfessores()
 {
-   char escolha;
-    int OK_Remove = 0;
+    char escolha;
+    /*int OK_Remove = 0;*/
     setbuf(stdin, NULL);
     system("cls");
     printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -179,22 +160,7 @@ void menuProfessores()
         menuProfessores();
         break;
     case '3':
-        OK_Remove = Remove(&Professores, 2);
-
-        if(OK_Remove == 1)
-        {
-            printf("\n Excluido com sucesso. \n");
-        }
-        else if( OK_Remove == 0)
-        {
-            printf("\n Lista vazia. \n");
-        }
-        else if(OK_Remove == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
-        system("pause");
-        menuProfessores();
+        menuExcluir(2);
         break;
     case '4':
         menuAlterar(2);
@@ -210,7 +176,7 @@ void menuProfessores()
 
 void menuDisciplinas()
 {
-      char escolha;
+    char escolha;
     int OK_Remove = 0;
     setbuf(stdin, NULL);
     system("cls");
@@ -232,7 +198,7 @@ void menuDisciplinas()
     printf("\n   *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
     escolha = getch();
     setbuf(stdin, NULL);
-;
+    ;
 
     switch(escolha)
     {
@@ -285,10 +251,9 @@ void menuCadastro(int select)
 
     setbuf(stdin, NULL);
     system("cls");
-     printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
+    printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
     printf("\n   |                              CADASTRO                             |");
     printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
-    getchar();
 
     if(select == 1)
     {
@@ -304,6 +269,7 @@ void menuCadastro(int select)
         else
         {
             Push(&Alunos, &Pessoas, select);
+            ArqSalvar(Alunos, ALUN);
             setbuf(stdin, NULL);
             system("cls");
             printf("\n Deseja realizar outro cadastro? ");
@@ -333,6 +299,7 @@ void menuCadastro(int select)
         else
         {
             Push(&Professores, &Pessoas, select);
+            ArqSalvar(Professores, PROF);
             setbuf(stdin, NULL);
             system("cls");
             printf("\n Deseja realizar outro cadastro? ");
@@ -383,15 +350,59 @@ void menuCadastro(int select)
 
 void menuAlterar(int select)
 {
-    int OK_Alterar;
+    int OK_Alterar, opcao;
+    _search dado;
+
     system("cls");
     printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
     printf("\n   |                             ALTERAÇÕES                            |");
     printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
 
+    do
+    {
+        setbuf(stdin, NULL);
+
+        printf("\n\n\n\n PARA ALTERAR, ESCOLHA:  \n");
+        printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
+        opcao = getch();
+    }
+    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
+
+    switch(opcao)
+    {
+    case '1':
+        setbuf(stdin, NULL);
+        printf("\n Digite a matricula: ");
+        setbuf(stdin, NULL);
+        scanf("%d", &dado.matricula);
+        strcpy(dado.cpf, "NULL");
+        break;
+    case '2':
+        setbuf(stdin, NULL);
+        printf("\n Digite o CPF: ");
+        setbuf(stdin, NULL);
+        gets(dado.cpf);
+        dado.matricula = -1;
+        break;
+    case '9':
+        if(select == 1)
+        {
+            menuAlunos();
+        }
+        else
+        {
+            menuProfessores();
+        }
+        break;
+    case '0':
+        printf("\n\nEncerrando o programa.");
+        exit(0);
+        break;
+    }
+
     if(select == 1)
     {
-        OK_Alterar = Atualizar(&Alunos, 1);
+        OK_Alterar = Atualizar(&Alunos, &dado, opcao);
 
         if(OK_Alterar == 1)
         {
@@ -410,7 +421,7 @@ void menuAlterar(int select)
     }
     else if(select == 2)
     {
-        OK_Alterar = Atualizar(&Professores, 2);
+        OK_Alterar = Atualizar(&Alunos, &dado, opcao);
 
         if(OK_Alterar == 1)
         {
@@ -449,21 +460,112 @@ void menuAlterar(int select)
 }
 
 
+void menuExcluir(int select)
+{
+    _search dado;
+    int opcao, OK_Remove;
+
+    system("cls");
+    printf("\n\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|");
+    printf("\n   |                             EXCLUSÕES                             |");
+    printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
+
+    do
+    {
+        setbuf(stdin, NULL);
+
+        printf("\n\n\n\n PARA REMOVER, ESCOLHA:  \n");
+        printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
+        opcao = getch();
+    }
+    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
+
+    switch(opcao)
+    {
+    case '1':
+        setbuf(stdin, NULL);
+        printf("\n Digite a matricula: ");
+        setbuf(stdin, NULL);
+        scanf("%d", &dado.matricula);
+        strcpy(dado.cpf, "NULL");
+        break;
+    case '2':
+        setbuf(stdin, NULL);
+        printf("\n Digite o CPF: ");
+        setbuf(stdin, NULL);
+        gets(dado.cpf);
+        dado.matricula = -1;
+        break;
+    case '9':
+        if(select == 1)
+        {
+            menuAlunos();
+        }
+        else
+        {
+            menuProfessores();
+        }
+        break;
+    case '0':
+        printf("\n\nEncerrando o programa.");
+        exit(0);
+        break;
+    }
+
+    if(select == 1)
+    {
+        OK_Remove = Remove(&Alunos, &dado, opcao);
+
+        if(OK_Remove == 1)
+        {
+            printf("\n Excluido com sucesso. \n");
+        }
+        else if( OK_Remove == 0)
+        {
+            printf("\n Lista vazia. \n");
+        }
+        else if(OK_Remove == -1)
+        {
+            printf("\n Não consta na base. \n");
+        }
+    }
+    else
+    {
+        OK_Remove = Remove(&Professores, &dado, opcao);
+
+        if(OK_Remove == 1)
+        {
+            printf("\n Excluido com sucesso. \n");
+        }
+        else if( OK_Remove == 0)
+        {
+            printf("\n Lista vazia. \n");
+        }
+        else if(OK_Remove == -1)
+        {
+            printf("\n Não consta na base. \n");
+        }
+    }
+    system("pause");
+
+}
+
+
 void menuListar()
 {
-/*
-Listar Alunos
-Listar Professores
-Listar Disciplinas (dados da disciplina sem os alunos)
-Listar uma disciplina (dados da disciplina e os alunos matriculados)
-Listar Alunos por sexo (Masculino/Feminino)
-Listar Alunos ordenados por Nome
-Listar Alunos ordenados por data de nascimento
-Listar Professores por sexo (Masculino/Feminino)
-Listar Professores ordenados por Nome
-Listar Professores ordenados por data de nascimento
-Aniversariantes do mês
-Lista de pessoas (professor/aluno) a partir de uma string de busca. O usuário informa no mínimo três letras e deve ser listado todas as pessoas que contem essas três letras no nome.
-*/
+    /*
+    Listar Alunos
+    Listar Professores
+    Listar Disciplinas (dados da disciplina sem os alunos)
+    Listar uma disciplina (dados da disciplina e os alunos matriculados)
+    Listar Alunos por sexo (Masculino/Feminino)
+    Listar Alunos ordenados por Nome
+    Listar Alunos ordenados por data de nascimento
+    Listar Professores por sexo (Masculino/Feminino)
+    Listar Professores ordenados por Nome
+    Listar Professores ordenados por data de nascimento
+    Aniversariantes do mês
+    Lista de pessoas (professor/aluno) a partir de uma string de busca. O usuário informa no mínimo três letras e deve ser listado todas as pessoas que contem essas três letras no nome.
+    */
     system("cls");
 }

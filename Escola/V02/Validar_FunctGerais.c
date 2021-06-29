@@ -48,7 +48,7 @@ _cadastro RecebeDados_Materia()
 _cadastro AlteraDados_Materia(_cadastro _Dados)
 {
 
-   setbuf(stdin, NULL);
+    setbuf(stdin, NULL);
     printf("\n Digite o nome disciplina: ");
     setbuf(stdin, NULL);
     fgets(_Dados.nome, MAX_NAME, stdin);
@@ -114,8 +114,8 @@ _cadastro _Validar(_cadastro *_Materia)
             setbuf(stdin, NULL);
             printf("\n Informe o CPF: ");
             setbuf(stdin, NULL);
-/*
-            c = validarCPF(cpf);                        */
+            /*
+                        c = validarCPF(cpf);                        */
         }
 
     }
@@ -184,7 +184,8 @@ int validarCodigo(char *codigo)
             break;
         }
         ndx++;
-    }while(ndx < 3);
+    }
+    while(ndx < 3);
 
     do
     {
@@ -194,7 +195,8 @@ int validarCodigo(char *codigo)
             break;
         }
         ndx++;
-    }while(ndx < 7 && codigo[ndx] != '\0');
+    }
+    while(ndx < 7 && codigo[ndx] != '\0');
 
     return v_ndx;
 }
@@ -211,21 +213,21 @@ cadastro RecebeDadosPessoais()
     nascimento = Dados.nascimento;
     cpf = Dados.cpf;
 
-    setbuf(stdin, NULL);
+    clear_keyboard_buffer();
     printf("\n Digite o nome: ");
     setbuf(stdin, NULL);
     fgets(nome, MAX_NAME, stdin);
     nome[strlen(nome)-1] = '\0';
     setbuf(stdin, NULL);
-    /*clear_keyboard_buffer();*/
+    clear_keyboard_buffer();
     printf(" Digite a data de nascimento < dd/mm/aaaa >: ");
     fgets(nascimento, 15, stdin);
     nascimento[strlen(nascimento)-1] = '\0';
-    setbuf(stdin, NULL);
-    printf("\n Digite o CPF: ");
+    clear_keyboard_buffer();
+    printf(" Digite o CPF: ");
     gets(cpf);
-    setbuf(stdin, NULL);
-    printf("\n Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
+    clear_keyboard_buffer();
+    printf(" Digite o sexo (F)- FEMININO ou (M) MASCULINO: ");
     gets(sexo);
     setbuf(stdin, NULL);
 
@@ -402,7 +404,7 @@ cadastro alt_validar(cadastro *Dados) /* VALIDAR PELAS OUTRAS FUNÇÕES E RETORNAR
         }
         if (b != 1)
         {
-           clear_keyboard_buffer();
+            clear_keyboard_buffer();
             printf("\n Data Invalida.");
             printf(" \n Digite a data de nascimento  dd/mm/aaaa : ");
             fgets(nascimento, 15, stdin);
@@ -488,7 +490,8 @@ int validarData(char *data)
             break;
         }
         ndx++;
-    }while(ndx < strlen(data));
+    }
+    while(ndx < strlen(data));
 
     ndx = 0;
     do
@@ -712,26 +715,26 @@ int validarCPF(char *cpf)
         }
 
     validador1 = ( aux[0]*10 +
-                  (aux[1]*9) +
-                  (aux[2]*8) +
-                  (aux[3]*7) +
-                  (aux[4]*6) +
-                  (aux[5]*5) +
-                  (aux[6]*4) +
-                  (aux[7]*3) +
-                  (aux[8]* 2)) ;
+                   (aux[1]*9) +
+                   (aux[2]*8) +
+                   (aux[3]*7) +
+                   (aux[4]*6) +
+                   (aux[5]*5) +
+                   (aux[6]*4) +
+                   (aux[7]*3) +
+                   (aux[8]* 2)) ;
     validador1 = validador1 * 10 % 11;
 
     validador2 = ( aux[0]*11 +
-                  (aux[1]*10)+
-                  (aux[2]*9) +
-                  (aux[3]*8) +
-                  (aux[4]*7) +
-                  (aux[5]*6) +
-                  (aux[6]*5) +
-                  (aux[7]*4) +
-                  (aux[8]*3)+
-                  (aux[9]*2)) ;
+                   (aux[1]*10)+
+                   (aux[2]*9) +
+                   (aux[3]*8) +
+                   (aux[4]*7) +
+                   (aux[5]*6) +
+                   (aux[6]*5) +
+                   (aux[7]*4) +
+                   (aux[8]*3)+
+                   (aux[9]*2)) ;
     validador2 = validador2 * 10 % 11;
 
     if(aux[9] == validador1 && aux[10] == validador2)

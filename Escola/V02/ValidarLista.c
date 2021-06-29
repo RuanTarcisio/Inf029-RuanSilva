@@ -85,8 +85,10 @@ void Display(Node *Geral, int select)
     {
         do
         {
+            printf("\n\n%d ", ref->posicao);
             printf("\n\n%s ", ref->dados.nome);
             printf("\n\n%d ", ref->dados.matricula);
+
             printf("\n\n%s ", ref->dados.nascimento);
             printf("\n\n%s ", ref->dados.cpf);
             printf("\n \n%c", ref->dados.sexo);
@@ -100,60 +102,19 @@ void Display(Node *Geral, int select)
 }
 
 
-int Remove(Node **Geral, int select)
+int Remove(Node **Geral, _search *dado, int opcao)
 {
-    int matricula, opcao, validador;
-    char cpf[12];
+    int validador;
+
     Node *inicio = NULL;
     Node* cache = (Node*) malloc(sizeof(Node));
 
-    cache = *Geral;
-    do
-    {
-        system("cls");
-        setbuf(stdin, NULL);
-
-        printf("\n PARA REMOVER, ESCOLHA:  \n");
-        printf("\n(1)- BUSCAR P/ MATRICULA \n(2)- BUSCAR P/ CPF \n(9)- VOLTAR  \n(0)- SAIR \n");
-        opcao = getch();
-    }
-    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
-
-    switch(opcao)
-    {
-    case '1':
-        setbuf(stdin, NULL);
-        printf("\n Digite a matricula: ");
-        setbuf(stdin, NULL);
-        scanf("%d", &matricula);
-        break;
-    case '2':
-        setbuf(stdin, NULL);
-        printf("\n Digite o CPF: ");
-        setbuf(stdin, NULL);
-        gets(cpf);
-        break;
-    case '9':
-        if(select == 1)
-        {
-            menuAlunos();
-        }
-        else
-        {
-            menuProfessores();
-        }
-        break;
-    case '0':
-        printf("\n\nEncerrando o programa.");
-        exit(0);
-        break;
-    }
 
     if(opcao == '1')
     {
         cache = *Geral;
 
-        if(Buscar_Na_Lista(cache, matricula) == 0)
+        if(Buscar_Na_Lista(cache, dado->matricula) == 0)
         {
             return -1;
         }
@@ -169,7 +130,7 @@ int Remove(Node **Geral, int select)
             }
             return 1;
         }
-        else if(cache->dados.matricula == matricula)
+        else if(cache->dados.matricula == dado->matricula)
         {
             *Geral = cache->prox;
             (*Geral)->tamanho--;
@@ -178,11 +139,11 @@ int Remove(Node **Geral, int select)
         }
         else
         {
-            for (cache = *Geral; cache != NULL && cache->dados.matricula != matricula; cache = cache->prox)
+            for (cache = *Geral; cache != NULL && cache->dados.matricula != dado->matricula; cache = cache->prox)
             {
                 inicio = cache;
             }
-            if(cache->dados.matricula == matricula)
+            if(cache->dados.matricula == dado->matricula)
             {
                 inicio->prox = cache->prox;
 
@@ -200,7 +161,7 @@ int Remove(Node **Geral, int select)
     {
         cache = *Geral;
 
-        if(CPF_NaBase(cache, cpf) == 0)
+        if(CPF_NaBase(cache, dado->cpf) == 0)
         {
             return -1;
         }
@@ -216,7 +177,7 @@ int Remove(Node **Geral, int select)
             }
             return 1;
         }
-        else if(strcmp(cache->dados.cpf, cpf) == 0)
+        else if(strcmp(cache->dados.cpf, dado->cpf) == 0)
         {
             *Geral = cache->prox;
             (*Geral)->tamanho--;
@@ -225,7 +186,7 @@ int Remove(Node **Geral, int select)
         }
         else
         {
-            for (cache = *Geral; cache != NULL && (strcmp(cache->dados.cpf, cpf) != 0); cache = cache->prox)
+            for (cache = *Geral; cache != NULL && (strcmp(cache->dados.cpf, dado->cpf) != 0); cache = cache->prox)
             {
                 inicio = cache;
             }
@@ -267,48 +228,27 @@ void Pop(Node** Geral)
 }
 
 
-int Atualizar(Node **Geral, int select)
+int Atualizar(Node **Geral, _search *dado, int opcao)
 {
-    int matricula, opcao, validador;
-    char  cpf[12];
+    int validador;
 
     Node* cache = 0;
     cadastro Dados;
 
-    cache = *Geral;
-
-    setbuf(stdin, NULL);
-    printf("\n Informe o CPF ou a matricula. ");
-    printf("(1)- Matricula ou (2)- CPF ");
-    opcao = getch();
-
-    switch(opcao)
-    {
-    case '1':
-        setbuf(stdin, NULL);
-        printf("\n Digite a matricula: ");
-        setbuf(stdin, NULL);
-        scanf("%d", &matricula);
-        break;
-    case '2':
-        setbuf(stdin, NULL);
-        printf("\n Digite o CPF: ");
-        setbuf(stdin, NULL);
-        gets(cpf);
-        break;
-    }
 
     if(opcao == '1')
     {
-        if(cache == NULL)
-        {
-            return 0;
-        }
-        if(Buscar_Na_Lista(cache, matricula) == 0)
+        cache = *Geral;
+
+        if(Buscar_Na_Lista(cache, dado->matricula) == 0)
         {
             return -1;
         }
-        else if(cache->dados.matricula == matricula)
+        else if(cache == NULL)
+        {
+            return 0;
+        }
+        else if(cache->dados.matricula == dado->matricula)
         {
             Dados = cache->dados;
 
@@ -321,11 +261,11 @@ int Atualizar(Node **Geral, int select)
         else
         {
             cache = cache->prox;
-            while (cache != NULL && cache->dados.matricula != matricula)
+            while (cache != NULL && cache->dados.matricula != dado->matricula)
             {
                 cache= cache->prox;
             }
-            if(cache->dados.matricula == matricula)
+            if(cache->dados.matricula == dado->matricula)
             {
                 Dados = cache->dados;
 
@@ -344,7 +284,9 @@ int Atualizar(Node **Geral, int select)
     }
     else
     {
-        if(CPF_NaBase(cache, cpf) == 0)
+        cache = *Geral;
+
+        if(CPF_NaBase(cache, dado->cpf) == 0)
         {
             return -1;
         }
@@ -352,7 +294,7 @@ int Atualizar(Node **Geral, int select)
         {
             return 0 ;
         }
-        else if(strcmp(cache->dados.cpf, cpf) == 0)
+        else if(strcmp(cache->dados.cpf, dado->cpf) == 0)
         {
 
             Dados = cache->dados;
@@ -366,7 +308,7 @@ int Atualizar(Node **Geral, int select)
         else
         {
             cache = cache->prox;
-            while (cache != NULL && strcmp(cache->dados.cpf, cpf) != 0)
+            while (cache != NULL && strcmp(cache->dados.cpf, dado->cpf) != 0)
             {
                 cache = cache->prox;
             }

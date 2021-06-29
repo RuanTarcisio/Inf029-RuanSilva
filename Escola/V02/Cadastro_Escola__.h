@@ -5,6 +5,8 @@
 #define MAX_NAME 50
 #define MATRICULA_ALUN 20211001
 #define MATRICULA_PROF 2021101
+#define ALUN 1
+#define PROF 2
 
 typedef struct
 {
@@ -16,8 +18,8 @@ typedef struct
 typedef struct
 {
     char nome[MAX_NAME];
-    char cpf[TAM_NASC+6];
-    char nascimento[TAM_NASC+5];
+    char cpf[TAM_NASC+4];
+    char nascimento[TAM_NASC+3];
     char sexo;
     int matricula;
     date aniversario;
@@ -34,6 +36,11 @@ typedef struct Lista
 Node* Professores;
 Node* Alunos;
 
+typedef struct
+{
+    int matricula;
+    char cpf[TAM_NASC+4];
+} _search;
 
 void clear_keyboard_buffer(void);
 /* FUN합ES PARA MENUS */
@@ -48,15 +55,19 @@ void menuAlterar (int select);
 void menuExcluir (int select);
 
 
+void ArqSalvar(Node *list, int opcao);
+Node* ler_Arq(int opcao);
+
+
 /* FUN합ES PARA A LISTA ( PROFESSORES E ALUNOS ) */
 Node *criar_Lista();
 void Display(Node *Geral, int select);
 int Push(Node **Geral, cadastro *Pessoas, int select);
 int Insert(Node **Geral, int select);
 void Pop(Node **Geral);
-int Remove(Node **Geral, int select);
+int Remove(Node **Geral, _search *dado, int opcao);
 int Sort(Node **Geral);
-int Atualizar(Node **Geral, int select);  /*MUDAR PARA INT, PARA CONFIRMA합ES. */
+int Atualizar(Node **Geral, _search *dado, int opcao);  /*MUDAR PARA INT, PARA CONFIRMA합ES. */
 int Buscar_Na_Lista(Node *Geral, int matricula);
 Node* AtPos(Node *Geral, int select);
 int CPF_NaBase(Node *Geral, char *cpf);

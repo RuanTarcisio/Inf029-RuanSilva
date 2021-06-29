@@ -78,7 +78,8 @@ void _Display(_Node *Geral)
 
                     ref->Discente = ref->Discente->prox;
 
-                }while(ref->Discente != NULL);
+                }
+                while(ref->Discente != NULL);
             }
             else
                 printf("\n Sem alunos matriculados na materia.");
@@ -95,7 +96,8 @@ void _Display(_Node *Geral)
 
                     ref->Docente = ref->Docente->prox;
 
-                }while(ref->Docente != NULL);
+                }
+                while(ref->Docente != NULL);
             }
             else
                 printf("\n Sem professores matriculados na materia.");
