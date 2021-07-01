@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "RuanSilva-2018216035.c"
+#include "RuanSilva-2018216035.cpp"
 
 void testSomar();
 void testFatorial();

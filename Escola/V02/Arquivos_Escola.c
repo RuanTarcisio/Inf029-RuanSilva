@@ -11,6 +11,27 @@
 
 
 
+void inserir_ArqDisciplina()
+{
+    _cadastro dados;
+    FILE *file;
+
+    file = fopen("ALUNOS_ALL.DAT", "ab");
+    if(!file)
+    {
+        printf("\n ERROR FILE  \n");
+        getch();
+        exit(0);
+    }
+    else
+    {
+        dados = RecebeDados_Materia();
+    }
+    fclose(file);
+
+
+}
+
 void ArqSalvar(Node *list, int opcao)
 {
     Node* cache;
@@ -39,9 +60,10 @@ void ArqSalvar(Node *list, int opcao)
 
     for(cache = list; cache != NULL; cache = cache->prox)
     {
-            fwrite(&cache->dados, sizeof(cadastro), 1, file);
+        fwrite(&cache->dados, sizeof(cadastro), 1, file);
     }
     fclose(file);
+
 
 }
 
@@ -51,7 +73,6 @@ Node* ler_Arq(int opcao)
     cadastro cache;
     Node *lista = criar_Lista();
     FILE *file;
-    int ndx = 0;
 
     if(opcao == ALUN)
     {
@@ -75,40 +96,55 @@ Node* ler_Arq(int opcao)
     }
     while(fread(&cache, sizeof(cadastro), 1, file) == 1)
     {
-        /*fread(&cache, sizeof(cadastro), 1, file);*/
-        Push(&lista, &cache, opcao);
-        printf(" \n%d ", ndx);
+        inserir_Arq(&lista, &cache);
     }
     fclose(file);
 
-return lista;
+    return lista;
 }
 
 
-    /*}
-    else if(titulo == USIM5_)
+void inserir_Arq(Node** Geral, cadastro *Pessoas)
+{
+    Node* novo = (Node*) malloc (sizeof(Node));
+    Node* cache;
+
+    novo->dados = *Pessoas;
+    novo->prox = NULL;
+
+    if(*Geral == NULL)
     {
-        FILE *arqC = fopen("USIM5_Compra.txt", "r");
-        while (!feof(arqC))
+        *Geral = novo;
+    }
+    else
+    {
+        for(cache = *Geral; cache->prox != NULL; cache = cache->prox)
         {
-
-            fscanf(arqC, "%d  %f  %f  ", &cache.qntd, &cache.valor, &cache.valor_unidade);
-            if(cache.qntd != 0)
-            {
-                insert(lista, &cache, Compra);
-            }
+            cache->qntd++;
         }
-        fclose(arqC);
+        cache->qntd++;
+        cache->prox = novo;
 
-        FILE *arqV = fopen("USIM5_Venda.txt", "r");
-        while (!feof(arqV))
-        {
+    }
+}
 
-            fscanf(arqV, "%d  %f  %f  ", &cache.qntd, &cache.valor, &cache.valor_unidade);
-            if(cache.qntd != 0)
-            {
-                insert(lista, &cache, Venda);
-            }
-        }
-        fclose(arqV);
-    }*/
+/*void inserir_Arq(Node** Geral, cadastro *Pessoas)
+{
+    Node *novo = (Node*) malloc(sizeof(Node));
+    Node *Prox;
+    novo->dados = *Pessoas;
+
+    if(*Geral == NULL)
+    {
+        novo->prox = NULL;
+        *Geral = novo;
+
+    }
+    else
+    {
+
+        novo->prox = *Geral;
+        novo->qntd = (*Geral)->qntd+1;
+        *Geral = novo;
+    }
+}*/

@@ -15,17 +15,8 @@ int main()
     setlocale( LC_ALL, "" );
 
     inicializar();
+
     menuGeral();
-
-    /* cadastro teste;
-
-     strcpy(teste.nome, "Laboratorio");
-     strcpy(teste.cpf, "01421503557");
-     teste.sexo = 'M';
-     strcpy(teste.nascimento, "01/02/2002");
-     Push(&Alunos, &teste, 1);*/
-
-
 
 
 

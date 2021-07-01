@@ -24,6 +24,9 @@ typedef struct List
 _Node* Materias;
 
 
+void ArqSalvarDisciplina(_Node *list);
+
+
 _Node* _criar_Lista();
 int _Push(_Node** Geral, _cadastro *Materias);
 int _Remove(_Node **Geral);

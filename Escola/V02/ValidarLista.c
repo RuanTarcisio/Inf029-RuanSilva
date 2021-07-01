@@ -13,7 +13,7 @@ Node* criar_Lista()
 {
 
     Node* criar = (Node*)malloc(sizeof(Node));
-    criar->posicao = 0;
+    criar->qntd = 0;
     criar->tamanho = 0;
     criar = NULL;
     return criar;
@@ -34,25 +34,17 @@ int Push(Node** Geral, cadastro *Pessoas, int select)
         }
         else
             novo->dados.matricula = MATRICULA_PROF;
+
         *Geral = novo;
         (*Geral)->tamanho = 1;
-        (*Geral)->posicao =1;
+        (*Geral)->qntd = 1;
     }
     else
     {
         novo->prox = *Geral;
-        if(select == 1)
-        {
-            novo->dados.matricula = (*Geral)->dados.matricula +1;
-            *Geral = novo;
-            (*Geral)->tamanho ++;
-            (*Geral)->posicao ++;
-        }
-        else
-            novo->dados.matricula = (*Geral)->dados.matricula +1;
+        novo->dados.matricula = (*Geral)->dados.matricula +1;
+        novo->qntd = (*Geral)->qntd+1;
         *Geral = novo;
-        (*Geral)->tamanho ++;
-        (*Geral)->posicao ++;
     }
 
     return 1; /* FUTURAS IMPLEMENTAÇÕES CONFIRMAR SE HA ESPAÇO*/
@@ -85,7 +77,7 @@ void Display(Node *Geral, int select)
     {
         do
         {
-            printf("\n\n%d ", ref->posicao);
+            printf("\n\n%d ", ref->qntd);
             printf("\n\n%s ", ref->dados.nome);
             printf("\n\n%d ", ref->dados.matricula);
 
@@ -296,7 +288,6 @@ int Atualizar(Node **Geral, _search *dado, int opcao)
         }
         else if(strcmp(cache->dados.cpf, dado->cpf) == 0)
         {
-
             Dados = cache->dados;
 
             Dados = AlterarDadosPessoais(Dados);
@@ -350,13 +341,7 @@ int Buscar_Na_Lista(Node *Geral, int matricula)
         }
         else
         {
-            for(referencia = Geral; referencia != NULL && referencia->dados.matricula != matricula; referencia = referencia->prox)
-            {
-            }/*do
-            {
-                referencia = referencia->prox;
-            }
-            while(referencia != NULL && referencia->dados.matricula == matricula);*/
+            for(referencia = Geral; referencia != NULL && referencia->dados.matricula != matricula; referencia = referencia->prox);
         }
         if(referencia == NULL)
         {

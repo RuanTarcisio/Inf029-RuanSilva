@@ -7,6 +7,7 @@
 #define MATRICULA_PROF 2021101
 #define ALUN 1
 #define PROF 2
+#define MATE 3
 
 typedef struct
 {
@@ -31,7 +32,7 @@ typedef struct Lista
     cadastro dados;
     struct Lista *prox;
     int tamanho;
-    int posicao;
+    int qntd;
 } Node;
 Node* Professores;
 Node* Alunos;
@@ -57,6 +58,7 @@ void menuExcluir (int select);
 
 void ArqSalvar(Node *list, int opcao);
 Node* ler_Arq(int opcao);
+void inserir_Arq(Node** Geral, cadastro *Pessoas);
 
 
 /* FUNÇÕES PARA A LISTA ( PROFESSORES E ALUNOS ) */

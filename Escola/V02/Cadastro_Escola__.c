@@ -358,104 +358,112 @@ void menuAlterar(int select)
     printf("\n   |                             ALTERAÇÕES                            |");
     printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
 
-    do
+    if(select != MATE)
     {
-        setbuf(stdin, NULL);
+        do
+        {
+            setbuf(stdin, NULL);
 
-        printf("\n\n\n\n PARA ALTERAR, ESCOLHA:  \n");
-        printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
-        opcao = getch();
-    }
-    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
+            printf("\n\n\n\n PARA ALTERAR, ESCOLHA:  \n");
+            printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
+            opcao = getch();
+        }
+        while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
 
-    switch(opcao)
-    {
-    case '1':
-        setbuf(stdin, NULL);
-        printf("\n Digite a matricula: ");
-        setbuf(stdin, NULL);
-        scanf("%d", &dado.matricula);
-        strcpy(dado.cpf, "NULL");
-        break;
-    case '2':
-        setbuf(stdin, NULL);
-        printf("\n Digite o CPF: ");
-        setbuf(stdin, NULL);
-        gets(dado.cpf);
-        dado.matricula = -1;
-        break;
-    case '9':
+        switch(opcao)
+        {
+        case '1':
+            setbuf(stdin, NULL);
+            printf("\n Digite a matricula: ");
+            setbuf(stdin, NULL);
+            scanf("%d", &dado.matricula);
+            strcpy(dado.cpf, "NULL");
+            break;
+        case '2':
+            setbuf(stdin, NULL);
+            printf("\n Digite o CPF: ");
+            setbuf(stdin, NULL);
+            gets(dado.cpf);
+            dado.matricula = -1;
+            break;
+        case '9':
+            if(select == 1)
+            {
+                menuAlunos();
+            }
+            else
+            {
+                menuProfessores();
+            }
+            break;
+        case '0':
+            printf("\n\nEncerrando o programa.");
+            exit(0);
+            break;
+        }
+
         if(select == 1)
         {
+            OK_Alterar = Atualizar(&Alunos, &dado, opcao);
+
+            if(OK_Alterar == 1)
+            {
+                printf("\n Alterado com sucesso.\n ");
+            }
+            else if(OK_Alterar == -1)
+            {
+                printf("\n Não consta na base.\n");
+            }
+            else if(OK_Alterar == 0)
+            {
+                printf("\n Lista vazia. \n");
+            }
+            system("pause");
             menuAlunos();
         }
-        else
+        else if(select == 2)
         {
+            OK_Alterar = Atualizar(&Alunos, &dado, opcao);
+
+            if(OK_Alterar == 1)
+            {
+                printf("\n Alterado com sucesso. \n");
+            }
+            else if(OK_Alterar == 0)
+            {
+                printf("\n Lista vazia. ");
+            }
+            else if(OK_Alterar == -1)
+            {
+                printf("\n Não consta na base. \n");
+            }
+            system("pause");
             menuProfessores();
         }
-        break;
-    case '0':
-        printf("\n\nEncerrando o programa.");
-        exit(0);
-        break;
+        else if(select == 3)
+        {
+            OK_Alterar = _Atualizar(&Materias);
+
+            if(OK_Alterar == 1)
+            {
+                printf("\n Alterado com sucesso. \n");
+            }
+            else if(OK_Alterar == 0)
+            {
+                printf("\n Lista vazia. ");
+            }
+            else if(OK_Alterar == -1)
+            {
+                printf("\n Não consta na base. \n");
+            }
+            system("pause");
+            menuDisciplinas();
+        }
     }
 
-    if(select == 1)
+    else if(select == MATE)
     {
-        OK_Alterar = Atualizar(&Alunos, &dado, opcao);
 
-        if(OK_Alterar == 1)
-        {
-            printf("\n Alterado com sucesso.\n ");
-        }
-        else if(OK_Alterar == -1)
-        {
-            printf("\n Não consta na base.\n");
-        }
-        else if(OK_Alterar == 0)
-        {
-            printf("\n Lista vazia. \n");
-        }
-        system("pause");
-        menuAlunos();
-    }
-    else if(select == 2)
-    {
-        OK_Alterar = Atualizar(&Alunos, &dado, opcao);
-
-        if(OK_Alterar == 1)
-        {
-            printf("\n Alterado com sucesso. \n");
-        }
-        else if(OK_Alterar == 0)
-        {
-            printf("\n Lista vazia. ");
-        }
-        else if(OK_Alterar == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
-        system("pause");
-        menuProfessores();
-    }
-    else if(select == 3)
-    {
-        OK_Alterar = _Atualizar(&Materias);
-
-        if(OK_Alterar == 1)
-        {
-            printf("\n Alterado com sucesso. \n");
-        }
-        else if(OK_Alterar == 0)
-        {
-            printf("\n Lista vazia. ");
-        }
-        else if(OK_Alterar == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
-        system("pause");
-        menuDisciplinas();
     }
 }
 
@@ -470,81 +478,90 @@ void menuExcluir(int select)
     printf("\n   |                             EXCLUSÕES                             |");
     printf("\n   |*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*|\n");
 
-    do
+    if(select != MATE)
     {
-        setbuf(stdin, NULL);
+        do
+        {
+            setbuf(stdin, NULL);
 
-        printf("\n\n\n\n PARA REMOVER, ESCOLHA:  \n");
-        printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
-        opcao = getch();
-    }
-    while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
+            printf("\n\n\n\n PARA REMOVER, ESCOLHA:  \n");
+            printf("\n (1)- BUSCAR P/ MATRICULA \n (2)- BUSCAR P/ CPF \n (9)- VOLTAR  \n (0)- SAIR \n");
+            opcao = getch();
+        }
+        while(opcao != '1' && opcao != '2' && opcao != '9' && opcao != '0');
 
-    switch(opcao)
-    {
-    case '1':
-        setbuf(stdin, NULL);
-        printf("\n Digite a matricula: ");
-        setbuf(stdin, NULL);
-        scanf("%d", &dado.matricula);
-        strcpy(dado.cpf, "NULL");
-        break;
-    case '2':
-        setbuf(stdin, NULL);
-        printf("\n Digite o CPF: ");
-        setbuf(stdin, NULL);
-        gets(dado.cpf);
-        dado.matricula = -1;
-        break;
-    case '9':
+        switch(opcao)
+        {
+        case '1':
+            setbuf(stdin, NULL);
+            printf("\n Digite a matricula: ");
+            setbuf(stdin, NULL);
+            scanf("%d", &dado.matricula);
+            strcpy(dado.cpf, "NULL");
+            break;
+        case '2':
+            setbuf(stdin, NULL);
+            printf("\n Digite o CPF: ");
+            setbuf(stdin, NULL);
+            gets(dado.cpf);
+            dado.matricula = -1;
+            break;
+        case '9':
+            if(select == 1)
+            {
+                menuAlunos();
+            }
+            else
+            {
+                menuProfessores();
+            }
+            break;
+        case '0':
+            printf("\n\nEncerrando o programa.");
+            exit(0);
+            break;
+        }
+
         if(select == 1)
         {
-            menuAlunos();
+            OK_Remove = Remove(&Alunos, &dado, opcao);
+
+            if(OK_Remove == 1)
+            {
+                printf("\n Excluido com sucesso. \n");
+                ArqSalvar(Alunos, ALUN);
+            }
+            else if( OK_Remove == 0)
+            {
+                printf("\n Lista vazia. \n");
+            }
+            else if(OK_Remove == -1)
+            {
+                printf("\n Não consta na base. \n");
+            }
         }
         else
         {
-            menuProfessores();
+            OK_Remove = Remove(&Professores, &dado, opcao);
+
+            if(OK_Remove == 1)
+            {
+                printf("\n Excluido com sucesso. \n");
+            }
+            else if( OK_Remove == 0)
+            {
+                printf("\n Lista vazia. \n");
+            }
+            else if(OK_Remove == -1)
+            {
+                printf("\n Não consta na base. \n");
+            }
         }
-        break;
-    case '0':
-        printf("\n\nEncerrando o programa.");
-        exit(0);
-        break;
     }
 
-    if(select == 1)
+    if(select == MATE)
     {
-        OK_Remove = Remove(&Alunos, &dado, opcao);
 
-        if(OK_Remove == 1)
-        {
-            printf("\n Excluido com sucesso. \n");
-        }
-        else if( OK_Remove == 0)
-        {
-            printf("\n Lista vazia. \n");
-        }
-        else if(OK_Remove == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
-    }
-    else
-    {
-        OK_Remove = Remove(&Professores, &dado, opcao);
-
-        if(OK_Remove == 1)
-        {
-            printf("\n Excluido com sucesso. \n");
-        }
-        else if( OK_Remove == 0)
-        {
-            printf("\n Lista vazia. \n");
-        }
-        else if(OK_Remove == -1)
-        {
-            printf("\n Não consta na base. \n");
-        }
     }
     system("pause");
 

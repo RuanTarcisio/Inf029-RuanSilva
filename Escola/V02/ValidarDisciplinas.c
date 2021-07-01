@@ -101,8 +101,6 @@ void _Display(_Node *Geral)
             }
             else
                 printf("\n Sem professores matriculados na materia.");
-            /*printf("\n\n%s ", ref->dados.cpf);
-            printf("\n \n%c", ref->dados.sexo);*/
             printf("\n\n ---------------------------------------------------");
             ref = ref->prox;
         }
@@ -181,11 +179,6 @@ int _Atualizar(_Node **Geral)
     _Node* cache = 0;
     cache = *Geral;
 
-    if(cache == NULL)
-    {
-        return 0;
-    }
-
     setbuf(stdin, NULL);
     printf("\n Informe o codigo da disciplina. ");
     gets(codigo);
@@ -193,6 +186,10 @@ int _Atualizar(_Node **Geral)
     if(Buscar_Disciplina(cache, codigo) == 0)
     {
         return -1;
+    }
+    else if(cache == NULL)
+    {
+        return 0;
     }
     else if(strcmp(cache->_dados.codigo, codigo) == 0)
     {
