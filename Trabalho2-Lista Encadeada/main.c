@@ -248,11 +248,6 @@ void testeMudarTamanhoEstrutura()
 }
 
 
-/*
-2 [3,4,-2,6]
-5 [1,34,12,6,27,-6, , , , ]
-*/
-/*
 void testeListaEncadeada()
 {
 
@@ -276,5 +271,5 @@ void testeListaEncadeada()
     destruirListaEncadeadaComCabecote(&inicio);
 
     printf("%d\n", inicio == NULL);
-}*/
+}
 
