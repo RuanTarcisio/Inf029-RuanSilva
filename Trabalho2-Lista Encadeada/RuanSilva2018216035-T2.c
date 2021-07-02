@@ -191,6 +191,7 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 {
     int retorno = 0, ndx = 0;
     Node *cache;
+    cache = origem[posicao].head;
 
     if (ehPosicaoValida(posicao) == 0)
         retorno = POSICAO_INVALIDA;
@@ -200,14 +201,16 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 
     else
     {
-        for(cache = origem[posicao].head; cache != NULL; cache = cache->prox)
+        for(ndx = 1; ndx >= 0; ndx--)
         {
             vetorAux[ndx] = cache->recebe.dado;
-            ndx++;
+            cache = cache->prox;
         }
     retorno = SUCESSO;
     }
 
+    /*printf("\n  valor: %d  e   %d \n", vetorAux[0], vetorAux[1]);
+            system("pause");*/
     return retorno;
 }
 
@@ -239,8 +242,7 @@ int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[
         retorno = SUCESSO;
     }
 
-printf("\n  retorno: %d ", retorno);
-system("pause");
+
     return retorno;
 }
 
@@ -254,8 +256,11 @@ Rertono (int)
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
-
     int retorno = 0;
+
+    if(vetorAux[0] == NULL)
+        retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+
     return retorno;
 }
 
