@@ -85,6 +85,7 @@ void removerNoEspecifico(Lista *origem, int posicao, int valor)
     if(cache->recebe.dado == valor)
     {
         origem[posicao].head = cache->prox;
+        origem[posicao].qntd--;
         free(cache);
     }
     else
@@ -99,6 +100,7 @@ void removerNoEspecifico(Lista *origem, int posicao, int valor)
         if(cache != NULL)
         {
             atual->prox = cache->prox;
+            origem[posicao].qntd--;
             free(cache);
         }
     }
@@ -147,4 +149,31 @@ void insertionSort(int *vet, int tam)
 	}
 	vet[j+1] = x;
     }
+}
+
+int Estruturas_Vazias(Lista *origem){
+
+    int vazia = 0;
+
+    for (int i = 0; i < TAM_VETOR; i++)
+    {
+        Node *cache = origem[i].head;
+        if(cache == NULL){
+            printf("  aq  %d   ", i);
+            system("pause");
+            vazia++;
+        }
+    }
+
+    /*printf("VAZIO ? %d ", vazia);
+    system("pause");
+    system("pause");*/
+
+
+
+
+    if (vazia == TAM_VETOR-1)
+        return 1;
+
+    return 0;
 }

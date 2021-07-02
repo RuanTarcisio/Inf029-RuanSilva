@@ -225,7 +225,6 @@ Rertono (int)
 */
 int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 {
-
     int retorno, tamanho = 0;
 
     if (ehPosicaoValida(posicao) == 0)
@@ -254,15 +253,38 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
-int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
+int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
 {
-    int retorno = 0;
+    int retorno = 0, vazio = 0;
 
-    if(vetorAux[0] == NULL)
+    vazio = Estruturas_Vazias(origem);
+
+    if(vazio == 1)
         retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+
+    else
+    {
+        for(int ndx = 0; ndx < TAM_VETOR; ndx++)
+        {
+            Node* cache = origem[ndx].head;
+
+            if(cache != NULL)
+            {
+                do
+                {
+                    vetorAux[ndx] = cache->recebe.dado;
+                    cache = cache->prox;
+                }while(cache != NULL);
+            }
+        }
+    retorno = SUCESSO;
+    }
+
+
 
     return retorno;
 }
+
 
 /*
 Objetivo: retorna os números ordenados de todas as estruturas auxiliares.
@@ -272,7 +294,7 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
-int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
+int getDadosOrdenadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
 {
 
     int retorno = 0;
