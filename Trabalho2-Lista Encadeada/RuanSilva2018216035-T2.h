@@ -20,6 +20,7 @@ typedef struct No
 
 typedef struct
 {
+    int validador;
     int tamanho;
     Node *head;
     int qntd;
@@ -36,6 +37,8 @@ void inicializar();
 Lista* criar_Lista();
 void Push(Lista *origem, int posicao, int valor);
 void removerFim(Lista *origem, int posicao);
+
+int consta_Na_base(Lista *origem, int posicao, int valor);
 
 
 

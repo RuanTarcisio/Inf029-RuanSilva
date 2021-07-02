@@ -22,8 +22,8 @@ int main()
     testeCriarEstrutura();
     testeInserirComEstrutura();
     testeExcluir();
-    /*testeExcluirNumeroEspecifico();
-    testeListar();
+    testeExcluirNumeroEspecifico();
+    /*testeListar();
     testeRetornarTodosNumeros();
     testeMudarTamanhoEstrutura();
     testeListaEncadeada();
@@ -87,5 +87,21 @@ void testeExcluir()
     printf("%d\n", excluirNumeroDoFinaldaEstrutura(trab2, 1) == SEM_ESTRUTURA_AUXILIAR);
     printf("%d\n", excluirNumeroDoFinaldaEstrutura(trab2, 2) == SUCESSO);
     printf("%d\n", excluirNumeroDoFinaldaEstrutura(trab2, 2) == ESTRUTURA_AUXILIAR_VAZIA);
+
 }
 
+
+void testeExcluirNumeroEspecifico()
+{
+    printf("testeExcluirNumeroEspecifico()\n");
+    //###  int excluirNumeroEspecificoDeEstrutura(int posicao, int valor); ###
+    printf("%d\n", criarEstruturaAuxiliar(trab2, 9, 3) == SUCESSO);
+    printf("%d\n", inserirNumeroEmEstrutura(trab2, 9, 7) == SUCESSO);
+    printf("%d\n", inserirNumeroEmEstrutura(trab2, 9, 4) == SUCESSO);
+    printf("%d\n", excluirNumeroEspecificoDeEstrutura(trab2, 9, 12) == NUMERO_INEXISTENTE);
+    printf("%d\n", excluirNumeroEspecificoDeEstrutura(trab2, 9, 7) == SUCESSO);
+    printf("%d\n", excluirNumeroEspecificoDeEstrutura(trab2, 1, 2) == SEM_ESTRUTURA_AUXILIAR);
+}
+/*
+9 [ 4, , ]
+*/

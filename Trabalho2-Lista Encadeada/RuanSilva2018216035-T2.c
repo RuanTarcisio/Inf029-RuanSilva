@@ -9,33 +9,6 @@
 #include "RuanSilva2018216035-T2.h"
 
 
-
-void inicializar()
-{
-    trab2 = criar_Lista();
-
-    trab2[0].tamanho = 2;
-    trab2[1].tamanho = 4;
-    trab2[3].tamanho = 8;
-    trab2[4].tamanho = 3;
-    trab2[6].tamanho = 5;
-
-    Push(trab2, 0, 4);
-    Push(trab2, 1, 3);
-    Push(trab2, 1, 5);
-    Push(trab2, 3, 23);
-    Push(trab2, 3, 35);
-    Push(trab2, 3, 2);
-    Push(trab2, 4, 6);
-    Push(trab2, 6, -16);
-    Push(trab2, 6, 18);
-    Push(trab2, 6, -1);
-
-
-}
-
-
-
 // se posição é um valor válido {entre 1 e 10}
 int ehPosicaoValida(int posicao)
 {
@@ -43,14 +16,6 @@ int ehPosicaoValida(int posicao)
         return 0;
     else
         return 1;
-}
-
-
-
-void dobrar(int *x)
-{
-
-    *x = *x * 2;
 }
 
 /*
@@ -73,7 +38,7 @@ int criarEstruturaAuxiliar(Lista *origem, int posicao, int tamanho)
     {
         return POSICAO_INVALIDA;
     }
-    else if (origem[posicao].tamanho != 0)
+    else if (origem[posicao].head != NULL || origem[posicao].tamanho != 0)
     {
         return JA_TEM_ESTRUTURA_AUXILIAR;
     }
@@ -81,9 +46,10 @@ int criarEstruturaAuxiliar(Lista *origem, int posicao, int tamanho)
     /*else if (origem[posicao].auxiliar == NULL)    LISTA ALOCADA DINAMICAMENTE 10 POSIÇÕES
         return SEM_ESPACO_DE_MEMORIA;*/
 
-    else
+    else{
         origem[posicao].tamanho = tamanho;
-
+        origem[posicao].validador = 1;
+    }
     return SUCESSO;
 
 }
@@ -101,7 +67,7 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
 {
     Node *cache = (Node*)malloc(sizeof(Node));
     cache->recebe.dado = valor;
-
+    cache->prox = origem[posicao].head;
 
     if (ehPosicaoValida(posicao) == 0)
         return POSICAO_INVALIDA;
@@ -113,11 +79,13 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
         return SEM_ESPACO;
 
     else
-    {
-        Push(origem, posicao, valor);
-    }
 
-    return SUCESSO;
+        cache->prox = origem[posicao].head;
+        origem[posicao].head = cache;
+        origem[posicao].qntd++;
+
+        return SUCESSO;
+
 }
 
 /*
@@ -133,19 +101,42 @@ Rertono (int)
 int excluirNumeroDoFinaldaEstrutura(Lista *origem, int posicao)
 {
 
-    if (ehPosicaoValida(posicao) == 0)
-        return POSICAO_INVALIDA;
+    /*
+Objetivo: excluir o numero 'valor' da estrutura auxiliar no final da estrutura.
+ex: suponha os valores [3, 8, 7, 9,  ,  ]. Após excluir, a estrutura deve ficar da seguinte forma [3, 8, 7,  ,  ,  ].
+Obs. Esta é uma exclusão lógica
 
-    else if (origem[posicao].tamanho == 0)
-        return SEM_ESTRUTURA_AUXILIAR;
+Rertono (int)
+    SUCESSO - excluido com sucesso
+    ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
+    SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+*/
+    int resultado = 0;
 
-    else if (origem[posicao].qntd == 0)
-        return ESTRUTURA_AUXILIAR_VAZIA;
 
-    else
+    if (ehPosicaoValida(posicao) == 0){
+        resultado = POSICAO_INVALIDA;
+
+    }
+    else if (origem[posicao].validador == 0 ){
+        resultado = SEM_ESTRUTURA_AUXILIAR;
+
+    }
+    else if (origem[posicao].head == NULL){
+        resultado = ESTRUTURA_AUXILIAR_VAZIA;
+
+    }
+    else if (origem[posicao].head != NULL)
+    {
         removerFim(origem, posicao);
+        resultado = SUCESSO;
 
-    return SUCESSO;
+    }
+
+
+
+    return resultado;
 }
 
 /*
@@ -159,32 +150,30 @@ Rertono (int)
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     NUMERO_INEXISTENTE - Número não existe
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
-
+*/
 int excluirNumeroEspecificoDeEstrutura(Lista *origem, int posicao, int valor)
 {
     int existe = 0;
     int aux;
-    posicao--;
+
 
     if (ehPosicaoValida(posicao) == 0)
         return POSICAO_INVALIDA;
 
-    else if (origem[posicao].tamanho == 0)
+    else if (origem[posicao].validador == 0 )
         return SEM_ESTRUTURA_AUXILIAR;
 
     else if (origem[posicao].qntd == 0)
         return ESTRUTURA_AUXILIAR_VAZIA;
-
-    else if(consta_na_Base(origem, valor) == 0)
+/*
+    else if(consta_Na_base(origem, posicao, valor) == 0)
         return NUMERO_INEXISTENTE;
-
+*/
     else
-        /*remover_NoEspecifico(origem, posicao, valor);
+        /*remover_NoEspecifico(origem, posicao, valor);*/
 
     return SUCESSO;
 }
-
-
 /*
 Objetivo: retorna os números da estrutura auxiliar da posição 'posicao (1..10)'.
 os números devem ser armazenados em vetorAux
