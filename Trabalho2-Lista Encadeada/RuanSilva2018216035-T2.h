@@ -5,18 +5,20 @@
 
 enum { TODAS_ESTRUTURAS_AUXILIARES_VAZIAS = -11, NOVO_TAMANHO_INVALIDO, NUMERO_INEXISTENTE,
        ESTRUTURA_AUXILIAR_VAZIA, TAMANHO_INVALIDO, SEM_ESPACO_DE_MEMORIA, POSICAO_INVALIDA,
-       JA_TEM_ESTRUTURA_AUXILIAR, SEM_ESTRUTURA_AUXILIAR, SEM_ESPACO, SUCESSO };
+       JA_TEM_ESTRUTURA_AUXILIAR, SEM_ESTRUTURA_AUXILIAR, SEM_ESPACO, SUCESSO
+     };
 
 
-typedef struct{
+typedef struct
+{
     int dado;
-}dados;
+} dados;
 
 typedef struct No
 {
     dados recebe;
     struct No *prox;
-}Node;
+} Node;
 
 typedef struct
 {
@@ -24,10 +26,10 @@ typedef struct
     int tamanho;
     Node *head;
     int qntd;
-}Lista;
+} Lista;
 
 
-Lista *trab2, *trab2Orden;
+Lista *trab2, *trab2aux;
 
 
 
@@ -35,10 +37,10 @@ Lista *trab2, *trab2Orden;
 void inicializar();
 
 Lista* criar_Lista();
-void Push(Lista *origem, int posicao, int valor);
+void Push(Lista *origem, int valor);
 void removerFim(Lista *origem, int posicao);
 void removerNoEspecifico(Lista *origem, int posicao, int valor);
-int Estruturas_Vazias(Lista *origem);
+int Estrutura_Vazia(Lista *origem);
 
 int consta_Na_base(Lista *origem, int posicao, int valor);
 
@@ -55,8 +57,8 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[]);
 int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[]);
 int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[]);
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[]);
-int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho);
-int getQuantidadeElementosEstruturaAuxiliar(int posicao);
+int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanho);
+int getQuantidadeElementosEstruturaAuxiliar(Lista *origem, int posicao);
 Node *montarListaEncadeadaComCabecote();
 void getDadosListaEncadeadaComCabecote(Node *inicio, int vetorAux[]);
 void destruirListaEncadeadaComCabecote(Node **inicio);

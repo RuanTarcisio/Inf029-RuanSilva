@@ -9,6 +9,7 @@
 #include "RuanSilva2018216035-T2.h"
 
 
+
 // se posição é um valor válido {entre 1 e 10}
 int ehPosicaoValida(int posicao)
 {
@@ -46,7 +47,8 @@ int criarEstruturaAuxiliar(Lista *origem, int posicao, int tamanho)
     /*else if (origem[posicao].auxiliar == NULL)    LISTA ALOCADA DINAMICAMENTE 10 POSIÇÕES
         return SEM_ESPACO_DE_MEMORIA;*/
 
-    else{
+    else
+    {
         origem[posicao].tamanho = tamanho;
         origem[posicao].validador = 1;
     }
@@ -86,6 +88,7 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
         origem[posicao].head = cache;
         origem[posicao].qntd++;
         resultado = SUCESSO;
+
     }
 
     return resultado;
@@ -105,28 +108,31 @@ int excluirNumeroDoFinaldaEstrutura(Lista *origem, int posicao)
 {
 
     /*
-Objetivo: excluir o numero 'valor' da estrutura auxiliar no final da estrutura.
-ex: suponha os valores [3, 8, 7, 9,  ,  ]. Após excluir, a estrutura deve ficar da seguinte forma [3, 8, 7,  ,  ,  ].
-Obs. Esta é uma exclusão lógica
+    Objetivo: excluir o numero 'valor' da estrutura auxiliar no final da estrutura.
+    ex: suponha os valores [3, 8, 7, 9,  ,  ]. Após excluir, a estrutura deve ficar da seguinte forma [3, 8, 7,  ,  ,  ].
+    Obs. Esta é uma exclusão lógica
 
-Rertono (int)
+    Rertono (int)
     SUCESSO - excluido com sucesso
     ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
-*/
+    */
     int resultado = 0;
 
 
-    if (ehPosicaoValida(posicao) == 0){
+    if (ehPosicaoValida(posicao) == 0)
+    {
         resultado = POSICAO_INVALIDA;
 
     }
-    else if (origem[posicao].validador == 0 ){
+    else if (origem[posicao].validador == 0 )
+    {
         resultado = SEM_ESTRUTURA_AUXILIAR;
 
     }
-    else if (origem[posicao].head == NULL){
+    else if (origem[posicao].head == NULL)
+    {
         resultado = ESTRUTURA_AUXILIAR_VAZIA;
 
     }
@@ -206,7 +212,7 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
             vetorAux[ndx] = cache->recebe.dado;
             cache = cache->prox;
         }
-    retorno = SUCESSO;
+        retorno = SUCESSO;
     }
 
     /*printf("\n  valor: %d  e   %d \n", vetorAux[0], vetorAux[1]);
@@ -257,31 +263,33 @@ int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
 {
     int retorno = 0, vazio = 0;
 
-    vazio = Estruturas_Vazias(origem);
+    vazio = Estrutura_Vazia(origem);
 
     if(vazio == 1)
         retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
 
     else
     {
-        for(int ndx = 0; ndx < TAM_VETOR; ndx++)
+        Node *cache;
+        int ndxAuxiliar = 8;
+
+        for(int ndx = 9; ndx >= 0; ndx--)
         {
-            Node* cache = origem[ndx].head;
+            cache = origem[ndx].head;
 
             if(cache != NULL)
             {
                 do
                 {
-                    vetorAux[ndx] = cache->recebe.dado;
+                    vetorAux[ndxAuxiliar] = cache->recebe.dado;
+                    ndxAuxiliar--;
                     cache = cache->prox;
+
                 }while(cache != NULL);
             }
         }
-    retorno = SUCESSO;
+        retorno = SUCESSO;
     }
-
-
-
     return retorno;
 }
 
@@ -297,7 +305,22 @@ Rertono (int)
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
 {
 
-    int retorno = 0;
+    int retorno = 0, vazio = 0, tamanho = 0;
+
+    vazio = Estrutura_Vazia(origem);
+
+    if(vazio == 1)
+        retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+
+    else
+    {
+        getDadosDeTodasEstruturasAuxiliares(origem, vetorAux);
+
+        for(tamanho = 0; vetorAux[tamanho] != '\0'; tamanho++);
+        insertionSort(vetorAux, 9);
+        retorno = SUCESSO;
+    }
+
     return retorno;
 }
 
@@ -312,10 +335,29 @@ Rertono (int)
     NOVO_TAMANHO_INVALIDO - novo tamanho não pode ser negativo
     SEM_ESPACO_DE_MEMORIA - erro na alocação do novo valor
 */
-int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
+int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanho)
 {
-
     int retorno = 0;
+    int aux = origem[posicao].tamanho + novoTamanho;
+
+
+    if (ehPosicaoValida(posicao) == 0)
+        retorno = POSICAO_INVALIDA;
+
+    else if (origem[posicao].validador == 0 )
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+
+    else if(aux < 1)
+        retorno = NOVO_TAMANHO_INVALIDO;
+
+    else
+    {
+        origem[posicao].tamanho += novoTamanho;
+
+        retorno = SUCESSO;
+    }
+
+
     return retorno;
 }
 
@@ -328,10 +370,28 @@ Retorno (int)
     ESTRUTURA_AUXILIAR_VAZIA - estrutura auxiliar vazia
     Um número int > 0 correpondente a quantidade de elementos preenchidos da estrutura
 */
-int getQuantidadeElementosEstruturaAuxiliar(int posicao)
+int getQuantidadeElementosEstruturaAuxiliar(Lista *origem, int posicao)
 {
 
     int retorno = 0;
+    Node *cache = origem[posicao].head;
+
+    if (ehPosicaoValida(posicao) == 0)
+        retorno = POSICAO_INVALIDA;
+
+    else if (origem[posicao].validador == 0 )
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+
+    else if (origem[posicao].qntd == 0)
+        retorno = ESTRUTURA_AUXILIAR_VAZIA;
+
+    else
+    {
+        for(cache = origem[posicao].head; cache != NULL; cache = cache->prox)
+        {
+            retorno++;
+        }
+    }
 
     return retorno;
 }

@@ -14,7 +14,7 @@ Lista* criar_Lista()
     Lista *list= (Lista*) malloc(sizeof(Lista)* TAM_VETOR);
 
     for(int ndx=0; ndx < TAM_VETOR; ndx++)
-     {
+    {
         list[ndx].head = NULL;
         list[ndx].tamanho = 0;
         list[ndx].qntd = 0;
@@ -38,22 +38,21 @@ void inicializar()
 }
 
 
-void Push(Lista *origem, int posicao, int valor)
+void Push(Lista *origem, int valor)
 {
     Node* cache = (Node*) malloc(sizeof(Node));
     cache->recebe.dado = valor;
 
-    cache->prox = origem[posicao].head;
-    origem[posicao].head = cache;
-    origem[posicao].qntd ++;
-    origem[posicao].validador = 1;
+    cache->prox = origem->head;
+    origem->head = cache;
+    origem->tamanho++;
+
 }
 
 
 void removerFim(Lista *origem, int posicao)
 {
     Node *cache = origem[posicao].head;
-
 
     if(origem[posicao].head->prox == NULL)
     {
@@ -142,25 +141,29 @@ void insertionSort(int *vet, int tam)
 {
     int j;
 
-    for(int i = 1; i < tam; i++){
-	int x = vet[i];
-	for(j = i - 1; j >= 0 && x < vet[j]; j--){
-		vet[j+1] = vet[j];
-	}
-	vet[j+1] = x;
+    for(int i = 1; i < tam; i++)
+    {
+        int x = vet[i];
+        for(j = i - 1; j >= 0 && x < vet[j]; j--)
+        {
+            vet[j+1] = vet[j];
+        }
+        vet[j+1] = x;
     }
 }
 
-int Estruturas_Vazias(Lista *origem){
+int Estrutura_Vazia(Lista *origem)
+{
 
     int vazia = 0;
 
     for (int i = 0; i < TAM_VETOR; i++)
     {
         Node *cache = origem[i].head;
-        if(cache == NULL){
-            printf("  aq  %d   ", i);
-            system("pause");
+        if(cache == NULL)
+        {
+            /*printf("  aq  %d   ", i);
+            system("pause");*/
             vazia++;
         }
     }
@@ -172,7 +175,7 @@ int Estruturas_Vazias(Lista *origem){
 
 
 
-    if (vazia == TAM_VETOR-1)
+    if (vazia == TAM_VETOR)
         return 1;
 
     return 0;
