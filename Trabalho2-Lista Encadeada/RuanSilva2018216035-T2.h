@@ -27,7 +27,7 @@ typedef struct
 }Lista;
 
 
-Lista *trab2;
+Lista *trab2, *trab2Orden;
 
 
 
@@ -37,6 +37,7 @@ void inicializar();
 Lista* criar_Lista();
 void Push(Lista *origem, int posicao, int valor);
 void removerFim(Lista *origem, int posicao);
+void removerNoEspecifico(Lista *origem, int posicao, int valor);
 
 int consta_Na_base(Lista *origem, int posicao, int valor);
 
@@ -50,7 +51,7 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor);
 int excluirNumeroDoFinaldaEstrutura(Lista *origem, int posicao);
 int excluirNumeroEspecificoDeEstrutura(Lista *origem, int posicao, int valor);
 int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[]);
-int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]);
+int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[]);
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]);
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]);
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho);
@@ -62,6 +63,7 @@ void destruirListaEncadeadaComCabecote(Node **inicio);
 void inicializar();
 void finalizar();
 void dobrar(int *x);
+void insertionSort(int *vet, int tam);
 
 
 

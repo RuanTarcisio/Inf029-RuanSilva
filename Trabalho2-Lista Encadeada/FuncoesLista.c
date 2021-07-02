@@ -76,16 +76,45 @@ void removerFim(Lista *origem, int posicao)
     free(cache);
 }
 
+
+void removerNoEspecifico(Lista *origem, int posicao, int valor)
+{
+    Node *cache = (Node*) malloc(sizeof(Node));
+    cache = origem[posicao].head;
+
+    if(cache->recebe.dado == valor)
+    {
+        origem[posicao].head = cache->prox;
+        free(cache);
+    }
+    else
+    {
+        Node *atual;
+
+        for(cache = origem[posicao].head; cache != NULL && cache->recebe.dado != valor; cache = cache->prox)
+        {
+            atual = cache;
+        }
+
+        if(cache != NULL)
+        {
+            atual->prox = cache->prox;
+            free(cache);
+        }
+    }
+}
+
+
 int consta_Na_base(Lista *origem, int posicao, int valor)
 {
     Node *cache = malloc(sizeof(Node));
-    cache = origem->head;
+    cache = origem[posicao].head;
 
-    int validador = -1;
+    int validador = 0;
 
-    if(origem == NULL)
+    if(origem[posicao].head == NULL)
     {
-        validador = 0;
+        validador = -1;
     }
     else
     {
@@ -99,9 +128,23 @@ int consta_Na_base(Lista *origem, int posicao, int valor)
         }
         if(cache == NULL)
         {
-            validador = 0;
+            validador = -1;
         }
         else
             validador = 1;
+    }
+    return validador;
+}
+
+void insertionSort(int *vet, int tam)
+{
+    int j;
+
+    for(int i = 1; i < tam; i++){
+	int x = vet[i];
+	for(j = i - 1; j >= 0 && x < vet[j]; j--){
+		vet[j+1] = vet[j];
+	}
+	vet[j+1] = x;
     }
 }

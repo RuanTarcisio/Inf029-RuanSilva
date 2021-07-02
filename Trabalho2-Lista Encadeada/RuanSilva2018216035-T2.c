@@ -69,23 +69,26 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
     cache->recebe.dado = valor;
     cache->prox = origem[posicao].head;
 
+    int resultado = 0;
+
     if (ehPosicaoValida(posicao) == 0)
-        return POSICAO_INVALIDA;
+        resultado = POSICAO_INVALIDA;
 
     else if (origem[posicao].tamanho == 0 )
-        return SEM_ESTRUTURA_AUXILIAR;
+        resultado = SEM_ESTRUTURA_AUXILIAR;
 
     else if (origem[posicao].tamanho <= origem[posicao].qntd)
-        return SEM_ESPACO;
+        resultado = SEM_ESPACO;
 
     else
-
+    {
         cache->prox = origem[posicao].head;
         origem[posicao].head = cache;
         origem[posicao].qntd++;
+        resultado = SUCESSO;
+    }
 
-        return SUCESSO;
-
+    return resultado;
 }
 
 /*
@@ -131,10 +134,7 @@ Rertono (int)
     {
         removerFim(origem, posicao);
         resultado = SUCESSO;
-
     }
-
-
 
     return resultado;
 }
@@ -153,26 +153,30 @@ Rertono (int)
 */
 int excluirNumeroEspecificoDeEstrutura(Lista *origem, int posicao, int valor)
 {
-    int existe = 0;
-    int aux;
+    int existe = 0, retorno = 0;
+
+    existe = consta_Na_base(origem, posicao, valor);
 
 
     if (ehPosicaoValida(posicao) == 0)
-        return POSICAO_INVALIDA;
+        retorno = POSICAO_INVALIDA;
 
     else if (origem[posicao].validador == 0 )
-        return SEM_ESTRUTURA_AUXILIAR;
+        retorno = SEM_ESTRUTURA_AUXILIAR;
 
     else if (origem[posicao].qntd == 0)
-        return ESTRUTURA_AUXILIAR_VAZIA;
-/*
-    else if(consta_Na_base(origem, posicao, valor) == 0)
-        return NUMERO_INEXISTENTE;
-*/
-    else
-        /*remover_NoEspecifico(origem, posicao, valor);*/
+        retorno = ESTRUTURA_AUXILIAR_VAZIA;
 
-    return SUCESSO;
+    else if(existe == -1)
+        retorno = NUMERO_INEXISTENTE;
+
+    else
+    {
+        removerNoEspecifico(origem, posicao, valor);
+        retorno = SUCESSO;
+    }
+
+    return retorno;
 }
 /*
 Objetivo: retorna os números da estrutura auxiliar da posição 'posicao (1..10)'.
@@ -185,8 +189,24 @@ Retorno (int)
 
 int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 {
+    int retorno = 0, ndx = 0;
+    Node *cache;
 
-    int retorno = 0;
+    if (ehPosicaoValida(posicao) == 0)
+        retorno = POSICAO_INVALIDA;
+
+    else if (origem[posicao].validador == 0 )
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+
+    else
+    {
+        for(cache = origem[posicao].head; cache != NULL; cache = cache->prox)
+        {
+            vetorAux[ndx] = cache->recebe.dado;
+            ndx++;
+        }
+    retorno = SUCESSO;
+    }
 
     return retorno;
 }
@@ -200,11 +220,27 @@ Rertono (int)
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
-int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[])
+int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 {
 
-    int retorno = 0;
+    int retorno, tamanho = 0;
 
+    if (ehPosicaoValida(posicao) == 0)
+        retorno = POSICAO_INVALIDA;
+
+    else if (origem[posicao].validador == 0 )
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+
+
+    else
+    {
+        for(tamanho = 0; vetorAux[tamanho] != '\0'; tamanho++);
+        insertionSort(vetorAux, tamanho);
+        retorno = SUCESSO;
+    }
+
+printf("\n  retorno: %d ", retorno);
+system("pause");
     return retorno;
 }
 
