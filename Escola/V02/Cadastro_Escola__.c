@@ -171,6 +171,7 @@ void menuProfessores()
         menuProfessores();
         break;
     }
+    menuProfessores();
 }
 
 
@@ -547,6 +548,7 @@ void menuExcluir(int select)
             if(OK_Remove == 1)
             {
                 printf("\n Excluido com sucesso. \n");
+                ArqSalvar(Professores, PROF);
             }
             else if( OK_Remove == 0)
             {
