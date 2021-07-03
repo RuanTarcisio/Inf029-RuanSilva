@@ -456,12 +456,20 @@ void destruirListaEncadeadaComCabecote(Lista *origem)
     {
         Node *cache = origem[ndx].head;
 
-        free(cache);
+        if(cache != NULL)
+        {
+            Node *aux;
+            do{
+                aux = cache->prox;
+                free(cache);
+                cache = aux;
+            }while(cache != NULL);
+        }
     }
-    origem->qntd = 0;
+    /*origem->qntd = 0;
     origem->tamanho = 0;
     origem->validador = 0;
-    free(origem);
+    free(origem);*/
 }
 
 /*

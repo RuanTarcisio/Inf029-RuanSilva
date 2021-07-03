@@ -267,6 +267,6 @@ void testeListaEncadeada()
 
     destruirListaEncadeadaComCabecote(trab2);
 
-    printf("%d\n", trab2 == NULL);
+    printf("%d\n", trab2->head == NULL);
 }
 
