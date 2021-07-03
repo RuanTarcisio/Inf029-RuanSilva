@@ -29,10 +29,7 @@ typedef struct
 } Lista;
 
 
-Lista *trab2, *trab2aux;
-
-
-
+Lista *trab2;
 
 void inicializar();
 
@@ -41,11 +38,11 @@ void Push(Lista *origem, int valor);
 void Pop(Lista *origem, int posicao);
 void removerFim(Lista *origem, int posicao);
 void removerNoEspecifico(Lista *origem, int posicao, int valor);
+void inserirNoFim(Lista *origem, int posicao, int valor);
 
 int Estrutura_Vazia(Lista *origem);
 
 int consta_Na_base(Lista *origem, int posicao, int valor);
-
 
 
 void show_log(char *str);

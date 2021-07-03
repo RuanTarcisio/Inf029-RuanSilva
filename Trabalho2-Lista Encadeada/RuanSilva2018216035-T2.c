@@ -199,14 +199,12 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
     int retorno = 0, ndx = 0;
     Node *cache;
     cache = origem[posicao].head;
-    int auxVetor[2];
 
     if (ehPosicaoValida(posicao) == 0)
         retorno = POSICAO_INVALIDA;
 
     else if (origem[posicao].validador == 0 )
         retorno = SEM_ESTRUTURA_AUXILIAR;
-
     else
     {
         do
@@ -216,14 +214,14 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
             cache = cache->prox;
             ndx++;
 
-        }while(cache != NULL);
-       /* auxVetor[0] = vetorAux[0];
-        vetorAux[0] = vetorAux[1];
-        vetorAux[1] = auxVetor[0];
-        printf("\n aq  %d    %d  \n", vetorAux[0], vetorAux[1]);*/
+        }
+        while(cache != NULL);
+        /* auxVetor[0] = vetorAux[0];
+         vetorAux[0] = vetorAux[1];
+         vetorAux[1] = auxVetor[0];
+         printf("\n aq  %d    %d  \n", vetorAux[0], vetorAux[1]);*/
         retorno = SUCESSO;
     }
-
     /*printf("\n  valor: %d  e   %d \n", vetorAux[0], vetorAux[1]);
             system("pause");*/
     return retorno;
@@ -248,15 +246,12 @@ int getDadosOrdenadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[
     else if (origem[posicao].validador == 0 )
         retorno = SEM_ESTRUTURA_AUXILIAR;
 
-
     else
     {
         for(tamanho = 0; vetorAux[tamanho] != '\0'; tamanho++);
         insertionSort(vetorAux, tamanho);
         retorno = SUCESSO;
     }
-
-
     return retorno;
 }
 
@@ -293,8 +288,8 @@ int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
                     vetorAux[ndxAuxiliar] = cache->recebe.dado;
                     ndxAuxiliar++;
                     cache = cache->prox;
-
-                }while(cache != NULL);
+                }
+                while(cache != NULL);
             }
         }
         retorno = SUCESSO;
@@ -329,7 +324,6 @@ int getDadosOrdenadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
         insertionSort(vetorAux, 9);
         retorno = SUCESSO;
     }
-
     return retorno;
 }
 
@@ -348,9 +342,6 @@ int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanh
 {
     int retorno = 0;
     int aux = origem[posicao].tamanho + novoTamanho;
-
-    Node *cache = origem[posicao].head;
-
 
     if (ehPosicaoValida(posicao) == 0)
         retorno = POSICAO_INVALIDA;
@@ -375,8 +366,6 @@ int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanh
 
         retorno = SUCESSO;
     }
-
-
     return retorno;
 }
 
@@ -411,7 +400,6 @@ int getQuantidadeElementosEstruturaAuxiliar(Lista *origem, int posicao)
             retorno++;
         }
     }
-
     return retorno;
 }
 
@@ -435,25 +423,25 @@ Retorno void
 void getDadosListaEncadeadaComCabecote(Lista *origem, int vetorAux[])
 {
     Node *cache;
-        int ndxAuxiliar = 0;
+    int ndxAuxiliar = 0;
 
-        for(int ndx = 0; ndx < 10; ndx++)
+    for(int ndx = 0; ndx < 10; ndx++)
+    {
+        cache = origem[ndx].head;
+
+        if(cache != NULL)
         {
-            cache = origem[ndx].head;
-
-            if(cache != NULL)
+            do
             {
-                do
-                {
-                    vetorAux[ndxAuxiliar] = cache->recebe.dado;
-                    ndxAuxiliar++;
-                    cache = cache->prox;
+                vetorAux[ndxAuxiliar] = cache->recebe.dado;
+                ndxAuxiliar++;
+                cache = cache->prox;
 
-                }while(cache != NULL);
             }
+            while(cache != NULL);
         }
+    }
 }
-
 /*
 Objetivo: Destruir a lista encadeada com cabeçote a partir de início.
 O ponteiro inicio deve ficar com NULL.
@@ -464,17 +452,23 @@ Retorno
 void destruirListaEncadeadaComCabecote(Lista *origem)
 {
 
+    for(int ndx = 0; ndx < TAM_VETOR; ndx++)
+    {
+        Node *cache = origem[ndx].head;
 
+        free(cache);
+    }
+    origem->qntd = 0;
+    origem->tamanho = 0;
+    origem->validador = 0;
+    free(origem);
 }
-
-
 
 /*
 Objetivo: finaliza o programa. deve ser chamado ao final do programa
 para poder liberar todos os espaços de memória das estruturas auxiliares.
 
 */
-
 void finalizar()
 {
 }

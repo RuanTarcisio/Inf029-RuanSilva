@@ -20,24 +20,19 @@ Lista* criar_Lista()
         list[ndx].qntd = 0;
         list[ndx].validador = 0;
     }
-
     return list;
 }
-
 
 void inicializar()
 {
     trab2 = criar_Lista();
-    trab2aux = (Lista*)malloc(sizeof(Lista));
 
     trab2[0].tamanho = 2;
     trab2[1].tamanho = 4;
     trab2[3].tamanho = 8;
     trab2[4].tamanho = 3;
     trab2[6].tamanho = 5;
-
 }
-
 
 void Push(Lista *origem, int valor)
 {
@@ -62,7 +57,8 @@ void inserirNoFim(Lista *origem, int posicao, int valor)
         origem[posicao].qntd++;
     }
     else
-    {   Node *atual;
+    {
+        Node *atual;
         for(atual = origem[posicao].head; atual->prox != NULL; atual = atual->prox);
 
         atual->prox = cache;
@@ -70,7 +66,6 @@ void inserirNoFim(Lista *origem, int posicao, int valor)
     }
 
 }
-
 
 void removerFim(Lista *origem, int posicao)
 {
@@ -93,7 +88,6 @@ void removerFim(Lista *origem, int posicao)
 
         origem[posicao].qntd--;
     }
-
     free(cache);
 }
 
@@ -193,9 +187,6 @@ int Estrutura_Vazia(Lista *origem)
     /*printf("VAZIO ? %d ", vazia);
     system("pause");
     system("pause");*/
-
-
-
 
     if (vazia == TAM_VETOR)
         return 1;

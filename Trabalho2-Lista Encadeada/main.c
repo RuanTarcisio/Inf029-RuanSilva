@@ -217,7 +217,7 @@ Rertono (int)
 void testeMudarTamanhoEstrutura()
 {
     show_log("testeMudarTamanhoEstrutura()");
-	printf("\nMudar tamanho estrutura\n\n");
+    printf("\nMudar tamanho estrutura\n\n");
     int vet[1];
     printf("%d\n", modificarTamanhoEstruturaAuxiliar(trab2, 2, -3) == NOVO_TAMANHO_INVALIDO);
     printf("%d\n", modificarTamanhoEstruturaAuxiliar(trab2, 2, -4) == NOVO_TAMANHO_INVALIDO);
@@ -247,10 +247,10 @@ void testeMudarTamanhoEstrutura()
 void testeListaEncadeada()
 {
 
-	printf("Lista encadeada\n");
+    printf("\nLista encadeada\n\n");
     show_log("testeListaEncadeada()");
     int vet[10];
-    Node *inicio = montarListaEncadeadaComCabecote();
+    /*Node *inicio = montarListaEncadeadaComCabecote();*/
     getDadosListaEncadeadaComCabecote(trab2, vet);
 
     printf("%d\n", vet[0] == 3);
@@ -264,8 +264,9 @@ void testeListaEncadeada()
     printf("%d\n", vet[8] == 27);
     printf("%d\n", vet[9] == -6);
 
+
     destruirListaEncadeadaComCabecote(trab2);
 
-    printf("%d\n", inicio == NULL);
+    printf("%d\n", trab2 == NULL);
 }
 
