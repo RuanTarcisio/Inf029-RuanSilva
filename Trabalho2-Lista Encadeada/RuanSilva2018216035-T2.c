@@ -67,9 +67,9 @@ CONSTANTES*/
 
 int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
 {
-    Node *cache = (Node*)malloc(sizeof(Node));
+    /*Node *cache = (Node*)malloc(sizeof(Node));
     cache->recebe.dado = valor;
-    cache->prox = origem[posicao].head;
+    cache->prox = origem[posicao].head;*/
 
     int resultado = 0;
 
@@ -84,9 +84,10 @@ int inserirNumeroEmEstrutura(Lista *origem, int posicao, int valor)
 
     else
     {
-        cache->prox = origem[posicao].head;
+        inserirNoFim(origem, posicao, valor);
+        /*cache->prox = origem[posicao].head;
         origem[posicao].head = cache;
-        origem[posicao].qntd++;
+        origem[posicao].qntd++;*/
         resultado = SUCESSO;
 
     }
@@ -198,6 +199,7 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
     int retorno = 0, ndx = 0;
     Node *cache;
     cache = origem[posicao].head;
+    int auxVetor[2];
 
     if (ehPosicaoValida(posicao) == 0)
         retorno = POSICAO_INVALIDA;
@@ -207,11 +209,18 @@ int getDadosEstruturaAuxiliar(Lista *origem, int posicao, int vetorAux[])
 
     else
     {
-        for(ndx = 1; ndx >= 0; ndx--)
+        do
         {
             vetorAux[ndx] = cache->recebe.dado;
+
             cache = cache->prox;
-        }
+            ndx++;
+
+        }while(cache != NULL);
+       /* auxVetor[0] = vetorAux[0];
+        vetorAux[0] = vetorAux[1];
+        vetorAux[1] = auxVetor[0];
+        printf("\n aq  %d    %d  \n", vetorAux[0], vetorAux[1]);*/
         retorno = SUCESSO;
     }
 
@@ -271,9 +280,9 @@ int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
     else
     {
         Node *cache;
-        int ndxAuxiliar = 8;
+        int ndxAuxiliar = 0;
 
-        for(int ndx = 9; ndx >= 0; ndx--)
+        for(int ndx = 0; ndx < 10; ndx++)
         {
             cache = origem[ndx].head;
 
@@ -282,7 +291,7 @@ int getDadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[])
                 do
                 {
                     vetorAux[ndxAuxiliar] = cache->recebe.dado;
-                    ndxAuxiliar--;
+                    ndxAuxiliar++;
                     cache = cache->prox;
 
                 }while(cache != NULL);
@@ -340,6 +349,8 @@ int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanh
     int retorno = 0;
     int aux = origem[posicao].tamanho + novoTamanho;
 
+    Node *cache = origem[posicao].head;
+
 
     if (ehPosicaoValida(posicao) == 0)
         retorno = POSICAO_INVALIDA;
@@ -353,6 +364,14 @@ int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanh
     else
     {
         origem[posicao].tamanho += novoTamanho;
+        int diferenca = origem[posicao].qntd - origem[posicao].tamanho;
+
+        while(diferenca > 0)
+        {
+            removerFim(origem, posicao);
+            diferenca--;
+
+        }
 
         retorno = SUCESSO;
     }
@@ -413,8 +432,26 @@ Node *montarListaEncadeadaComCabecote()
 Objetivo: retorna os números da lista enceada com cabeçote armazenando em vetorAux.
 Retorno void
 */
-void getDadosListaEncadeadaComCabecote(Node *inicio, int vetorAux[])
+void getDadosListaEncadeadaComCabecote(Lista *origem, int vetorAux[])
 {
+    Node *cache;
+        int ndxAuxiliar = 0;
+
+        for(int ndx = 0; ndx < 10; ndx++)
+        {
+            cache = origem[ndx].head;
+
+            if(cache != NULL)
+            {
+                do
+                {
+                    vetorAux[ndxAuxiliar] = cache->recebe.dado;
+                    ndxAuxiliar++;
+                    cache = cache->prox;
+
+                }while(cache != NULL);
+            }
+        }
 }
 
 /*
@@ -424,8 +461,10 @@ O ponteiro inicio deve ficar com NULL.
 Retorno
     void.
 */
-void destruirListaEncadeadaComCabecote(Node **inicio)
+void destruirListaEncadeadaComCabecote(Lista *origem)
 {
+
+
 }
 
 

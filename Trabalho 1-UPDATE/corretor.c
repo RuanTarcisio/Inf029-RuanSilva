@@ -27,6 +27,7 @@ int main()
 
 void testQ1()
 {
+    printf("\n\n Q1 \n\n");
     char str[11];
     strcpy(str, "29/02/2015");
     printf("%d\n", q1(str) == 0);
@@ -42,6 +43,7 @@ void testQ1()
 
 void testQ2()
 {
+    printf("\n\n Q2 \n\n");
     char datainicial[11], datafinal[11];
     int qtdDias, qtdMeses, qtdAnos;
     int retorno;
@@ -95,6 +97,7 @@ void testQ2()
 
 void testQ3()
 {
+    printf("\n\n Q3 \n\n");
     char str[250];
     strcpy(str, "Renato Lima Novais");
     printf("%d\n", q3(str, 'a', 0) == 3);
@@ -106,6 +109,7 @@ void testQ3()
 
 void testQ4()
 {
+    printf("\n\n Q4 \n\n");
     char strTexto[250];
     char strBusca[50];
     int posicoes[30];
@@ -139,6 +143,7 @@ void testQ4()
 
 void testQ5()
 {
+    printf("\n\n Q5 \n\n");
     printf("%d\n", q5(345) == 543);
     printf("%d\n", q5(78) == 87);
     printf("%d\n", q5(3) == 3);
@@ -147,6 +152,7 @@ void testQ5()
 
 void testQ6()
 {
+    printf("\n\n Q6 \n\n");
     printf("%d\n", q6(34567368, 3) == 2);
     printf("%d\n", q6(34567368, 4576) == 0);
     printf("%d\n", q6(3539343, 3) == 4);

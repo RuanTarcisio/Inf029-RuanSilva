@@ -38,8 +38,10 @@ void inicializar();
 
 Lista* criar_Lista();
 void Push(Lista *origem, int valor);
+void Pop(Lista *origem, int posicao);
 void removerFim(Lista *origem, int posicao);
 void removerNoEspecifico(Lista *origem, int posicao, int valor);
+
 int Estrutura_Vazia(Lista *origem);
 
 int consta_Na_base(Lista *origem, int posicao, int valor);
@@ -60,8 +62,8 @@ int getDadosOrdenadosDeTodasEstruturasAuxiliares(Lista *origem, int vetorAux[]);
 int modificarTamanhoEstruturaAuxiliar(Lista *origem, int posicao, int novoTamanho);
 int getQuantidadeElementosEstruturaAuxiliar(Lista *origem, int posicao);
 Node *montarListaEncadeadaComCabecote();
-void getDadosListaEncadeadaComCabecote(Node *inicio, int vetorAux[]);
-void destruirListaEncadeadaComCabecote(Node **inicio);
+void getDadosListaEncadeadaComCabecote(Lista *origem, int vetorAux[]);
+void destruirListaEncadeadaComCabecote(Lista *origem);
 
 void inicializar();
 void finalizar();

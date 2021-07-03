@@ -26,8 +26,8 @@ int main()
     testeListar();
     testeRetornarTodosNumeros();
     testeMudarTamanhoEstrutura();
-    /*testeListaEncadeada();
-    finalizar();*/
+    testeListaEncadeada();
+    /*finalizar();*/
 }
 int ligado = 0;
 void show_log(char *str)
@@ -161,7 +161,7 @@ void testeRetornarTodosNumeros()
     5 [1,34,12,6,27,-6, , , , ]
     */
     int vet[9];
-    printf("\n ESTOU AQ 0\n");
+
     printf("%d\n", getDadosDeTodasEstruturasAuxiliares(trab2, vet) == SUCESSO);
 
     printf("%d\n", vet[0] == 3);
@@ -174,7 +174,6 @@ void testeRetornarTodosNumeros()
     printf("%d\n", vet[7] == 27);
     printf("%d\n", vet[8] == -6);
 
-    printf("\n ESTOU AQ 1\n");
     int vet2[9];
 
     printf("%d\n", getDadosOrdenadosDeTodasEstruturasAuxiliares(trab2, vet2) == SUCESSO);
@@ -188,8 +187,6 @@ void testeRetornarTodosNumeros()
     printf("%d\n", vet2[6] == 12);
     printf("%d\n", vet2[7] == 27);
     printf("%d\n", vet2[8] == 34);
-
-    printf("\n ESTOU AQ 2\n");
 
     printf("%d\n", getDadosDeTodasEstruturasAuxiliares(trab2, vet) == SUCESSO);
 
@@ -219,7 +216,6 @@ Rertono (int)
 
 void testeMudarTamanhoEstrutura()
 {
-    system("cls");
     show_log("testeMudarTamanhoEstrutura()");
 	printf("\nMudar tamanho estrutura\n\n");
     int vet[1];
@@ -231,7 +227,7 @@ void testeMudarTamanhoEstrutura()
 
     //modificar para tamanho de 3 para 1
     printf("%d\n", modificarTamanhoEstruturaAuxiliar(trab2, 2, -2) == SUCESSO);
-    printf("%d\n", getQuantidadeElementosEstruturaAuxiliar(trab2, 2));
+    printf("%d\n", getQuantidadeElementosEstruturaAuxiliar(trab2, 2)== 1);
     printf("%d\n", getDadosEstruturaAuxiliar(trab2, 2, vet) == SUCESSO);
     printf("%d\n", vet[0] == 3);
 
@@ -255,7 +251,7 @@ void testeListaEncadeada()
     show_log("testeListaEncadeada()");
     int vet[10];
     Node *inicio = montarListaEncadeadaComCabecote();
-    getDadosListaEncadeadaComCabecote(inicio, vet);
+    getDadosListaEncadeadaComCabecote(trab2, vet);
 
     printf("%d\n", vet[0] == 3);
     printf("%d\n", vet[1] == 4);
@@ -268,7 +264,7 @@ void testeListaEncadeada()
     printf("%d\n", vet[8] == 27);
     printf("%d\n", vet[9] == -6);
 
-    destruirListaEncadeadaComCabecote(&inicio);
+    destruirListaEncadeadaComCabecote(trab2);
 
     printf("%d\n", inicio == NULL);
 }

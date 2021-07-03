@@ -28,6 +28,7 @@ Lista* criar_Lista()
 void inicializar()
 {
     trab2 = criar_Lista();
+    trab2aux = (Lista*)malloc(sizeof(Lista));
 
     trab2[0].tamanho = 2;
     trab2[1].tamanho = 4;
@@ -46,6 +47,27 @@ void Push(Lista *origem, int valor)
     cache->prox = origem->head;
     origem->head = cache;
     origem->tamanho++;
+
+}
+
+void inserirNoFim(Lista *origem, int posicao, int valor)
+{
+    Node *cache = (Node*)malloc(sizeof(Node));
+    cache->recebe.dado = valor;
+    cache->prox = NULL;
+
+    if(origem[posicao].head == NULL)
+    {
+        origem[posicao].head = cache;
+        origem[posicao].qntd++;
+    }
+    else
+    {   Node *atual;
+        for(atual = origem[posicao].head; atual->prox != NULL; atual = atual->prox);
+
+        atual->prox = cache;
+        origem[posicao].qntd++;
+    }
 
 }
 
@@ -179,4 +201,22 @@ int Estrutura_Vazia(Lista *origem)
         return 1;
 
     return 0;
+}
+
+
+void Pop(Lista *origem, int posicao)
+{
+    Node *cache = (Node*) malloc(sizeof(Node));
+    cache = origem[posicao].head;
+
+    if(origem[posicao].head == NULL)
+    {
+
+    }
+    else
+    {
+        origem[posicao].head = cache->prox;
+        origem[posicao].qntd--;
+    }
+    free(cache);
 }
